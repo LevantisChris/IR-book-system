@@ -11,24 +11,15 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="717.0" prefWidth="1272.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.bitwardendesignconcept_demo.Controllers.MainController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="717.0" prefWidth="1272.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.bitwardendesignconcept_demo.Controllers.MainController">
    <children>
       <BorderPane layoutX="-3.0" prefHeight="717.0" prefWidth="1275.0">
          <left>
-            <VBox prefHeight="717.0" prefWidth="185.0" style="-fx-background-color: #282828;" BorderPane.alignment="CENTER">
+            <VBox prefHeight="717.0" prefWidth="204.0" style="-fx-background-color: #282828;" BorderPane.alignment="CENTER">
                <children>
-                  <Button fx:id="btnAllItems" alignment="BASELINE_LEFT" mnemonicParsing="false" prefHeight="27.0" prefWidth="183.0" stylesheets="@../../../css/style.css" text="All Items" textFill="WHITE">
-                     <graphic>
-                        <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../../../icons/Checkmark.png" />
-                           </image></ImageView>
-                     </graphic>
-                  </Button>
-                  <Button fx:id="btnFavorites" alignment="BASELINE_LEFT" mnemonicParsing="false" prefHeight="27.0" prefWidth="183.0" stylesheets="@../../../css/style.css" text="Favorites" textFill="WHITE">
+                  <Button fx:id="btnFavorites" alignment="BASELINE_LEFT" mnemonicParsing="false" prefHeight="27.0" prefWidth="183.0" stylesheets="@../../../css/style.css" text="Statistics" textFill="WHITE">
                      <graphic>
                         <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -36,19 +27,22 @@
                            </image></ImageView>
                      </graphic>
                   </Button>
-                  <Button fx:id="btnTrash" alignment="BASELINE_LEFT" mnemonicParsing="false" prefHeight="27.0" prefWidth="183.0" stylesheets="@../../../css/style.css" text="Trash" textFill="WHITE">
+                  <Button fx:id="btnTrash" alignment="BASELINE_LEFT" mnemonicParsing="false" prefHeight="27.0" prefWidth="183.0" stylesheets="@../../../css/style.css" text="User Ratings" textFill="WHITE">
                      <graphic>
                         <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../../../icons/Trash%20Can.png" />
+                              <Image url="@../../../icons/Checkmark.png" />
                            </image></ImageView>
                      </graphic>
                   </Button>
-                  <Label prefHeight="33.0" prefWidth="171.0" text="Types" textFill="#808080">
+                  <Label prefHeight="33.0" prefWidth="171.0" text="Type of Analyzer" textFill="#aeaeae">
                      <padding>
                         <Insets left="5.0" />
-                     </padding></Label>
-                  <Button fx:id="btnLogin" alignment="BASELINE_LEFT" mnemonicParsing="false" prefHeight="27.0" prefWidth="183.0" stylesheets="@../../../css/style.css" text="Login" textFill="WHITE">
+                     </padding>
+                     <font>
+                        <Font name="System Bold" size="13.0" />
+                     </font></Label>
+                  <Button fx:id="btnLogin" alignment="BASELINE_LEFT" mnemonicParsing="false" prefHeight="27.0" prefWidth="183.0" stylesheets="@../../../css/style.css" text="English Analyzer" textFill="WHITE">
                      <graphic>
                         <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -57,7 +51,68 @@
                         </ImageView>
                      </graphic>
                   </Button>
-                  <Button fx:id="btnCard" alignment="BASELINE_LEFT" mnemonicParsing="false" prefHeight="27.0" prefWidth="183.0" stylesheets="@../../../css/style.css" text="Card" textFill="WHITE">
+                  <Button fx:id="btnCard" alignment="BASELINE_LEFT" mnemonicParsing="false" prefHeight="27.0" prefWidth="183.0" stylesheets="@../../../css/style.css" text="Standard Analyzer" textFill="WHITE">
+                     <graphic>
+                        <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../../icons/Login%20Rounded.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+                  <Button fx:id="btnIdentity" alignment="BASELINE_LEFT" mnemonicParsing="false" prefHeight="27.0" prefWidth="183.0" stylesheets="@../../../css/style.css" text="Whitespace Analyzer" textFill="WHITE">
+                     <graphic>
+                        <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../../icons/Login%20Rounded.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+                  <Button fx:id="btnNode" alignment="BASELINE_LEFT" mnemonicParsing="false" prefHeight="27.0" prefWidth="183.0" stylesheets="@../../../css/style.css" text="Simple Analyzer" textFill="WHITE">
+                     <graphic>
+                        <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../../icons/Login%20Rounded.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+                  <Button fx:id="btnNode1" alignment="BASELINE_LEFT" layoutX="15.0" layoutY="210.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="183.0" stylesheets="@../../../css/style.css" text="Stop Analyzer" textFill="WHITE">
+                     <graphic>
+                        <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../../icons/Login%20Rounded.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+                  <Button fx:id="btnNode11" alignment="BASELINE_LEFT" mnemonicParsing="false" prefHeight="27.0" prefWidth="183.0" stylesheets="@../../../css/style.css" text="Keyword Analyzer" textFill="WHITE">
+                     <graphic>
+                        <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../../icons/Login%20Rounded.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+                  <Button fx:id="btnNode12" alignment="BASELINE_LEFT" mnemonicParsing="false" prefHeight="27.0" prefWidth="194.0" stylesheets="@../../../css/style.css" text="Simple White Space Analyzer" textFill="WHITE">
+                     <graphic>
+                        <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../../icons/Login%20Rounded.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+                  <Label prefHeight="33.0" prefWidth="171.0" text="Type of Query Parser" textFill="#aeaeae">
+                     <VBox.margin>
+                        <Insets left="5.0" />
+                     </VBox.margin>
+                     <font>
+                        <Font name="System Bold" size="13.0" />
+                     </font></Label>
+                  <Button fx:id="btnWork" alignment="BASELINE_LEFT" mnemonicParsing="false" prefHeight="27.0" prefWidth="183.0" stylesheets="@../../../css/style.css" text="Standard Query Parser" textFill="WHITE">
                      <graphic>
                         <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -66,51 +121,84 @@
                         </ImageView>
                      </graphic>
                   </Button>
-                  <Button fx:id="btnIdentity" alignment="BASELINE_LEFT" mnemonicParsing="false" prefHeight="27.0" prefWidth="183.0" stylesheets="@../../../css/style.css" text="Identity" textFill="WHITE">
+                  <Button fx:id="btnSocial" alignment="BASELINE_LEFT" mnemonicParsing="false" prefHeight="27.0" prefWidth="182.0" stylesheets="@../../../css/style.css" text="MultiField Query Parser" textFill="WHITE">
                      <graphic>
                         <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../../../icons/Smart%20Card.png" />
+                              <Image url="@../../../icons/Magnetic%20Card.png" />
                            </image>
                         </ImageView>
                      </graphic>
                   </Button>
-                  <Button fx:id="btnNode" alignment="BASELINE_LEFT" mnemonicParsing="false" prefHeight="27.0" prefWidth="183.0" stylesheets="@../../../css/style.css" text="Secure Note" textFill="WHITE">
+                  <Button fx:id="btnPersonal" alignment="BASELINE_LEFT" mnemonicParsing="false" prefHeight="27.0" prefWidth="178.0" stylesheets="@../../../css/style.css" text="Simple Query Parser" textFill="WHITE">
                      <graphic>
                         <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../../../icons/Note.png" />
+                              <Image url="@../../../icons/Magnetic%20Card.png" />
                            </image>
                         </ImageView>
                      </graphic>
                   </Button>
-                  <Label prefHeight="33.0" prefWidth="171.0" text="Folders" textFill="#808080">
-                     <VBox.margin>
-                        <Insets left="5.0" />
-                     </VBox.margin></Label>
-                  <Button fx:id="btnWork" alignment="BASELINE_LEFT" mnemonicParsing="false" prefHeight="27.0" prefWidth="183.0" stylesheets="@../../../css/style.css" text="Work" textFill="WHITE">
+                  <Label prefHeight="33.0" prefWidth="202.0" text=" Type of Similarity Algorithm" textFill="#aeaeae">
+                     <font>
+                        <Font name="System Bold" size="13.0" />
+                     </font>
+                  </Label>
+                  <Button fx:id="btnWork1" alignment="BASELINE_LEFT" mnemonicParsing="false" prefHeight="27.0" prefWidth="183.0" stylesheets="@../../../css/style.css" text="TF-IDF" textFill="WHITE">
                      <graphic>
                         <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../../../icons/Folder.png" />
+                              <Image url="@../../../icons/algorithm_48.png" />
                            </image>
                         </ImageView>
                      </graphic>
                   </Button>
-                  <Button fx:id="btnSocial" alignment="BASELINE_LEFT" mnemonicParsing="false" prefHeight="27.0" prefWidth="183.0" stylesheets="@../../../css/style.css" text="Social" textFill="WHITE">
+                  <Button fx:id="btnWork2" alignment="BASELINE_LEFT" mnemonicParsing="false" prefHeight="27.0" prefWidth="183.0" stylesheets="@../../../css/style.css" text="BM25" textFill="WHITE">
                      <graphic>
                         <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../../../icons/Folder.png" />
+                              <Image url="@../../../icons/algorithm_48.png" />
                            </image>
                         </ImageView>
                      </graphic>
                   </Button>
-                  <Button fx:id="btnPersonal" alignment="BASELINE_LEFT" mnemonicParsing="false" prefHeight="27.0" prefWidth="183.0" stylesheets="@../../../css/style.css" text="Personal" textFill="WHITE">
+                  <Label prefHeight="33.0" prefWidth="171.0" text=" Type of search Query" textFill="#aeaeae">
+                     <font>
+                        <Font name="System Bold" size="13.0" />
+                     </font>
+                  </Label>
+                  <Button fx:id="btnSocial11" alignment="BASELINE_LEFT" mnemonicParsing="false" prefHeight="27.0" prefWidth="182.0" stylesheets="@../../../css/style.css" text="Term query" textFill="WHITE">
                      <graphic>
                         <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../../../icons/Folder.png" />
+                              <Image url="@../../../icons/search_48.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+                  <Button fx:id="btnSocial111" alignment="BASELINE_LEFT" mnemonicParsing="false" prefHeight="27.0" prefWidth="182.0" stylesheets="@../../../css/style.css" text="WildCard query" textFill="WHITE">
+                     <graphic>
+                        <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../../icons/search_48.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+                  <Button fx:id="btnSocial1111" alignment="BASELINE_LEFT" mnemonicParsing="false" prefHeight="27.0" prefWidth="182.0" stylesheets="@../../../css/style.css" text="Prefix query" textFill="WHITE">
+                     <graphic>
+                        <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../../icons/search_48.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+                  <Button fx:id="btnSocial11111" alignment="BASELINE_LEFT" mnemonicParsing="false" prefHeight="27.0" prefWidth="182.0" stylesheets="@../../../css/style.css" text="Boolean query" textFill="WHITE">
+                     <graphic>
+                        <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../../icons/search_48.png" />
                            </image>
                         </ImageView>
                      </graphic>
@@ -129,7 +217,7 @@
                <children>
                   <BorderPane prefHeight="706.0" prefWidth="393.0">
                      <top>
-                        <TextField fx:id="tfSearch" promptText="Search Vault" stylesheets="@../../../css/style.css" BorderPane.alignment="CENTER" />
+                        <TextField fx:id="tfSearch" promptText="Search" stylesheets="@../../../css/style.css" BorderPane.alignment="CENTER" />
                      </top>
                      <center>
                         <VBox fx:id="vItems" prefHeight="686.0" prefWidth="393.0" BorderPane.alignment="CENTER">
@@ -145,69 +233,6 @@
                <children>
                   <Pane prefHeight="717.0" prefWidth="687.0" style="-fx-background-color: #1E1E1E;">
                      <children>
-                        <Pane layoutX="61.0" layoutY="61.0">
-                           <children>
-                              <ImageView fx:id="ivLogo" fitHeight="82.0" fitWidth="94.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@../../../icons/Adobe.png" />
-                                 </image>
-                              </ImageView>
-                              <VBox layoutX="111.0" layoutY="9.0">
-                                 <children>
-                                    <Label fx:id="lbICompanyName" prefHeight="41.0" prefWidth="212.0" text="Adobe" textFill="WHITE">
-                                       <font>
-                                          <Font name="System Bold" size="22.0" />
-                                       </font>
-                                    </Label>
-                                    <Label prefHeight="26.0" prefWidth="215.0" text="Log in">
-                                       <font>
-                                          <Font size="17.0" />
-                                       </font>
-                                    </Label>
-                                 </children>
-                              </VBox>
-                           </children>
-                        </Pane>
-                        <TextField fx:id="tfUsername" layoutX="69.0" layoutY="169.0" prefHeight="44.0" prefWidth="454.0" promptText="Username" stylesheets="@../../../css/style.css">
-                           <font>
-                              <Font size="17.0" />
-                           </font>
-                        </TextField>
-                        <TextField fx:id="tfPassword" layoutX="69.0" layoutY="231.0" prefHeight="44.0" prefWidth="454.0" promptText="Password" stylesheets="@../../../css/style.css">
-                           <font>
-                              <Font size="17.0" />
-                           </font>
-                        </TextField>
-                        <VBox layoutX="69.0" layoutY="314.0">
-                           <children>
-                              <Label prefHeight="31.0" prefWidth="442.0" text="Website" textFill="#a1a1a1">
-                                 <font>
-                                    <Font name="System Italic" size="18.0" />
-                                 </font>
-                              </Label>
-                              <Label fx:id="lbIWebsite" prefHeight="26.0" prefWidth="446.0" text="adobe.com" textFill="WHITE">
-                                 <font>
-                                    <Font size="17.0" />
-                                 </font>
-                              </Label>
-                           </children>
-                        </VBox>
-                        <Line endX="350.0" layoutX="172.0" layoutY="151.0" startX="-100.0" stroke="WHITE" />
-                        <Line endX="350.0" layoutX="171.0" layoutY="383.0" startX="-100.0" stroke="WHITE" />
-                        <VBox layoutX="69.0" layoutY="399.0">
-                           <children>
-                              <Label prefHeight="31.0" prefWidth="75.0" text="Notes" textFill="#a1a1a1">
-                                 <font>
-                                    <Font name="System Italic" size="18.0" />
-                                 </font>
-                              </Label>
-                              <Label fx:id="lbINotes" alignment="TOP_LEFT" prefHeight="182.0" prefWidth="445.0" text="Some notes go here" textFill="WHITE">
-                                 <font>
-                                    <Font size="17.0" />
-                                 </font>
-                              </Label>
-                           </children>
-                        </VBox>
                         <Button fx:id="btnCloseApp" layoutX="625.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleButtonClicks" prefHeight="31.0" prefWidth="48.0" style="-fx-background-radius: 10;" stylesheets="@../../../css/style.css" text="X" textFill="WHITE">
                            <font>
                               <Font name="System Bold" size="24.0" />
@@ -219,34 +244,9 @@
                               <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
                            </padding>
                         </Button>
-                        <Button fx:id="btnMinimize" layoutX="565.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleButtonClicks" prefHeight="31.0" prefWidth="48.0" style="-fx-background-radius: 10;" stylesheets="@../../../css/style.css" text="/" textFill="WHITE">
+                        <Button fx:id="btnMinimize" layoutX="565.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleButtonClicks" prefHeight="31.0" prefWidth="48.0" style="-fx-background-radius: 10;" stylesheets="@../../../css/style.css" text="-" textFill="WHITE">
                            <font>
                               <Font name="System Bold" size="24.0" />
-                           </font>
-                           <opaqueInsets>
-                              <Insets />
-                           </opaqueInsets>
-                           <padding>
-                              <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
-                           </padding>
-                           <effect>
-                              <Blend />
-                           </effect>
-                        </Button>
-                        <Button fx:id="btnDelete" layoutX="447.0" layoutY="85.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="75.0" style="-fx-background-radius: 10;" stylesheets="@../../../css/style.css" text="Delete" textFill="WHITE">
-                           <font>
-                              <Font name="System Bold Italic" size="16.0" />
-                           </font>
-                           <opaqueInsets>
-                              <Insets />
-                           </opaqueInsets>
-                           <padding>
-                              <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
-                           </padding>
-                        </Button>
-                        <Button fx:id="btnEdit" layoutX="387.0" layoutY="86.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="51.0" style="-fx-background-radius: 10;" stylesheets="@../../../css/style.css" text="Edit" textFill="WHITE">
-                           <font>
-                              <Font name="System Bold Italic" size="16.0" />
                            </font>
                            <opaqueInsets>
                               <Insets />
