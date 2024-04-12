@@ -49,6 +49,21 @@
             <artifactId>javafx-graphics</artifactId>
             <version>17.0.2</version>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/org.apache.lucene/lucene-core -->
+        <dependency>
+            <groupId>org.apache.lucene</groupId>
+            <artifactId>lucene-core</artifactId>
+            <version>9.10.0</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.apache.lucene/lucene-analysis-common -->
+        <dependency>
+            <groupId>org.apache.lucene</groupId>
+            <artifactId>lucene-analysis-common</artifactId>
+            <version>9.10.0</version>
+        </dependency>
+
+
+
     </dependencies>
 
     <build>

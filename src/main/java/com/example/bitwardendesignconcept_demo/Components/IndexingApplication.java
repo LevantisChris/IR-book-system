@@ -8,6 +8,7 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
 public class IndexingApplication extends Application {
+    private IndexingApplication indexingApplication;
     @Override
     public void start(Stage stage) throws Exception {
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("indexing-view.fxml"));
@@ -15,6 +16,8 @@ public class IndexingApplication extends Application {
         scene.getStylesheets().add(getClass().getResource("/css/style.css").toExternalForm());
         stage.initStyle(StageStyle.UNDECORATED);
         stage.setScene(scene);
+        /*IndexingController indexingController = fxmlLoader.getController();
+        indexingController.setStage(stage);*/
 
         stage.showAndWait();
     }

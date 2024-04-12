@@ -1,15 +1,14 @@
 package com.example.bitwardendesignconcept_demo.Controllers;
 
 import com.example.bitwardendesignconcept_demo.Components.DialogUtil;
+import com.example.bitwardendesignconcept_demo.IR_System.LuceneWriteIndexFromFileExample;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
-import javafx.scene.input.KeyCode;
-import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -44,6 +43,13 @@ public class IndexingController implements Initializable {
     @FXML
     private Button submit_btn;
 
+    /*private Stage stage;
+
+    // Method to set the stage
+    public void setStage(Stage stage) {
+        this.stage = stage;
+    }*/
+
     @FXML
     void handleButtonClicks_Indexing(ActionEvent event) {
         if(event.getSource() == cancel_btn) {
@@ -58,6 +64,17 @@ public class IndexingController implements Initializable {
             if(SELECTED_ANALYZER == null) {
                 String message = "Please select an Analyzer.", title = "Warning";
                 DialogUtil.showConfirmationDialog(title, message, 1);
+            } else {
+                LuceneWriteIndexFromFileExample indexer =
+                        new LuceneWriteIndexFromFileExample();
+                boolean result = indexer.startIndexing(SELECTED_ANALYZER); // Start the indexing with a specific type of Analyzer ...
+                if(result) {
+                    String message = "The indexing process completed successfully.", title = "Warning";
+                    DialogUtil.showConfirmationDialog(title, message, 1);
+                } else {
+                    String message = "Error occurred in indexing process.", title = "Warning";
+                    DialogUtil.showConfirmationDialog(title, message, 1);
+                }
             }
         }
         /* Left Bar Listeners */
