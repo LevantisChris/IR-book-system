@@ -42,7 +42,7 @@
                      <font>
                         <Font name="System Bold" size="13.0" />
                      </font></Label>
-                  <Button fx:id="btnLogin" alignment="BASELINE_LEFT" mnemonicParsing="false" prefHeight="27.0" prefWidth="183.0" stylesheets="@../../../css/style.css" text="English Analyzer" textFill="WHITE">
+                  <Button fx:id="EnglishAnalyzer_Btn" alignment="BASELINE_LEFT" mnemonicParsing="false" prefHeight="27.0" prefWidth="183.0" stylesheets="@../../../css/style.css" text="English Analyzer" textFill="WHITE">
                      <graphic>
                         <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -51,7 +51,7 @@
                         </ImageView>
                      </graphic>
                   </Button>
-                  <Button fx:id="btnCard" alignment="BASELINE_LEFT" mnemonicParsing="false" prefHeight="27.0" prefWidth="183.0" stylesheets="@../../../css/style.css" text="Standard Analyzer" textFill="WHITE">
+                  <Button fx:id="StandardAnalyzer_Btn" alignment="BASELINE_LEFT" mnemonicParsing="false" prefHeight="27.0" prefWidth="183.0" stylesheets="@../../../css/style.css" text="Standard Analyzer" textFill="WHITE">
                      <graphic>
                         <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -60,7 +60,7 @@
                         </ImageView>
                      </graphic>
                   </Button>
-                  <Button fx:id="btnIdentity" alignment="BASELINE_LEFT" mnemonicParsing="false" prefHeight="27.0" prefWidth="183.0" stylesheets="@../../../css/style.css" text="Whitespace Analyzer" textFill="WHITE">
+                  <Button fx:id="WhitespaceAnalyzer_Btn" alignment="BASELINE_LEFT" mnemonicParsing="false" prefHeight="27.0" prefWidth="183.0" stylesheets="@../../../css/style.css" text="Whitespace Analyzer" textFill="WHITE">
                      <graphic>
                         <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -69,7 +69,7 @@
                         </ImageView>
                      </graphic>
                   </Button>
-                  <Button fx:id="btnNode" alignment="BASELINE_LEFT" mnemonicParsing="false" prefHeight="27.0" prefWidth="183.0" stylesheets="@../../../css/style.css" text="Simple Analyzer" textFill="WHITE">
+                  <Button fx:id="SimpleAnalyzer_Btn" alignment="BASELINE_LEFT" mnemonicParsing="false" prefHeight="27.0" prefWidth="183.0" stylesheets="@../../../css/style.css" text="Simple Analyzer" textFill="WHITE">
                      <graphic>
                         <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -78,7 +78,7 @@
                         </ImageView>
                      </graphic>
                   </Button>
-                  <Button fx:id="btnNode1" alignment="BASELINE_LEFT" layoutX="15.0" layoutY="210.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="183.0" stylesheets="@../../../css/style.css" text="Stop Analyzer" textFill="WHITE">
+                  <Button fx:id="StopAnalyzer_Btn" alignment="BASELINE_LEFT" layoutX="15.0" layoutY="210.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="183.0" stylesheets="@../../../css/style.css" text="Stop Analyzer" textFill="WHITE">
                      <graphic>
                         <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -87,7 +87,7 @@
                         </ImageView>
                      </graphic>
                   </Button>
-                  <Button fx:id="btnNode11" alignment="BASELINE_LEFT" mnemonicParsing="false" prefHeight="27.0" prefWidth="183.0" stylesheets="@../../../css/style.css" text="Keyword Analyzer" textFill="WHITE">
+                  <Button fx:id="KeywordAnalyzer_Btn" alignment="BASELINE_LEFT" mnemonicParsing="false" prefHeight="27.0" prefWidth="183.0" stylesheets="@../../../css/style.css" text="Keyword Analyzer" textFill="WHITE">
                      <graphic>
                         <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -96,7 +96,7 @@
                         </ImageView>
                      </graphic>
                   </Button>
-                  <Button fx:id="btnNode12" alignment="BASELINE_LEFT" mnemonicParsing="false" prefHeight="27.0" prefWidth="194.0" stylesheets="@../../../css/style.css" text="Simple White Space Analyzer" textFill="WHITE">
+                  <Button fx:id="SimpleWhiteAnalyzer_Btn" alignment="BASELINE_LEFT" mnemonicParsing="false" prefHeight="27.0" prefWidth="194.0" stylesheets="@../../../css/style.css" text="Simple White Space Analyzer" textFill="WHITE">
                      <graphic>
                         <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -112,7 +112,7 @@
                      <font>
                         <Font name="System Bold" size="13.0" />
                      </font></Label>
-                  <Button fx:id="btnWork" alignment="BASELINE_LEFT" mnemonicParsing="false" prefHeight="27.0" prefWidth="183.0" stylesheets="@../../../css/style.css" text="Standard Query Parser" textFill="WHITE">
+                  <Button fx:id="StandartQueryParser_Btn" alignment="BASELINE_LEFT" mnemonicParsing="false" prefHeight="27.0" prefWidth="183.0" stylesheets="@../../../css/style.css" text="Standard Query Parser" textFill="WHITE">
                      <graphic>
                         <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -121,7 +121,7 @@
                         </ImageView>
                      </graphic>
                   </Button>
-                  <Button fx:id="btnSocial" alignment="BASELINE_LEFT" mnemonicParsing="false" prefHeight="27.0" prefWidth="182.0" stylesheets="@../../../css/style.css" text="MultiField Query Parser" textFill="WHITE">
+                  <Button fx:id="MultiFeildParser_Btn" alignment="BASELINE_LEFT" mnemonicParsing="false" prefHeight="27.0" prefWidth="182.0" stylesheets="@../../../css/style.css" text="MultiField Query Parser" textFill="WHITE">
                      <graphic>
                         <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -130,7 +130,7 @@
                         </ImageView>
                      </graphic>
                   </Button>
-                  <Button fx:id="btnPersonal" alignment="BASELINE_LEFT" mnemonicParsing="false" prefHeight="27.0" prefWidth="178.0" stylesheets="@../../../css/style.css" text="Simple Query Parser" textFill="WHITE">
+                  <Button fx:id="SimpleQuery_Btn" alignment="BASELINE_LEFT" mnemonicParsing="false" prefHeight="27.0" prefWidth="178.0" stylesheets="@../../../css/style.css" text="Simple Query Parser" textFill="WHITE">
                      <graphic>
                         <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -144,7 +144,7 @@
                         <Font name="System Bold" size="13.0" />
                      </font>
                   </Label>
-                  <Button fx:id="btnWork1" alignment="BASELINE_LEFT" mnemonicParsing="false" prefHeight="27.0" prefWidth="183.0" stylesheets="@../../../css/style.css" text="TF-IDF" textFill="WHITE">
+                  <Button fx:id="TF_IDF_SimilarityALgo_Btn" alignment="BASELINE_LEFT" mnemonicParsing="false" prefHeight="27.0" prefWidth="183.0" stylesheets="@../../../css/style.css" text="TF-IDF" textFill="WHITE">
                      <graphic>
                         <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -153,7 +153,7 @@
                         </ImageView>
                      </graphic>
                   </Button>
-                  <Button fx:id="btnWork2" alignment="BASELINE_LEFT" mnemonicParsing="false" prefHeight="27.0" prefWidth="183.0" stylesheets="@../../../css/style.css" text="BM25" textFill="WHITE">
+                  <Button fx:id="BM25_Btn" alignment="BASELINE_LEFT" mnemonicParsing="false" prefHeight="27.0" prefWidth="183.0" stylesheets="@../../../css/style.css" text="BM25" textFill="WHITE">
                      <graphic>
                         <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -167,7 +167,7 @@
                         <Font name="System Bold" size="13.0" />
                      </font>
                   </Label>
-                  <Button fx:id="btnSocial11" alignment="BASELINE_LEFT" mnemonicParsing="false" prefHeight="27.0" prefWidth="182.0" stylesheets="@../../../css/style.css" text="Term query" textFill="WHITE">
+                  <Button fx:id="TermQuery_Btn" alignment="BASELINE_LEFT" mnemonicParsing="false" prefHeight="27.0" prefWidth="182.0" stylesheets="@../../../css/style.css" text="Term query" textFill="WHITE">
                      <graphic>
                         <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -176,7 +176,7 @@
                         </ImageView>
                      </graphic>
                   </Button>
-                  <Button fx:id="btnSocial111" alignment="BASELINE_LEFT" mnemonicParsing="false" prefHeight="27.0" prefWidth="182.0" stylesheets="@../../../css/style.css" text="WildCard query" textFill="WHITE">
+                  <Button fx:id="WildCardQuery_Btn" alignment="BASELINE_LEFT" mnemonicParsing="false" prefHeight="27.0" prefWidth="182.0" stylesheets="@../../../css/style.css" text="WildCard query" textFill="WHITE">
                      <graphic>
                         <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -185,7 +185,7 @@
                         </ImageView>
                      </graphic>
                   </Button>
-                  <Button fx:id="btnSocial1111" alignment="BASELINE_LEFT" mnemonicParsing="false" prefHeight="27.0" prefWidth="182.0" stylesheets="@../../../css/style.css" text="Prefix query" textFill="WHITE">
+                  <Button fx:id="PrefixQuery_Btn" alignment="BASELINE_LEFT" mnemonicParsing="false" prefHeight="27.0" prefWidth="182.0" stylesheets="@../../../css/style.css" text="Prefix query" textFill="WHITE">
                      <graphic>
                         <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -194,7 +194,7 @@
                         </ImageView>
                      </graphic>
                   </Button>
-                  <Button fx:id="btnSocial11111" alignment="BASELINE_LEFT" mnemonicParsing="false" prefHeight="27.0" prefWidth="182.0" stylesheets="@../../../css/style.css" text="Boolean query" textFill="WHITE">
+                  <Button fx:id="BooleanQuery_Btn" alignment="BASELINE_LEFT" mnemonicParsing="false" prefHeight="27.0" prefWidth="182.0" stylesheets="@../../../css/style.css" text="Boolean query" textFill="WHITE">
                      <graphic>
                         <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true">
                            <image>

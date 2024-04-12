@@ -16,10 +16,10 @@ public class MainItemController implements Initializable {
     private ImageView ivIcon;
 
     @FXML
-    private Label lblAppName;
+    private Label Small_title_lbl;
 
     @FXML
-    private Label lblEmail;
+    private Label Small_description_lbl;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -27,8 +27,8 @@ public class MainItemController implements Initializable {
     }
 
     public void setItemInfo(String appName, String appEmail, String appIconUrl) {
-        lblAppName.setText(appName);
-        lblEmail.setText(appEmail);
+        Small_title_lbl.setText(appName);
+        Small_description_lbl.setText(appEmail);
         ivIcon.setImage(new Image(String.valueOf(HelloApplication.class.getResource(appIconUrl))));
     }
 }
