@@ -1,4 +1,21 @@
 package com.example.bitwardendesignconcept_demo.Components;
 
-public class IndexingApplication {
+import com.example.bitwardendesignconcept_demo.HelloApplication;
+import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
+
+public class IndexingApplication extends Application {
+    @Override
+    public void start(Stage stage) throws Exception {
+        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("indexing-view.fxml"));
+        Scene scene = new Scene(fxmlLoader.load());
+        scene.getStylesheets().add(getClass().getResource("/css/style.css").toExternalForm());
+        stage.initStyle(StageStyle.UNDECORATED);
+        stage.setScene(scene);
+
+        stage.showAndWait();
+    }
 }
