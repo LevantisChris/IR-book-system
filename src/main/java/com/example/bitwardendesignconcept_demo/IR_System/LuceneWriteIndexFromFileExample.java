@@ -4,6 +4,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.*;
 import java.nio.file.attribute.BasicFileAttributes;
+import java.sql.*;
+import java.time.Duration;
+import java.time.Instant;
 
 import com.example.bitwardendesignconcept_demo.Components.DialogUtil;
 import org.apache.lucene.analysis.Analyzer;
@@ -25,6 +28,9 @@ import org.apache.lucene.analysis.core.SimpleAnalyzer;
 
 public class LuceneWriteIndexFromFileExample {
 
+    private int numOfDocs = 0;
+    private long totalSize = 0;
+
     public boolean startIndexing(String typeOfAnalyzer) {
 
         //Input folder
@@ -34,6 +40,9 @@ public class LuceneWriteIndexFromFileExample {
         String indexPath = "indexedFiles";
 
         final Path docDir = Paths.get(docsPath);
+
+        /* Start measuring the time takes to run the indexing */
+        Instant start = Instant.now();
 
         try {
             //org.apache.lucene.store.Directory instance
@@ -64,6 +73,16 @@ public class LuceneWriteIndexFromFileExample {
             indexDocs(writer, docDir);
 
             writer.close();
+
+            Instant end = Instant.now();
+            Duration timeElapsed = Duration.between(start, end);
+            // Convert elapsed time to java.sql.Time
+            long seconds = timeElapsed.getSeconds();
+            Time time = new Time(seconds * 1000); // Convert to milliseconds
+            System.out.println("EVENT --> Time taken: " + timeElapsed.toSeconds() + " seconds");
+            /* Create the stats for the collection the Systems just index */
+            calcStatsOfCollection(docDir, time, typeOfAnalyzer);
+
             return true;
         }
         catch (IOException e) {
@@ -112,6 +131,51 @@ public class LuceneWriteIndexFromFileExample {
             //document.  Then delete and then add are atomic as seen
             //by a reader on the same index
             writer.updateDocument(new Term("path", file.toString()), doc);
+        }
+    }
+
+    private void calcStatsOfCollection(Path docDir, Time time, String analyzer_type) {
+        FileVisitor<Path> fileVisitor = new SimpleFileVisitor<Path>() {
+            @Override
+            public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
+                // Count the number of files (documents)
+                numOfDocs++;
+                // Sum up the size of each file
+                totalSize += Files.size(file);
+                return FileVisitResult.CONTINUE;
+            }
+        };
+        try {
+            Files.walkFileTree(docDir, fileVisitor);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        System.out.println("Number of documents: " + numOfDocs);
+        System.out.println("Total size of documents (in bytes): " + totalSize);
+
+        insertIndexingCollection(analyzer_type, numOfDocs, (int) totalSize, time);
+    }
+
+    /* Database */
+    private static final String URL = "jdbc:mysql://localhost:3306/ir_system";
+    private static final String USERNAME = "root";
+    private static final String PASSWORD = "kolos2020";
+
+    public static void insertIndexingCollection(String typeOfAnalyzer, int numberOfFiles, int totalSize, Time totalTime) {
+        String sql = "INSERT INTO INDEXING_COLLECTION (DATE_INDEXED, TYPE_ANALYZER, NUMBER_OF_FILES, TOTAL_SIZE, TOTAL_TIME) VALUES (CURDATE(), ?, ?, ?, ?)";
+
+        try (
+                Connection connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+                PreparedStatement statement = connection.prepareStatement(sql)
+        ) {
+            statement.setString(1, typeOfAnalyzer);
+            statement.setInt(2, numberOfFiles);
+            statement.setInt(3, totalSize);
+            statement.setTime(4, totalTime);
+
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 }

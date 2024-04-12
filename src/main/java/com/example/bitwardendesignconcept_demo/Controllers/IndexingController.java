@@ -43,12 +43,11 @@ public class IndexingController implements Initializable {
     @FXML
     private Button submit_btn;
 
-    /*private Stage stage;
+    private Stage stage;
 
-    // Method to set the stage
     public void setStage(Stage stage) {
         this.stage = stage;
-    }*/
+    }
 
     @FXML
     void handleButtonClicks_Indexing(ActionEvent event) {
@@ -71,6 +70,7 @@ public class IndexingController implements Initializable {
                 if(result) {
                     String message = "The indexing process completed successfully.", title = "Warning";
                     DialogUtil.showConfirmationDialog(title, message, 1);
+                    stage.close();
                 } else {
                     String message = "Error occurred in indexing process.", title = "Warning";
                     DialogUtil.showConfirmationDialog(title, message, 1);

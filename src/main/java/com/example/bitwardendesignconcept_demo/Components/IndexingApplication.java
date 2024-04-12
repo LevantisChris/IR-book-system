@@ -1,5 +1,6 @@
 package com.example.bitwardendesignconcept_demo.Components;
 
+import com.example.bitwardendesignconcept_demo.Controllers.IndexingController;
 import com.example.bitwardendesignconcept_demo.HelloApplication;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -16,8 +17,8 @@ public class IndexingApplication extends Application {
         scene.getStylesheets().add(getClass().getResource("/css/style.css").toExternalForm());
         stage.initStyle(StageStyle.UNDECORATED);
         stage.setScene(scene);
-        /*IndexingController indexingController = fxmlLoader.getController();
-        indexingController.setStage(stage);*/
+        IndexingController indexingController = fxmlLoader.getController();
+        indexingController.setStage(stage);
 
         stage.showAndWait();
     }
