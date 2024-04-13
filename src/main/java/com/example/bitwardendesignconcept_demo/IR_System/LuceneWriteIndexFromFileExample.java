@@ -77,11 +77,15 @@ public class LuceneWriteIndexFromFileExample {
             Instant end = Instant.now();
             Duration timeElapsed = Duration.between(start, end);
             // Convert elapsed time to java.sql.Time
-            long seconds = timeElapsed.getSeconds();
-            Time time = new Time(seconds * 1000); // Convert to milliseconds
-            System.out.println("EVENT --> Time taken: " + timeElapsed.toSeconds() + " seconds");
+            // Extract hours, minutes, and seconds from the duration
+            long hours = timeElapsed.toHours();
+            long minutes = timeElapsed.toMinutesPart();
+            long seconds = timeElapsed.toSecondsPart();
+            // Format the time as HH:MM:SS
+            String formattedTime = String.format("%02d:%02d:%02d", hours, minutes, seconds);
+            System.out.println("EVENT --> Time taken: " + formattedTime);
             /* Create the stats for the collection the Systems just index */
-            calcStatsOfCollection(docDir, time, typeOfAnalyzer);
+            calcStatsOfCollection(docDir, formattedTime, typeOfAnalyzer);
 
             return true;
         }
@@ -134,7 +138,7 @@ public class LuceneWriteIndexFromFileExample {
         }
     }
 
-    private void calcStatsOfCollection(Path docDir, Time time, String analyzer_type) {
+    private void calcStatsOfCollection(Path docDir, String formattedTime, String analyzer_type) {
         FileVisitor<Path> fileVisitor = new SimpleFileVisitor<Path>() {
             @Override
             public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
@@ -153,7 +157,7 @@ public class LuceneWriteIndexFromFileExample {
         System.out.println("Number of documents: " + numOfDocs);
         System.out.println("Total size of documents (in bytes): " + totalSize);
 
-        insertIndexingCollection(analyzer_type, numOfDocs, (int) totalSize, time);
+        insertIndexingCollection(analyzer_type, numOfDocs, (int) totalSize, formattedTime);
     }
 
     /* Database */
@@ -161,7 +165,7 @@ public class LuceneWriteIndexFromFileExample {
     private static final String USERNAME = "root";
     private static final String PASSWORD = "kolos2020";
 
-    public static void insertIndexingCollection(String typeOfAnalyzer, int numberOfFiles, int totalSize, Time totalTime) {
+    public static void insertIndexingCollection(String typeOfAnalyzer, int numberOfFiles, int totalSize, String formattedTime) {
         String sql = "INSERT INTO INDEXING_COLLECTION (DATE_INDEXED, TYPE_ANALYZER, NUMBER_OF_FILES, TOTAL_SIZE, TOTAL_TIME) VALUES (CURDATE(), ?, ?, ?, ?)";
 
         try (
@@ -171,7 +175,7 @@ public class LuceneWriteIndexFromFileExample {
             statement.setString(1, typeOfAnalyzer);
             statement.setInt(2, numberOfFiles);
             statement.setInt(3, totalSize);
-            statement.setTime(4, totalTime);
+            statement.setString(4, formattedTime);
 
             statement.executeUpdate();
         } catch (SQLException e) {
