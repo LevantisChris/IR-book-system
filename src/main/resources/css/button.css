@@ -1,9 +1,9 @@
 /* Button Styles */
 
 .button {
-    -fx-background-color: #4CAF50;
+    -fx-background-color: #2f7931;
     -fx-text-fill: white;
-    -fx-font-size: 15px;
+    -fx-font-size: 13px;
     -fx-font-weight: bold;
     -fx-border-radius: 4px;
     -fx-background-radius: 4px;

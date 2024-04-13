@@ -1,6 +1,6 @@
 package com.example.bitwardendesignconcept_demo.Controllers;
 
-import com.example.bitwardendesignconcept_demo.HelloApplication;
+import com.example.bitwardendesignconcept_demo.MainApplication;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
@@ -29,6 +29,6 @@ public class MainItemController implements Initializable {
     public void setItemInfo(String appName, String appEmail, String appIconUrl) {
         Small_title_lbl.setText(appName);
         Small_description_lbl.setText(appEmail);
-        ivIcon.setImage(new Image(String.valueOf(HelloApplication.class.getResource(appIconUrl))));
+        ivIcon.setImage(new Image(String.valueOf(MainApplication.class.getResource(appIconUrl))));
     }
 }

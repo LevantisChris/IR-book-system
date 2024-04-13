@@ -1,7 +1,7 @@
 package com.example.bitwardendesignconcept_demo.Controllers;
 
 import com.example.bitwardendesignconcept_demo.Components.DialogUtil;
-import com.example.bitwardendesignconcept_demo.IR_System.LuceneWriteIndexFromFileExample;
+import com.example.bitwardendesignconcept_demo.IR_System.LuceneWriteIndexFromFiles;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -64,8 +64,8 @@ public class IndexingController implements Initializable {
                 String message = "Please select an Analyzer.", title = "Warning";
                 DialogUtil.showConfirmationDialog(title, message, 1);
             } else {
-                LuceneWriteIndexFromFileExample indexer =
-                        new LuceneWriteIndexFromFileExample();
+                LuceneWriteIndexFromFiles indexer =
+                        new LuceneWriteIndexFromFiles();
                 boolean result = indexer.startIndexing(SELECTED_ANALYZER); // Start the indexing with a specific type of Analyzer ...
                 if(result) {
                     String message = "The indexing process completed successfully.", title = "Warning";

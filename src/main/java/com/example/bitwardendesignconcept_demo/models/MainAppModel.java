@@ -2,7 +2,7 @@ package com.example.bitwardendesignconcept_demo.models;
 
 import javafx.beans.property.SimpleStringProperty;
 
-public class AppModel {
+public class MainAppModel {
     private final SimpleStringProperty BookTitle;
     private final SimpleStringProperty Description;
     private final SimpleStringProperty appIcon;
@@ -11,7 +11,7 @@ public class AppModel {
         return BookTitle.get();
     }
 
-    public AppModel(String appName, String appEmail, String appIcon) {
+    public MainAppModel(String appName, String appEmail, String appIcon) {
         this.BookTitle = new SimpleStringProperty(appName);
         this.Description = new SimpleStringProperty(appEmail);
         this.appIcon = new SimpleStringProperty(appIcon);

@@ -1,26 +1,23 @@
 .button
 {
     -fx-background-color: #282828;
-    -fx-background-radius: 0em;
+    -fx-background-radius: 5em;
 }
 .button:hover
 {
     -fx-background-color: #5f5f5f;
-    -fx-background-radius: 5em;
 }
 .button:pressed
 {
     -fx-background-color: #336600;
-    -fx-background-radius: 5em;
 }
 
 .text-field {
-      -fx-background-color: #2C2C2C;
-      -fx-text-fill: #FFFFFF;
-      -fx-prompt-text-fill: white;
+    -fx-background-color: #2C2C2C;
+    -fx-text-fill: #FFFFFF;
+    -fx-prompt-text-fill: white;
 }
 
 .text-field:focused {
     -fx-background-color: #3A3A3A;
-    -fx-border-color: #1DB954;  /* Spotify green */
 }

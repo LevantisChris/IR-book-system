@@ -2,7 +2,9 @@ package com.example.bitwardendesignconcept_demo.Controllers;
 
 import com.example.bitwardendesignconcept_demo.Components.DialogUtil;
 import com.example.bitwardendesignconcept_demo.Components.IndexingApplication;
-import com.example.bitwardendesignconcept_demo.HelloApplication;
+import com.example.bitwardendesignconcept_demo.IR_System.LuceneReadIndexFromFiles;
+import com.example.bitwardendesignconcept_demo.IR_System.MAIN_OPTIONS;
+import com.example.bitwardendesignconcept_demo.MainApplication;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -10,11 +12,11 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.effect.BoxBlur;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
-import com.example.bitwardendesignconcept_demo.models.AppModel;
+import com.example.bitwardendesignconcept_demo.models.MainAppModel;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
@@ -25,21 +27,227 @@ import java.util.Arrays;
 import java.util.ResourceBundle;
 import java.io.File;
 
+import static com.example.bitwardendesignconcept_demo.IR_System.MAIN_OPTIONS.*;
+
 public class MainController implements Initializable {
 
-    @FXML
-    private AnchorPane MainAnchorPane;
 
     @FXML
     private VBox vItems;
+    @FXML
+    private Button BM_25_SimilarityALgo_Btn;
+
+    @FXML
+    private Button BooleanQuery_Btn;
+
+    @FXML
+    private Button EnglishAnalyzer_Btn;
+
+    @FXML
+    private Button KeywordAnalyzer_Btn;
+
+    @FXML
+    private Button MultiFieldQueryParser_Btn;
+
+    @FXML
+    private Button PrefixQuery_Btn;
+
+    @FXML
+    private Button SimpleAnalyzer_Btn;
+
+    @FXML
+    private Button SimpleQueryParser_Btn;
+
+    @FXML
+    private Button StandardAnalyzer_Btn;
+
+    @FXML
+    private Button StandardQueryParser_Btn;
+
+    @FXML
+    private Button StopAnalyzer_Btn;
+
+    @FXML
+    private Button TF_IDF_SimilarityALgo_Btn;
+
+    @FXML
+    private Button TermQuery_Btn;
+
+    @FXML
+    private Button WhitespaceAnalyzer_Btn;
+
+    @FXML
+    private Button WildCardQuery_Btn;
+
+    @FXML
+    private Button btnCloseApp;
+
+    @FXML
+    private Button btnFavorites;
+
+    @FXML
+    private Button btnMinimize;
+
+    @FXML
+    private Button btnTrash;
+
+    @FXML
+    private Label query_error_label;
+
+    @FXML
+    private TextField userQuery_TextField;
+
+    @FXML
+    private Button submit_btn;
+
+    @FXML
+    private VBox UserQuery_VBox;
 
     ///
+
+    private MAIN_OPTIONS SELECTED_ANALYZER; private Button reference_analyzer = null;
+    private MAIN_OPTIONS SELECTED_QPARSER; private Button reference_qParser = null;
+    private MAIN_OPTIONS SELECTED_SALGO; private Button reference_sAlgo = null;
+    private MAIN_OPTIONS SELECTED_SQUERY; private Button reference_sQuery = null;
 
     private boolean [] isSelected;
 
     @FXML
-    void handleButtonClicks(ActionEvent event) {
-        System.out.println("Button clicked");
+    void handleButtonClicks_Main(ActionEvent event) {
+        if(event.getSource() == submit_btn) {
+            if(userQuery_TextField.getText().isEmpty()) {
+                String message = "Please add a query.", title = "Warning";
+                DialogUtil.showConfirmationDialog(title, message, 1);
+            } else if(SELECTED_ANALYZER == null ||
+                    SELECTED_QPARSER == null ||
+                    SELECTED_SALGO == null ||
+                    SELECTED_SQUERY == null) {
+                String message = "Please select all options.", title = "Warning";
+                DialogUtil.showConfirmationDialog(title, message, 1);
+            } else {
+                LuceneReadIndexFromFiles luceneReadIndexFromFiles
+                        = new LuceneReadIndexFromFiles(SELECTED_ANALYZER,
+                                                        SELECTED_QPARSER,
+                                                        SELECTED_SALGO,
+                                                        SELECTED_SQUERY,
+                                                        userQuery_TextField.getText());
+            }
+        }
+        /* Types of Analyzers */
+        else if(event.getSource() == EnglishAnalyzer_Btn) {
+            System.out.println("EVENT --> The user clicked EnglishAnalyzer_Btn");
+            SELECTED_ANALYZER = ANALYZER_ENGLISH;
+            if (reference_analyzer != null) reference_analyzer.setStyle("-fx-background-color: null");
+            reference_analyzer = EnglishAnalyzer_Btn;
+            EnglishAnalyzer_Btn.setStyle("-fx-background-color: #336600");
+
+        } else if(event.getSource() == StandardAnalyzer_Btn) {
+            System.out.println("EVENT --> The user clicked StandardAnalyzer_Btn");
+            SELECTED_ANALYZER = ANALYZER_STANDARD;
+            if (reference_analyzer != null) reference_analyzer.setStyle("-fx-background-color: null");
+            reference_analyzer = StandardAnalyzer_Btn;
+            StandardAnalyzer_Btn.setStyle("-fx-background-color: #336600");
+
+        } else if(event.getSource() == WhitespaceAnalyzer_Btn) {
+            System.out.println("EVENT --> The user clicked WhitespaceAnalyzer_Btn");
+            SELECTED_ANALYZER = ANALYZER_WHITESPACE;
+            if (reference_analyzer != null) reference_analyzer.setStyle("-fx-background-color: null");
+            reference_analyzer = WhitespaceAnalyzer_Btn;
+            WhitespaceAnalyzer_Btn.setStyle("-fx-background-color: #336600");
+
+        } else if(event.getSource() == SimpleAnalyzer_Btn) {
+            System.out.println("EVENT --> The user clicked SimpleAnalyzer_Btn");
+            SELECTED_ANALYZER = ANALYZER_SIMPLE;
+            if (reference_analyzer != null) reference_analyzer.setStyle("-fx-background-color: null");
+            reference_analyzer = SimpleAnalyzer_Btn;
+            SimpleAnalyzer_Btn.setStyle("-fx-background-color: #336600");
+
+        } else if(event.getSource() == StopAnalyzer_Btn) {
+            System.out.println("EVENT --> The user clicked StopAnalyzer_Btn");
+            SELECTED_ANALYZER = ANALYZER_STOP;
+            if (reference_analyzer != null) reference_analyzer.setStyle("-fx-background-color: null");
+            reference_analyzer = StopAnalyzer_Btn;
+            StopAnalyzer_Btn.setStyle("-fx-background-color: #336600");
+
+        } else if(event.getSource() == KeywordAnalyzer_Btn) {
+            System.out.println("EVENT --> The user clicked KeywordAnalyzer_Btn");
+            SELECTED_ANALYZER = ANALYZER_KEYWORD;
+            if (reference_analyzer != null) reference_analyzer.setStyle("-fx-background-color: null");
+            reference_analyzer = KeywordAnalyzer_Btn;
+            KeywordAnalyzer_Btn.setStyle("-fx-background-color: #336600");
+
+        }
+        /* Types of Query Parsers */
+        else if(event.getSource() == StandardQueryParser_Btn) {
+            System.out.println("EVENT --> The user clicked StandardQueryParser_Btn");
+            SELECTED_QPARSER = QPARSER_STANDARD;
+            if (reference_qParser != null) reference_qParser.setStyle("-fx-background-color: null");
+            reference_qParser = StandardQueryParser_Btn;
+            StandardQueryParser_Btn.setStyle("-fx-background-color: #336600");
+
+        } else if(event.getSource() == MultiFieldQueryParser_Btn) {
+            System.out.println("EVENT --> The user clicked MultiFieldQueryParser_Btn");
+            SELECTED_QPARSER = QPARSER_MULTIFIELD;
+            if (reference_qParser != null) reference_qParser.setStyle("-fx-background-color: null");
+            reference_qParser = MultiFieldQueryParser_Btn;
+            MultiFieldQueryParser_Btn.setStyle("-fx-background-color: #336600");
+
+        } else if(event.getSource() == SimpleQueryParser_Btn) {
+            System.out.println("EVENT --> The user clicked SimpleQueryParser_Btn");
+            SELECTED_QPARSER = QPARSER_SIMPLE;
+            if (reference_qParser != null) reference_qParser.setStyle("-fx-background-color: null");
+            reference_qParser = SimpleQueryParser_Btn;
+            SimpleQueryParser_Btn.setStyle("-fx-background-color: #336600");
+
+        }
+        /* Type of Similarity Algorithm */
+        else if(event.getSource() == TF_IDF_SimilarityALgo_Btn) {
+            System.out.println("EVENT --> The user clicked TF_IDF_SimilarityALgo_Btn");
+            SELECTED_SALGO = SIMIALGO_TFIDF;
+            if (reference_sAlgo != null) reference_sAlgo.setStyle("-fx-background-color: null");
+            reference_sAlgo = TF_IDF_SimilarityALgo_Btn;
+            TF_IDF_SimilarityALgo_Btn.setStyle("-fx-background-color: #336600");
+
+        } else if(event.getSource() == BM_25_SimilarityALgo_Btn) {
+            System.out.println("EVENT --> The user clicked BM_25_SimilarityALgo_Btn");
+            SELECTED_SALGO = SIMIALGO_BM25;
+            if (reference_sAlgo != null) reference_sAlgo.setStyle("-fx-background-color: null");
+            reference_sAlgo = BM_25_SimilarityALgo_Btn;
+            BM_25_SimilarityALgo_Btn.setStyle("-fx-background-color: #336600");
+
+        }
+        /* Type of Search Query */
+        else if(event.getSource() == TermQuery_Btn) {
+            System.out.println("EVENT --> The user clicked TermQuery_Btn");
+            SELECTED_SQUERY =SQUERY_TERM;
+            if (reference_sQuery != null) reference_sQuery.setStyle("-fx-background-color: null");
+            reference_sQuery = TermQuery_Btn;
+            TermQuery_Btn.setStyle("-fx-background-color: #336600");
+
+        } else if(event.getSource() == WildCardQuery_Btn) {
+            System.out.println("EVENT --> The user clicked WildCardQuery_Btn");
+            SELECTED_SQUERY = SQUERY_WILDCARD;
+            if (reference_sQuery != null) reference_sQuery.setStyle("-fx-background-color: null");
+            reference_sQuery = WildCardQuery_Btn;
+            WildCardQuery_Btn.setStyle("-fx-background-color: #336600");
+
+        } else if(event.getSource() == PrefixQuery_Btn) {
+            System.out.println("EVENT --> The user clicked PrefixQuery_Btn");
+            SELECTED_SQUERY = SQUERY_PREFIX;
+            if (reference_sQuery != null) reference_sQuery.setStyle("-fx-background-color: null");
+            reference_sQuery = PrefixQuery_Btn;
+            PrefixQuery_Btn.setStyle("-fx-background-color: #336600");
+
+        } else if(event.getSource() == BooleanQuery_Btn) {
+            System.out.println("EVENT --> The user clicked BooleanQuery_Btn");
+            SELECTED_SQUERY = SQUERY_PREFIX;
+            if (reference_sQuery != null) reference_sQuery.setStyle("-fx-background-color: null");
+            reference_sQuery = BooleanQuery_Btn;
+            BooleanQuery_Btn.setStyle("-fx-background-color: #336600");
+
+        } else {
+            System.out.println("EVENT --> Not clicked");
+        }
     }
 
     @Override
@@ -69,15 +277,15 @@ public class MainController implements Initializable {
                 }
             }
             /* NOTE: You can take them from a DB */
-            ArrayList<AppModel> app = new ArrayList<>();
-            app.add(new AppModel("Book Title", "This is small description", "/icons/book_96.png"));
-            app.add(new AppModel("Book Title", "This is small description", "/icons/book_96.png"));
-            app.add(new AppModel("Book Title", "This is small description", "/icons/book_96.png"));
+            ArrayList<MainAppModel> app = new ArrayList<>();
+            app.add(new MainAppModel("Book Title", "This is small description", "/icons/book_96.png"));
+            app.add(new MainAppModel("Book Title", "This is small description", "/icons/book_96.png"));
+            app.add(new MainAppModel("Book Title", "This is small description", "/icons/book_96.png"));
 
             Node [] nodes = new Node[app.size()];
                for (int i = 0;i < nodes.length;i++) {
                    FXMLLoader loader = new FXMLLoader();
-                   loader.setLocation(HelloApplication.class.getResource("mainitem.fxml"));
+                   loader.setLocation(MainApplication.class.getResource("mainitem.fxml"));
                    nodes[i] = loader.load();
                    isSelected = new boolean[app.size()];
                    final int h = i;

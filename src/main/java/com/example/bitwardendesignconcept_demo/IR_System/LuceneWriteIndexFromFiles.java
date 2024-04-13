@@ -26,7 +26,7 @@ import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.FSDirectory;
 import org.apache.lucene.analysis.core.SimpleAnalyzer;
 
-public class LuceneWriteIndexFromFileExample {
+public class LuceneWriteIndexFromFiles {
 
     private int numOfDocs = 0;
     private long totalSize = 0;
