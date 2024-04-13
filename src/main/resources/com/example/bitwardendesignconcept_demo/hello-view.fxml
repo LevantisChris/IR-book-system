@@ -208,7 +208,7 @@
                <children>
                   <BorderPane prefHeight="706.0" prefWidth="393.0">
                      <center>
-                        <VBox fx:id="vItems" prefHeight="686.0" prefWidth="393.0" BorderPane.alignment="CENTER">
+                        <VBox fx:id="vItems" prefHeight="638.0" prefWidth="407.0" BorderPane.alignment="CENTER">
                            <BorderPane.margin>
                               <Insets />
                            </BorderPane.margin></VBox>
@@ -216,17 +216,12 @@
                      <top>
                         <VBox fx:id="UserQuery_VBox" prefHeight="0.0" prefWidth="374.0" spacing="5.0" style="-fx-border-color: #adadad; -fx-border-width: 0 0 1 0;" BorderPane.alignment="CENTER">
                            <children>
-                              <TextField fx:id="userQuery_TextField" prefHeight="48.0" prefWidth="374.0" promptText="Enter keywords..." stylesheets="@../../../css/style.css">
+                              <TextField fx:id="userQuery_TextField" prefHeight="25.0" prefWidth="424.0" promptText="Enter keywords..." stylesheets="@../../../css/style.css">
                                  <opaqueInsets>
                                     <Insets />
                                  </opaqueInsets>
                               </TextField>
-                              <Button fx:id="submit_btn" mnemonicParsing="false" onAction="#handleButtonClicks_Main" prefHeight="17.0" prefWidth="374.0" stylesheets="@../../../css/button.css" text="Submit" />
-                              <Label fx:id="query_error_label" alignment="CENTER" contentDisplay="CENTER" prefHeight="17.0" prefWidth="409.0" text="This is a test for displaing an error" textFill="RED" wrapText="true">
-                                 <font>
-                                    <Font name="System Bold" size="13.0" />
-                                 </font>
-                              </Label>
+                              <Button fx:id="submit_btn" mnemonicParsing="false" onAction="#handleButtonClicks_Main" prefHeight="27.0" prefWidth="438.0" stylesheets="@../../../css/button.css" text="Submit" />
                            </children>
                            <padding>
                               <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
@@ -242,9 +237,9 @@
          <right>
             <VBox BorderPane.alignment="CENTER">
                <children>
-                  <Pane prefHeight="717.0" prefWidth="687.0" style="-fx-background-color: #1E1E1E;">
+                  <Pane prefHeight="734.0" prefWidth="620.0" style="-fx-background-color: #1E1E1E;">
                      <children>
-                        <Button fx:id="btnCloseApp" layoutX="625.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleButtonClicks_Main" prefHeight="31.0" prefWidth="48.0" style="-fx-background-radius: 10;" stylesheets="@../../../css/style.css" text="X" textFill="WHITE">
+                        <Button fx:id="btnCloseApp" layoutX="558.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleButtonClicks_Main" prefHeight="31.0" prefWidth="48.0" style="-fx-background-radius: 10;" stylesheets="@../../../css/style.css" text="X" textFill="WHITE">
                            <font>
                               <Font name="System Bold" size="24.0" />
                            </font>
@@ -255,7 +250,7 @@
                               <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
                            </padding>
                         </Button>
-                        <Button fx:id="btnMinimize" layoutX="565.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleButtonClicks_Main" prefHeight="31.0" prefWidth="48.0" style="-fx-background-radius: 10;" stylesheets="@../../../css/style.css" text="-" textFill="WHITE">
+                        <Button fx:id="btnMinimize" layoutX="504.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleButtonClicks_Main" prefHeight="31.0" prefWidth="48.0" style="-fx-background-radius: 10;" stylesheets="@../../../css/style.css" text="-" textFill="WHITE">
                            <font>
                               <Font name="System Bold" size="24.0" />
                            </font>

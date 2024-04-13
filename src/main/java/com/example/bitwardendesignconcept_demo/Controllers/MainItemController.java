@@ -19,7 +19,7 @@ public class MainItemController implements Initializable {
     private Label Small_title_lbl;
 
     @FXML
-    private Label Small_description_lbl;
+    private Label score_lbl;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -28,7 +28,7 @@ public class MainItemController implements Initializable {
 
     public void setItemInfo(String appName, String appEmail, String appIconUrl) {
         Small_title_lbl.setText(appName);
-        Small_description_lbl.setText(appEmail);
+        score_lbl.setText(appEmail);
         ivIcon.setImage(new Image(String.valueOf(MainApplication.class.getResource(appIconUrl))));
     }
 }

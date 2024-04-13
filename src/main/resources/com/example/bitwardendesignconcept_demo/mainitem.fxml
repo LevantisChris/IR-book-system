@@ -6,18 +6,18 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="53.0" prefWidth="283.0" style="-fx-background-color: #1E1E1E; -fx-border-radius: 5em;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.bitwardendesignconcept_demo.Controllers.MainItemController">
+<AnchorPane prefHeight="47.0" prefWidth="283.0" style="-fx-background-color: #1E1E1E; -fx-border-radius: 5em;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.bitwardendesignconcept_demo.Controllers.MainItemController">
    <children>
       <ImageView fx:id="ivIcon" fitHeight="38.0" fitWidth="37.0" layoutX="5.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../../icons/book_96.png" />
          </image></ImageView>
-      <Label fx:id="Small_title_lbl" layoutX="52.0" layoutY="8.0" text="Book title" textFill="WHITE">
+      <Label fx:id="Small_title_lbl" layoutX="52.0" layoutY="8.0" text="Book title" textFill="WHITE" wrapText="true">
          <font>
             <Font name="System Bold" size="13.0" />
          </font>
       </Label>
-      <Label fx:id="Small_description_lbl" layoutX="51.0" layoutY="25.0" text="BookTitle" textFill="WHITE">
+      <Label fx:id="score_lbl" layoutX="51.0" layoutY="25.0" text="Score" textFill="WHITE" wrapText="true">
          <font>
             <Font size="10.0" />
          </font>

@@ -17,7 +17,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 import com.example.bitwardendesignconcept_demo.models.MainAppModel;
-import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -100,8 +99,7 @@ public class MainController implements Initializable {
     @FXML
     private Button submit_btn;
 
-    @FXML
-    private VBox UserQuery_VBox;
+    private boolean [] isSelected;
 
     ///
 
@@ -109,8 +107,6 @@ public class MainController implements Initializable {
     private MAIN_OPTIONS SELECTED_QPARSER; private Button reference_qParser = null;
     private MAIN_OPTIONS SELECTED_SALGO; private Button reference_sAlgo = null;
     private MAIN_OPTIONS SELECTED_SQUERY; private Button reference_sQuery = null;
-
-    private boolean [] isSelected;
 
     @FXML
     void handleButtonClicks_Main(ActionEvent event) {
@@ -131,6 +127,7 @@ public class MainController implements Initializable {
                                                         SELECTED_SALGO,
                                                         SELECTED_SQUERY,
                                                         userQuery_TextField.getText());
+                updateResults();
             }
         }
         /* Types of Analyzers */
@@ -252,82 +249,28 @@ public class MainController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        try {
-            /* Check if the indexing folder is empty */
-            if (!checkIndexingFolderStatus()) {
+        /* Check if the indexing folder is empty */
+        if (!checkIndexingFolderStatus()) {
 
-                String message = "The files are not indexed, you have to index them.", title = "Warning";
-                boolean result = DialogUtil.showConfirmationDialog(title, message, 2);
-                if (result) {
-                    System.out.println("EVENT --> User clicked Yes");
-                    /*System.out.println("EVENT --> BLur the hello-view");
-                    // Blur the hello-view
-                    BoxBlur blur = new BoxBlur(5, 5, 3);
-                    MainAnchorPane.setEffect(blur);
-                    MainAnchorPane.setDisable(true);*/
-                    try {
-                        IndexingApplication indexingApp = new IndexingApplication();
-                        indexingApp.start(new Stage());
-                    } catch (Exception e) {
-                        throw new RuntimeException(e);
-                    }
-                } else {
-                    System.out.println("EVENT --> User clicked No");
-                    Platform.exit(); // exit the application ...
+            String message = "The files are not indexed, you have to index them.", title = "Warning";
+            boolean result = DialogUtil.showConfirmationDialog(title, message, 2);
+            if (result) {
+                System.out.println("EVENT --> User clicked Yes");
+                /*System.out.println("EVENT --> BLur the hello-view");
+                // Blur the hello-view
+                BoxBlur blur = new BoxBlur(5, 5, 3);
+                MainAnchorPane.setEffect(blur);
+                MainAnchorPane.setDisable(true);*/
+                try {
+                    IndexingApplication indexingApp = new IndexingApplication();
+                    indexingApp.start(new Stage());
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
                 }
+            } else {
+                System.out.println("EVENT --> User clicked No");
+                Platform.exit(); // exit the application ...
             }
-            /* NOTE: You can take them from a DB */
-            ArrayList<MainAppModel> app = new ArrayList<>();
-            app.add(new MainAppModel("Book Title", "This is small description", "/icons/book_96.png"));
-            app.add(new MainAppModel("Book Title", "This is small description", "/icons/book_96.png"));
-            app.add(new MainAppModel("Book Title", "This is small description", "/icons/book_96.png"));
-
-            Node [] nodes = new Node[app.size()];
-               for (int i = 0;i < nodes.length;i++) {
-                   FXMLLoader loader = new FXMLLoader();
-                   loader.setLocation(MainApplication.class.getResource("mainitem.fxml"));
-                   nodes[i] = loader.load();
-                   isSelected = new boolean[app.size()];
-                   final int h = i;
-                   MainItemController mainItemController = loader.getController();
-                   mainItemController.setItemInfo(app.get(i).getBookTitle(),
-                                                  app.get(i).getDescription(),
-                                                  app.get(i).getAppIcon());
-                   nodes[i].setOnMouseEntered(evt -> {
-                       if(!isSelected[h]) {
-                           nodes[h].setStyle("-fx-background-color: #336600");
-                       }
-                   });
-                   nodes[i].setOnMouseExited(evt -> {
-                       if(isSelected[h]) {
-                           nodes[h].setStyle("-fx-background-color: #336600");
-                       } else {
-                           nodes[h].setStyle("-fx-background-color: #1E1E1E");
-                       }
-                   });
-                   nodes[i].setOnMousePressed(evt -> {
-                       //reset the array
-                       Arrays.fill(isSelected, Boolean.FALSE);
-                       isSelected[h] = true;
-                       //reset to the GUI
-                       for (Node n : nodes) {
-                           n.setStyle("-fx-background-color: #1E1E1E");
-                       }
-
-                       if(isSelected[h]) {
-                           nodes[h].setStyle("-fx-background-color: #336600");
-                       }
-                       // do something
-                       System.out.println("App obj pressed ...");
-                       /* ivLogo.setImage(new Image(String.valueOf(HelloApplication.class.getResource(app.get(h).getAppIcon()))));
-                       tfUsername.setText(app.get(h).getDescription());
-                       lbICompanyName.setText(app.get(h).getBookTitle()); */
-                   });
-                   VBox.setMargin(nodes[i], new Insets(5, 0, 5, 0)); // 5px padding on the top and bottom
-                   vItems.getChildren().add(nodes[i]);
-               }
-        } catch (IOException e) {
-            throw new RuntimeException(e);
         }
     }
 
@@ -357,6 +300,67 @@ public class MainController implements Initializable {
         } else {
             System.out.println("EVENT --> The (Indexes) specified path is not a valid folder.");
             return false;
+        }
+    }
+
+    private void updateResults() {
+        if (!vItems.getChildren().isEmpty()) {
+            vItems.getChildren().clear();
+        }
+        ArrayList<MainAppModel> app = LuceneReadIndexFromFiles.app;
+        if(app.isEmpty()) {
+            Label label = new Label("No results ...");
+            label.setStyle("-fx-font-size: 20pt; -fx-font-weight: bold; -fx-text-fill: white; -fx-start-margin: 5px");
+            vItems.getChildren().add(label);
+            return;
+        }
+        try {
+            Node[] nodes = new Node[app.size()];
+            for (int i = 0;i < nodes.length;i++) {
+                FXMLLoader loader = new FXMLLoader();
+                loader.setLocation(MainApplication.class.getResource("mainitem.fxml"));
+                nodes[i] = loader.load();
+                isSelected = new boolean[app.size()];
+                final int h = i;
+                MainItemController mainItemController = loader.getController();
+                mainItemController.setItemInfo(app.get(i).getBookTitle(),
+                        String.valueOf(app.get(i).getScore()),
+                        app.get(i).getAppIcon());
+                nodes[i].setOnMouseEntered(evt -> {
+                    if(!isSelected[h]) {
+                        nodes[h].setStyle("-fx-background-color: #336600");
+                    }
+                });
+                nodes[i].setOnMouseExited(evt -> {
+                    if(isSelected[h]) {
+                        nodes[h].setStyle("-fx-background-color: #336600");
+                    } else {
+                        nodes[h].setStyle("-fx-background-color: #1E1E1E");
+                    }
+                });
+                nodes[i].setOnMousePressed(evt -> {
+                    //reset the array
+                    Arrays.fill(isSelected, Boolean.FALSE);
+                    isSelected[h] = true;
+                    //reset to the GUI
+                    for (Node n : nodes) {
+                        n.setStyle("-fx-background-color: #1E1E1E");
+                    }
+
+                    if(isSelected[h]) {
+                        nodes[h].setStyle("-fx-background-color: #336600");
+                    }
+                    // do something
+                    System.out.println("App obj pressed ...");
+                           /* ivLogo.setImage(new Image(String.valueOf(HelloApplication.class.getResource(app.get(h).getAppIcon()))));
+                           tfUsername.setText(app.get(h).getScore());
+                           lbICompanyName.setText(app.get(h).getBookTitle()); */
+                });
+                VBox.setMargin(nodes[i], new Insets(5, 0, 5, 0)); // 5px padding on the top and bottom
+                vItems.getChildren().add(nodes[i]);
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
 }
