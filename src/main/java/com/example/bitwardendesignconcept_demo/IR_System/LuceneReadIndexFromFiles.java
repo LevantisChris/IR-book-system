@@ -1,12 +1,13 @@
 package com.example.bitwardendesignconcept_demo.IR_System;
 
-import com.example.bitwardendesignconcept_demo.Controllers.MainItemController;
-import com.example.bitwardendesignconcept_demo.MainApplication;
+import org.jsoup.Jsoup;
+
 import com.example.bitwardendesignconcept_demo.models.MainAppModel;
-import javafx.fxml.FXMLLoader;
-import javafx.geometry.Insets;
-import javafx.scene.Node;
-import javafx.scene.layout.VBox;
+import org.apache.lucene.analysis.TokenStream;
+import org.apache.lucene.search.highlight.Highlighter;
+import org.apache.lucene.search.highlight.QueryScorer;
+import org.apache.lucene.search.highlight.SimpleHTMLFormatter;
+import org.apache.lucene.search.highlight.TokenSources;
 import org.apache.lucene.analysis.core.KeywordAnalyzer;
 import org.apache.lucene.analysis.core.SimpleAnalyzer;
 import org.apache.lucene.analysis.core.StopAnalyzer;
@@ -38,7 +39,6 @@ import java.time.Instant;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class LuceneReadIndexFromFiles {
     private String indexPath = "indexedFiles";
@@ -71,26 +71,27 @@ public class LuceneReadIndexFromFiles {
             setSimilarityAlgo(indexSearcher, PREFERRED_SIMILARITY_ALGO);
             /* Set the Analyzer */
             Analyzer analyzer = setAnalyzer(PREFERRED_ANALYZER);
+            Query query = null;
             if (analyzer != null) {
                 if(PREFERRED_QUERY_PARSER == MAIN_OPTIONS.QPARSER_STANDARD) {
                     QueryParser queryParser = new QueryParser("contents", analyzer);
                     /* Maybe we dont need to specify different types of queries,
                      *  it is in the context of the UI and the user how to handle it. */
-                    Query query = queryParser.parse(USER_QUERY);
+                    query = queryParser.parse(USER_QUERY);
                     /* Perform the Search */
                     topDocs = indexSearcher.search(query, 10);
                 } else if(PREFERRED_QUERY_PARSER == MAIN_OPTIONS.QPARSER_MULTIFIELD) {
                     MultiFieldQueryParser queryParser = new MultiFieldQueryParser(new String[]{}, analyzer); // Not specific files the analyzer will search all of them*
                     /* Maybe we dont need to specify different types of queries,
                      *  it is in the context of the UI and the user how to handle it. */
-                    Query query = queryParser.parse(USER_QUERY);
+                    query = queryParser.parse(USER_QUERY);
                     /* Perform the Search */
                     topDocs = indexSearcher.search(query, 10);
                 } else if(PREFERRED_QUERY_PARSER == MAIN_OPTIONS.QPARSER_SIMPLE) {
                     SimpleQueryParser queryParser = new SimpleQueryParser(analyzer, "contents");
                     /* Maybe we dont need to specify different types of queries,
                      *  it is in the context of the UI and the user how to handle it. */
-                    Query query = queryParser.parse(USER_QUERY);
+                    query = queryParser.parse(USER_QUERY);
                     /* Perform the Search */
                     topDocs = indexSearcher.search(query, 10);
                 }
@@ -116,7 +117,10 @@ public class LuceneReadIndexFromFiles {
                     PREFERRED_SEARCH_QUERY.toString(),
                     formattedTime);
 
-            displayResults(indexSearcher, indexReader, topDocs);
+            SimpleHTMLFormatter htmlFormatter = new SimpleHTMLFormatter();
+            Highlighter highlighter = new Highlighter(htmlFormatter, new QueryScorer(query));
+
+            displayResults(indexSearcher, indexReader, topDocs, highlighter, query, PREFERRED_ANALYZER);
 
             updateAnalyzerCounter(PREFERRED_ANALYZER.toString());
             updateQParserCounter(PREFERRED_QUERY_PARSER.toString());
@@ -128,7 +132,7 @@ public class LuceneReadIndexFromFiles {
         }
     }
 
-    private void displayResults(IndexSearcher indexSearcher, IndexReader indexReader, TopDocs topDocs) {
+    private void displayResults(IndexSearcher indexSearcher, IndexReader indexReader, TopDocs topDocs, Highlighter highlighter, Query query, MAIN_OPTIONS PREFERRED_ANALYZER) {
         if(topDocs == null) {
             System.out.println("EVENT --> EMPTY topDocs ...");
             return;
@@ -139,16 +143,47 @@ public class LuceneReadIndexFromFiles {
             for (ScoreDoc scoreDoc : topDocs.scoreDocs) {
                 // Retrieve the document from the index
                 Document document = indexSearcher.doc(scoreDoc.doc);
+                // Get highlighted snippets
+                String snippet = getSnippet(document, query, highlighter, PREFERRED_ANALYZER);
                 // Print the document's fields and relevant scoring
-                System.out.println("- Document: " + document.get("path") + ", Score: " + scoreDoc.score);
+                System.out.println("- Document: " + document.get("path") + ", Score: " + scoreDoc.score +", \nSnippet: " + snippet);
                 insertIntoSearchInfo(new File(document.get("path")).getName(), scoreDoc.score);
 
                 app.add(new MainAppModel(new File(document.get("path")).getName(), scoreDoc.score, "/icons/book_96.png"));
             }
             indexReader.close();
-        } catch (IOException e) {
+        } catch (Exception e) {
             throw new RuntimeException(e);
         }
+    }
+
+    // Method to retrieve highlighted snippets from the document
+    private static String getSnippet(Document document, Query query, Highlighter highlighter, MAIN_OPTIONS PREFERRED_ANALYZER) throws Exception {
+        // Get the full text content of the document
+        String fullContent = document.get("contents");
+
+        TokenStream tokenStream = null;
+        if(PREFERRED_ANALYZER == MAIN_OPTIONS.ANALYZER_STANDARD)
+            // Create a token stream for the full content
+            tokenStream = TokenSources.getTokenStream("contents", fullContent, new StandardAnalyzer());
+        else if(PREFERRED_ANALYZER == MAIN_OPTIONS.ANALYZER_ENGLISH) {
+            tokenStream = TokenSources.getTokenStream("contents", fullContent, new EnglishAnalyzer());
+        } else if(PREFERRED_ANALYZER == MAIN_OPTIONS.ANALYZER_SIMPLE) {
+            tokenStream = TokenSources.getTokenStream("contents", fullContent, new SimpleAnalyzer());
+        } else if(PREFERRED_ANALYZER == MAIN_OPTIONS.ANALYZER_KEYWORD) {
+            tokenStream = TokenSources.getTokenStream("contents", fullContent, new KeywordAnalyzer());
+        } else if(PREFERRED_ANALYZER == MAIN_OPTIONS.ANALYZER_STOP) {
+            tokenStream = TokenSources.getTokenStream("contents", fullContent, new EnglishAnalyzer()); // Not by accident :)
+        } else if(PREFERRED_ANALYZER == MAIN_OPTIONS.ANALYZER_WHITESPACE) {
+            tokenStream = TokenSources.getTokenStream("contents", fullContent, new WhitespaceAnalyzer());
+        }
+
+        // Get the highlighted text (snippets) containing the matching terms
+        String highlightedText = highlighter.getBestFragments(tokenStream, fullContent, 1, "");
+
+        // Strip HTML tags to get plain text
+        // Get the highlighted text (snippets) containing the matching terms
+        return Jsoup.parse(highlightedText).text();
     }
 
     private Analyzer setAnalyzer(MAIN_OPTIONS PREFERRED_ANALYZER) {

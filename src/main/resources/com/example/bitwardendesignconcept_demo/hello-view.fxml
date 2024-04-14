@@ -9,6 +9,7 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
@@ -239,31 +240,39 @@
                <children>
                   <Pane prefHeight="734.0" prefWidth="620.0" style="-fx-background-color: #1E1E1E;">
                      <children>
-                        <Button fx:id="btnCloseApp" layoutX="558.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleButtonClicks_Main" prefHeight="31.0" prefWidth="48.0" style="-fx-background-radius: 10;" stylesheets="@../../../css/style.css" text="X" textFill="WHITE">
-                           <font>
-                              <Font name="System Bold" size="24.0" />
-                           </font>
-                           <opaqueInsets>
-                              <Insets />
-                           </opaqueInsets>
+                        <HBox alignment="CENTER_RIGHT" prefHeight="71.0" prefWidth="620.0" spacing="10.0" style="-fx-background-color: white;">
+                           <children>
+                              <Button fx:id="btnMinimize" mnemonicParsing="false" onAction="#handleButtonClicks_Main" prefHeight="31.0" prefWidth="48.0" style="-fx-background-radius: 10;" stylesheets="@../../../css/style.css" text="-" textFill="WHITE">
+                                 <font>
+                                    <Font name="System Bold" size="24.0" />
+                                 </font>
+                                 <opaqueInsets>
+                                    <Insets />
+                                 </opaqueInsets>
+                                 <padding>
+                                    <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
+                                 </padding>
+                                 <effect>
+                                    <Blend />
+                                 </effect>
+                              </Button>
+                              <Button fx:id="btnCloseApp" mnemonicParsing="false" onAction="#handleButtonClicks_Main" prefHeight="31.0" prefWidth="48.0" style="-fx-background-radius: 10;" stylesheets="@../../../css/style.css" text="X" textFill="WHITE">
+                                 <font>
+                                    <Font name="System Bold" size="24.0" />
+                                 </font>
+                                 <opaqueInsets>
+                                    <Insets />
+                                 </opaqueInsets>
+                                 <padding>
+                                    <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
+                                 </padding>
+                              </Button>
+                           </children>
                            <padding>
-                              <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
+                              <Insets right="10.0" />
                            </padding>
-                        </Button>
-                        <Button fx:id="btnMinimize" layoutX="504.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleButtonClicks_Main" prefHeight="31.0" prefWidth="48.0" style="-fx-background-radius: 10;" stylesheets="@../../../css/style.css" text="-" textFill="WHITE">
-                           <font>
-                              <Font name="System Bold" size="24.0" />
-                           </font>
-                           <opaqueInsets>
-                              <Insets />
-                           </opaqueInsets>
-                           <padding>
-                              <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
-                           </padding>
-                           <effect>
-                              <Blend />
-                           </effect>
-                        </Button>
+                        </HBox>
+                        <VBox layoutY="70.0" prefHeight="647.0" prefWidth="621.0" />
                      </children>
                   </Pane>
                </children>

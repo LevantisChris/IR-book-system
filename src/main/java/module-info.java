@@ -4,7 +4,9 @@ module com.example.bitwardendesignconcept_demo {
     requires org.apache.lucene.core;
     requires org.apache.lucene.analysis.common;
     requires java.sql;
-    requires lucene.queryparser;
+    requires org.apache.lucene.highlighter;
+    requires org.apache.lucene.queryparser;
+    requires org.jsoup;
 
 
     exports com.example.bitwardendesignconcept_demo.Controllers;
