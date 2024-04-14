@@ -9,14 +9,14 @@ public class MainAppModel {
     private final SimpleFloatProperty Score;
     private final SimpleStringProperty appIcon;
 
-    public String getBookTitle() {
-        return BookTitle.get();
-    }
-
     public MainAppModel(String appName, float Score, String appIcon) {
         this.BookTitle = new SimpleStringProperty(appName);
         this.Score = new SimpleFloatProperty(Score);
         this.appIcon = new SimpleStringProperty(appIcon);
+    }
+
+    public String getBookTitle() {
+        return BookTitle.get();
     }
 
     public float getScore() {

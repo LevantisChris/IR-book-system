@@ -1,5 +1,6 @@
 package com.example.bitwardendesignconcept_demo.Controllers;
 
+import com.example.bitwardendesignconcept_demo.AI_Summarizer;
 import com.example.bitwardendesignconcept_demo.Components.DialogUtil;
 import com.example.bitwardendesignconcept_demo.Components.IndexingApplication;
 import com.example.bitwardendesignconcept_demo.IR_System.LuceneReadIndexFromFiles;
@@ -19,6 +20,8 @@ import javafx.scene.layout.VBox;
 import com.example.bitwardendesignconcept_demo.models.MainAppModel;
 import javafx.stage.Stage;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -350,11 +353,14 @@ public class MainController implements Initializable {
                     if(isSelected[h]) {
                         nodes[h].setStyle("-fx-background-color: #336600");
                     }
-                    // do something
-                    System.out.println("App obj pressed ...");
-                           /* ivLogo.setImage(new Image(String.valueOf(HelloApplication.class.getResource(app.get(h).getAppIcon()))));
-                           tfUsername.setText(app.get(h).getScore());
-                           lbICompanyName.setText(app.get(h).getBookTitle()); */
+
+                    System.out.println("EVENT --> FILE-RESULT pressed ...");
+                    /* Call the AI-Summariser */
+                    AI_Summarizer aiSummarizer = new AI_Summarizer();
+                    System.out.println("EVENT --> User pressed the file with title //" + app.get(h).getBookTitle());
+                    System.out.println("EVENT --> TEST-AI:\n" + aiSummarizer.Summarize(
+                            readTextFromFile(app.get(h).getBookTitle()),
+                            20)); // must number of words in the summary will be 20
                 });
                 VBox.setMargin(nodes[i], new Insets(5, 0, 5, 0)); // 5px padding on the top and bottom
                 vItems.getChildren().add(nodes[i]);
@@ -362,5 +368,23 @@ public class MainController implements Initializable {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    /* This class takes as input a title of a file and returns the contents of it */
+    public static String readTextFromFile(String fileName) {
+        String filePath = "./inputFiles/" + fileName;
+        StringBuilder content = new StringBuilder();
+
+        try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                content.append(line).append("\n");
+            }
+        } catch (IOException e) {
+            System.out.println("EVENT --> Error in the readTextFromFile with input the path : " + filePath + " :");
+            e.printStackTrace();
+        }
+
+        return content.toString();
     }
 }
