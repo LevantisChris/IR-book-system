@@ -45,12 +45,11 @@ public class LuceneReadIndexFromFiles {
     private int generatedIndex = -1;
     public static ArrayList<MainAppModel> app = new ArrayList<>(); // This list will keep the last results of the last search ...
 
-    public LuceneReadIndexFromFiles() {};
-    public LuceneReadIndexFromFiles(MAIN_OPTIONS PREFERRED_ANALYZER,
-                                    MAIN_OPTIONS PREFERRED_QUERY_PARSER,
-                                    MAIN_OPTIONS PREFERRED_SIMILARITY_ALGO,
-                                    MAIN_OPTIONS PREFERRED_SEARCH_QUERY,
-                                    String USER_QUERY) {
+    public ArrayList<String> readIndexfromFiles(MAIN_OPTIONS PREFERRED_ANALYZER,
+                                           MAIN_OPTIONS PREFERRED_QUERY_PARSER,
+                                           MAIN_OPTIONS PREFERRED_SIMILARITY_ALGO,
+                                           MAIN_OPTIONS PREFERRED_SEARCH_QUERY,
+                                           String USER_QUERY) {
 
         if(!app.isEmpty()) app.clear();
 
@@ -120,23 +119,25 @@ public class LuceneReadIndexFromFiles {
             SimpleHTMLFormatter htmlFormatter = new SimpleHTMLFormatter();
             Highlighter highlighter = new Highlighter(htmlFormatter, new QueryScorer(query));
 
-            displayResults(indexSearcher, indexReader, topDocs, highlighter, query, PREFERRED_ANALYZER);
+            ArrayList<String> snippetList = displayResults(indexSearcher, indexReader, topDocs, highlighter, query, PREFERRED_ANALYZER);
 
             updateAnalyzerCounter(PREFERRED_ANALYZER.toString());
             updateQParserCounter(PREFERRED_QUERY_PARSER.toString());
             updateSAlgosCounter(PREFERRED_SIMILARITY_ALGO.toString());
             updateSQueriesCounter(PREFERRED_SEARCH_QUERY.toString());
 
+            return snippetList;
         } catch (IOException | ParseException e) {
             throw new RuntimeException(e);
         }
     }
 
-    private void displayResults(IndexSearcher indexSearcher, IndexReader indexReader, TopDocs topDocs, Highlighter highlighter, Query query, MAIN_OPTIONS PREFERRED_ANALYZER) {
+    private ArrayList<String> displayResults(IndexSearcher indexSearcher, IndexReader indexReader, TopDocs topDocs, Highlighter highlighter, Query query, MAIN_OPTIONS PREFERRED_ANALYZER) {
         if(topDocs == null) {
             System.out.println("EVENT --> EMPTY topDocs ...");
-            return;
+            return null;
         }
+        ArrayList<String> snippetList = new ArrayList<>();
         try {
             // Display the search results
             System.out.println("EVENT --> Search Results:");
@@ -145,6 +146,7 @@ public class LuceneReadIndexFromFiles {
                 Document document = indexSearcher.doc(scoreDoc.doc);
                 // Get highlighted snippets
                 String snippet = getSnippet(document, query, highlighter, PREFERRED_ANALYZER);
+                snippetList.add(snippet);
                 // Print the document's fields and relevant scoring
                 System.out.println("- Document: " + document.get("path") + ", Score: " + scoreDoc.score +", \nSnippet: " + snippet);
                 insertIntoSearchInfo(new File(document.get("path")).getName(), scoreDoc.score);
@@ -152,6 +154,7 @@ public class LuceneReadIndexFromFiles {
                 app.add(new MainAppModel(new File(document.get("path")).getName(), scoreDoc.score, "/icons/book_96.png"));
             }
             indexReader.close();
+            return snippetList;
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

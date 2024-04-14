@@ -6,6 +6,9 @@ import com.example.bitwardendesignconcept_demo.Components.IndexingApplication;
 import com.example.bitwardendesignconcept_demo.IR_System.LuceneReadIndexFromFiles;
 import com.example.bitwardendesignconcept_demo.IR_System.MAIN_OPTIONS;
 import com.example.bitwardendesignconcept_demo.MainApplication;
+import javafx.animation.Animation;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -15,10 +18,12 @@ import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 import com.example.bitwardendesignconcept_demo.models.MainAppModel;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -102,6 +107,15 @@ public class MainController implements Initializable {
     @FXML
     private Button submit_btn;
 
+    @FXML
+    private Label titleOfTheDoc_Label;
+
+    @FXML
+    private Label sampleText_Label;
+
+    @FXML
+    private TextArea AI_Summ_textArea;
+
     private boolean [] isSelected;
 
     ///
@@ -125,12 +139,14 @@ public class MainController implements Initializable {
                 DialogUtil.showConfirmationDialog(title, message, 1);
             } else {
                 LuceneReadIndexFromFiles luceneReadIndexFromFiles
-                        = new LuceneReadIndexFromFiles(SELECTED_ANALYZER,
-                                                        SELECTED_QPARSER,
-                                                        SELECTED_SALGO,
-                                                        SELECTED_SQUERY,
-                                                        userQuery_TextField.getText());
-                updateResults();
+                        = new LuceneReadIndexFromFiles();
+                ArrayList<String> snippetList = luceneReadIndexFromFiles.readIndexfromFiles(
+                        SELECTED_ANALYZER,
+                        SELECTED_QPARSER,
+                        SELECTED_SALGO,
+                        SELECTED_SQUERY,
+                        userQuery_TextField.getText());
+                updateResults(snippetList);
             }
         }
         /* Types of Analyzers */
@@ -306,7 +322,7 @@ public class MainController implements Initializable {
         }
     }
 
-    private void updateResults() {
+    private void updateResults(ArrayList<String> snippetList) {
         if (!vItems.getChildren().isEmpty()) {
             vItems.getChildren().clear();
         }
@@ -358,9 +374,11 @@ public class MainController implements Initializable {
                     /* Call the AI-Summariser */
                     AI_Summarizer aiSummarizer = new AI_Summarizer();
                     System.out.println("EVENT --> User pressed the file with title //" + app.get(h).getBookTitle());
-                    System.out.println("EVENT --> TEST-AI:\n" + aiSummarizer.Summarize(
+                    String aiSummarizer_text = aiSummarizer.Summarize(
                             readTextFromFile(app.get(h).getBookTitle()),
-                            20)); // must number of words in the summary will be 20
+                            20);
+                    System.out.println("EVENT --> TEST-AI:\n" + aiSummarizer_text); // must number of words in the summary will be 20
+                    updateDetailsOfDoc(app.get(h).getBookTitle(), "..." + snippetList.get(h) + "...", aiSummarizer_text);
                 });
                 VBox.setMargin(nodes[i], new Insets(5, 0, 5, 0)); // 5px padding on the top and bottom
                 vItems.getChildren().add(nodes[i]);
@@ -386,5 +404,43 @@ public class MainController implements Initializable {
         }
 
         return content.toString();
+    }
+
+    private Timeline timeline;
+    private void updateDetailsOfDoc(String bookTitle, String snippet, String aiSummarizer_text) {
+        titleOfTheDoc_Label.setText(bookTitle);
+        sampleText_Label.setText(snippet);
+        AI_Summ_textArea.setText(aiSummarizer_text);
+
+        scrollAnimationLabels(sampleText_Label);
+    }
+
+    private void scrollAnimationLabels(Label label) {
+        // Set wrapping to true to allow text to wrap to the next line if it's too long
+        label.setWrapText(true);
+        // Remove ellipsis to prevent truncation of text
+        label.setEllipsisString("");
+
+        // Initialize timeline if it's null
+        if (timeline == null) {
+            timeline = new Timeline(
+                    new KeyFrame(Duration.ZERO, e -> scroll(label)),
+                    new KeyFrame(Duration.millis(20))
+            );
+            timeline.setCycleCount(Animation.INDEFINITE);
+        }
+
+        if (!timeline.getStatus().equals(Animation.Status.RUNNING)) {
+            System.out.println("IS RUNNING");
+            timeline.play();
+        }
+    }
+
+    private void scroll(Label label) {
+        double scrollX = label.getTranslateX() - 1;
+        if (scrollX < -label.getWidth()) {
+            scrollX = label.getWidth();
+        }
+        label.setTranslateX(scrollX);
     }
 }

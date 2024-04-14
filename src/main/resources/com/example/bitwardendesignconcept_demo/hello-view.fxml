@@ -3,6 +3,8 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.effect.Blend?>
 <?import javafx.scene.image.Image?>
@@ -215,7 +217,7 @@
                            </BorderPane.margin></VBox>
                      </center>
                      <top>
-                        <VBox fx:id="UserQuery_VBox" prefHeight="0.0" prefWidth="374.0" spacing="5.0" style="-fx-border-color: #adadad; -fx-border-width: 0 0 1 0;" BorderPane.alignment="CENTER">
+                        <VBox fx:id="UserQuery_VBox" prefHeight="68.0" prefWidth="449.0" spacing="5.0" BorderPane.alignment="CENTER">
                            <children>
                               <TextField fx:id="userQuery_TextField" prefHeight="25.0" prefWidth="424.0" promptText="Enter keywords..." stylesheets="@../../../css/style.css">
                                  <opaqueInsets>
@@ -225,7 +227,7 @@
                               <Button fx:id="submit_btn" mnemonicParsing="false" onAction="#handleButtonClicks_Main" prefHeight="27.0" prefWidth="438.0" stylesheets="@../../../css/button.css" text="Submit" />
                            </children>
                            <padding>
-                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                              <Insets bottom="5.0" left="5.0" top="5.0" />
                            </padding>
                         </VBox>
                      </top>
@@ -240,9 +242,9 @@
                <children>
                   <Pane prefHeight="734.0" prefWidth="620.0" style="-fx-background-color: #1E1E1E;">
                      <children>
-                        <HBox alignment="CENTER_RIGHT" prefHeight="71.0" prefWidth="620.0" spacing="10.0" style="-fx-background-color: white;">
+                        <HBox alignment="CENTER_RIGHT" prefHeight="73.0" prefWidth="620.0" spacing="10.0" style="-fx-border-color: #adadad; -fx-border-width: 0 0 1 0;">
                            <children>
-                              <Button fx:id="btnMinimize" mnemonicParsing="false" onAction="#handleButtonClicks_Main" prefHeight="31.0" prefWidth="48.0" style="-fx-background-radius: 10;" stylesheets="@../../../css/style.css" text="-" textFill="WHITE">
+                              <Button fx:id="btnMinimize" mnemonicParsing="false" onAction="#handleButtonClicks_Main" prefHeight="56.0" prefWidth="43.0" style="-fx-background-radius: 10;" stylesheets="@../../../css/style.css" text="-" textFill="WHITE">
                                  <font>
                                     <Font name="System Bold" size="24.0" />
                                  </font>
@@ -256,7 +258,7 @@
                                     <Blend />
                                  </effect>
                               </Button>
-                              <Button fx:id="btnCloseApp" mnemonicParsing="false" onAction="#handleButtonClicks_Main" prefHeight="31.0" prefWidth="48.0" style="-fx-background-radius: 10;" stylesheets="@../../../css/style.css" text="X" textFill="WHITE">
+                              <Button fx:id="btnCloseApp" mnemonicParsing="false" onAction="#handleButtonClicks_Main" prefHeight="56.0" prefWidth="43.0" style="-fx-background-radius: 10;" stylesheets="@../../../css/style.css" text="X" textFill="WHITE">
                                  <font>
                                     <Font name="System Bold" size="24.0" />
                                  </font>
@@ -269,11 +271,47 @@
                               </Button>
                            </children>
                            <padding>
-                              <Insets right="10.0" />
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                            </padding>
                         </HBox>
-                        <VBox layoutY="70.0" prefHeight="647.0" prefWidth="621.0" />
+                        <ScrollPane fx:id="scrollPane" hbarPolicy="NEVER" layoutY="76.0" prefHeight="641.0" prefWidth="621.0" style="-fx-background-color: #282828;" vbarPolicy="NEVER">
+                           <content>
+                              <VBox fx:id="detailsFile_VBox" prefHeight="639.0" prefWidth="619.0" style="-fx-background-color: #1E1E1E;">
+                                 <children>
+                                    <Label fx:id="titleOfTheDoc_Label" prefHeight="53.0" prefWidth="628.0" text="This is the title of a doc test testtest test test" textFill="WHITE">
+                                       <font>
+                                          <Font name="System Bold" size="27.0" />
+                                       </font>
+                                       <VBox.margin>
+                                          <Insets />
+                                       </VBox.margin>
+                                    </Label>
+                                    <Label fx:id="sampleText_Label" layoutX="20.0" layoutY="10.0" prefHeight="38.0" prefWidth="615.0" text="This the sample text of the file" textFill="#ffffff9c" wrapText="true">
+                                       <font>
+                                          <Font size="19.0" />
+                                       </font>
+                                       <VBox.margin>
+                                          <Insets />
+                                       </VBox.margin>
+                                    </Label>
+                                    <Label layoutX="20.0" layoutY="83.0" prefHeight="38.0" prefWidth="630.0" text="Summary" textFill="#ffffff9c" wrapText="true">
+                                       <font>
+                                          <Font size="15.0" />
+                                       </font>
+                                    </Label>
+                                    <TextArea fx:id="AI_Summ_textArea" layoutX="20.0" layoutY="149.0" prefHeight="183.0" prefWidth="599.0" style="-fx-control-inner-background: #282828; -fx-text-fill: white;" wrapText="true" />
+                                 </children>
+                                 <padding>
+                                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                 </padding>
+                              </VBox>
+                           </content>
+                        </ScrollPane>
+
                      </children>
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin>
                   </Pane>
                </children>
             </VBox>
