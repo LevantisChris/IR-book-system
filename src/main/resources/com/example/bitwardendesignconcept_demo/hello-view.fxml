@@ -244,6 +244,14 @@
                      <children>
                         <HBox alignment="CENTER_RIGHT" prefHeight="73.0" prefWidth="620.0" spacing="10.0" style="-fx-border-color: #adadad; -fx-border-width: 0 0 1 0;">
                            <children>
+                              <Label fx:id="reultsIN_lbl" prefHeight="62.0" prefWidth="503.0" textFill="#909090">
+                                 <font>
+                                    <Font name="System Italic" size="31.0" />
+                                 </font>
+                                 <padding>
+                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                 </padding>
+                              </Label>
                               <Button fx:id="btnMinimize" mnemonicParsing="false" onAction="#handleButtonClicks_Main" prefHeight="56.0" prefWidth="43.0" style="-fx-background-radius: 10;" stylesheets="@../../../css/style.css" text="-" textFill="WHITE">
                                  <font>
                                     <Font name="System Bold" size="24.0" />
@@ -278,7 +286,7 @@
                            <content>
                               <VBox fx:id="detailsFile_VBox" prefHeight="639.0" prefWidth="619.0" style="-fx-background-color: #1E1E1E;">
                                  <children>
-                                    <Label fx:id="titleOfTheDoc_Label" prefHeight="53.0" prefWidth="628.0" text="This is the title of a doc test testtest test test" textFill="WHITE">
+                                    <Label fx:id="titleOfTheDoc_Label" prefHeight="53.0" prefWidth="628.0" textFill="WHITE">
                                        <font>
                                           <Font name="System Bold" size="27.0" />
                                        </font>
@@ -286,7 +294,7 @@
                                           <Insets />
                                        </VBox.margin>
                                     </Label>
-                                    <Label fx:id="sampleText_Label" layoutX="20.0" layoutY="10.0" prefHeight="38.0" prefWidth="615.0" text="This the sample text of the file" textFill="#ffffff9c" wrapText="true">
+                                    <Label fx:id="sampleText_Label" layoutX="20.0" layoutY="10.0" prefHeight="38.0" prefWidth="615.0" textFill="#ffffff9c" wrapText="true">
                                        <font>
                                           <Font size="19.0" />
                                        </font>

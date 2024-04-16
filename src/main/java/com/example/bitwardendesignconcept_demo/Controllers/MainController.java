@@ -116,6 +116,9 @@ public class MainController implements Initializable {
     @FXML
     private TextArea AI_Summ_textArea;
 
+    @FXML
+    private Label reultsIN_lbl;
+
     private boolean [] isSelected;
 
     ///
@@ -146,6 +149,7 @@ public class MainController implements Initializable {
                         SELECTED_SALGO,
                         SELECTED_SQUERY,
                         userQuery_TextField.getText());
+                reultsIN_lbl.setText("Results in " + luceneReadIndexFromFiles.time_taken);
                 updateResults(snippetList);
             }
         }

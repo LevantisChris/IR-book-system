@@ -44,7 +44,7 @@ public class LuceneReadIndexFromFiles {
     private String indexPath = "indexedFiles";
     private int generatedIndex = -1;
     public static ArrayList<MainAppModel> app = new ArrayList<>(); // This list will keep the last results of the last search ...
-
+    public String time_taken = null;
     public ArrayList<String> readIndexfromFiles(MAIN_OPTIONS PREFERRED_ANALYZER,
                                            MAIN_OPTIONS PREFERRED_QUERY_PARSER,
                                            MAIN_OPTIONS PREFERRED_SIMILARITY_ALGO,
@@ -52,6 +52,8 @@ public class LuceneReadIndexFromFiles {
                                            String USER_QUERY) {
 
         if(!app.isEmpty()) app.clear();
+
+        time_taken = null;
 
         /* Start measuring the time */
         Instant start = Instant.now();
@@ -106,6 +108,7 @@ public class LuceneReadIndexFromFiles {
             // Format the time as HH:MM:SS.microseconds
             String formattedTime = String.format("%02d:%02d:%02d.%06d", hours, minutes, seconds, microseconds);
             System.out.println("EVENT --> Time taken (READ INDEX): " + formattedTime);
+            time_taken = formattedTime;
 
             /* Update the database */
             insertIntoSearchingHistory(
