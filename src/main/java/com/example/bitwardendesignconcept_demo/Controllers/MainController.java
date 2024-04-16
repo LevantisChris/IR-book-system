@@ -11,19 +11,24 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import com.example.bitwardendesignconcept_demo.models.MainAppModel;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import org.controlsfx.control.Rating;
+
+
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -87,21 +92,6 @@ public class MainController implements Initializable {
     private Button WildCardQuery_Btn;
 
     @FXML
-    private Button btnCloseApp;
-
-    @FXML
-    private Button btnFavorites;
-
-    @FXML
-    private Button btnMinimize;
-
-    @FXML
-    private Button btnTrash;
-
-    @FXML
-    private Label query_error_label;
-
-    @FXML
     private TextField userQuery_TextField;
 
     @FXML
@@ -118,6 +108,12 @@ public class MainController implements Initializable {
 
     @FXML
     private Label reultsIN_lbl;
+
+    @FXML
+    private ScrollPane scrollPane;
+
+    @FXML
+    private HBox ratingStar_HBox;
 
     private boolean [] isSelected;
 
@@ -272,6 +268,7 @@ public class MainController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        scrollPane.setVisible(false);
         /* Check if the indexing folder is empty */
         if (!checkIndexingFolderStatus()) {
 
@@ -327,6 +324,7 @@ public class MainController implements Initializable {
     }
 
     private void updateResults(ArrayList<String> snippetList) {
+        scrollPane.setVisible(true);
         if (!vItems.getChildren().isEmpty()) {
             vItems.getChildren().clear();
         }
@@ -412,9 +410,69 @@ public class MainController implements Initializable {
 
     private Timeline timeline;
     private void updateDetailsOfDoc(String bookTitle, String snippet, String aiSummarizer_text) {
+        ratingStar_HBox.getChildren().clear();
         titleOfTheDoc_Label.setText(bookTitle);
         sampleText_Label.setText(snippet);
         AI_Summ_textArea.setText(aiSummarizer_text);
+
+        // Create a Rating component
+        Rating rating = new Rating();
+        rating.setMax(5);
+        rating.setRating(2);
+        ratingStar_HBox.getChildren().add(rating);
+
+        Button submitButton = new Button();
+        submitButton.setId("ratingSubmit_btn");
+        submitButton.setText("Submit");
+        submitButton.setStyle(
+                "-fx-background-color: #2f7931; " +
+                        "-fx-text-fill: white; " +
+                        "-fx-font-size: 13px; " +
+                        "-fx-font-weight: bold; " +
+                        "-fx-border-radius: 4px; " +
+                        "-fx-background-radius: 4px; " +
+                        "-fx-cursor: hand; "
+        );
+
+        submitButton.setOnMouseEntered(e -> submitButton.setStyle(
+                "-fx-background-color: #45a049; " +
+                        "-fx-text-fill: white; " +
+                        "-fx-font-size: 13px; " +
+                        "-fx-font-weight: bold; " +
+                        "-fx-border-radius: 4px; " +
+                        "-fx-background-radius: 4px; " +
+                        "-fx-cursor: hand; "
+        ));
+
+        submitButton.setOnMouseExited(e -> submitButton.setStyle(
+                "-fx-background-color: #2f7931; " +
+                        "-fx-text-fill: white; " +
+                        "-fx-font-size: 13px; " +
+                        "-fx-font-weight: bold; " +
+                        "-fx-border-radius: 4px; " +
+                        "-fx-background-radius: 4px; " +
+                        "-fx-cursor: hand; "
+        ));
+
+        submitButton.setOnMousePressed(e -> submitButton.setStyle(
+                "-fx-background-color: #388e3c; " +
+                        "-fx-text-fill: white; " +
+                        "-fx-font-size: 13px; " +
+                        "-fx-font-weight: bold; " +
+                        "-fx-border-radius: 4px; " +
+                        "-fx-background-radius: 4px; " +
+                        "-fx-cursor: hand; "
+        ));
+        ratingStar_HBox.getChildren().add(submitButton);
+
+        submitButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                System.out.println("EVENT --> Rating submit button clicked");
+                double userRating =  rating.getRating();
+                System.out.println("EVENT --> The user choose a rating of: " + userRating + " stars");
+            }
+        });
 
         scrollAnimationLabels(sampleText_Label);
     }
@@ -435,7 +493,7 @@ public class MainController implements Initializable {
         }
 
         if (!timeline.getStatus().equals(Animation.Status.RUNNING)) {
-            System.out.println("IS RUNNING");
+            System.out.println("EVENT --> IS RUNNING");
             timeline.play();
         }
     }

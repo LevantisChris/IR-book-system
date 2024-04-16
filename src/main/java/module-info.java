@@ -7,6 +7,7 @@ module com.example.bitwardendesignconcept_demo {
     requires org.apache.lucene.highlighter;
     requires org.apache.lucene.queryparser;
     requires org.jsoup;
+    requires org.controlsfx.controls;
 
 
     exports com.example.bitwardendesignconcept_demo.Controllers;
