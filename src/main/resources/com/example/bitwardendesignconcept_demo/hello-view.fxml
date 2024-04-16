@@ -3,10 +3,12 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.effect.Blend?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -35,16 +37,17 @@
                         <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../../../icons/Checkmark.png" />
-                           </image></ImageView>
+                           </image>
+                        </ImageView>
                      </graphic>
                   </Button>
-                  <Label prefHeight="33.0" prefWidth="171.0" text="Type of Analyzer" textFill="#aeaeae">
-                     <padding>
-                        <Insets left="5.0" />
-                     </padding>
+                  <Label prefHeight="33.0" prefWidth="227.0" text="Type of Analyzer" textFill="#aeaeae">
                      <font>
                         <Font name="System Bold" size="13.0" />
-                     </font></Label>
+                     </font>
+                     <VBox.margin>
+                        <Insets left="5.0" />
+                     </VBox.margin></Label>
                   <Button fx:id="EnglishAnalyzer_Btn" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#handleButtonClicks_Main" prefHeight="27.0" prefWidth="183.0" stylesheets="@../../../css/style.css" text="English Analyzer" textFill="WHITE">
                      <graphic>
                         <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true">
@@ -99,7 +102,7 @@
                         </ImageView>
                      </graphic>
                   </Button>
-                  <Label prefHeight="33.0" prefWidth="171.0" text="Type of Query Parser" textFill="#aeaeae">
+                  <Label prefHeight="33.0" prefWidth="242.0" text="Type of Query Parser" textFill="#aeaeae">
                      <VBox.margin>
                         <Insets left="5.0" />
                      </VBox.margin>
@@ -137,6 +140,9 @@
                      <font>
                         <Font name="System Bold" size="13.0" />
                      </font>
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin>
                   </Label>
                   <Button fx:id="TF_IDF_SimilarityALgo_Btn" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#handleButtonClicks_Main" prefHeight="27.0" prefWidth="183.0" stylesheets="@../../../css/style.css" text="TF-IDF" textFill="WHITE">
                      <graphic>
@@ -156,10 +162,13 @@
                         </ImageView>
                      </graphic>
                   </Button>
-                  <Label prefHeight="33.0" prefWidth="171.0" text=" Type of search Query" textFill="#aeaeae">
+                  <Label prefHeight="33.0" prefWidth="217.0" text=" Type of search Query" textFill="#aeaeae">
                      <font>
                         <Font name="System Bold" size="13.0" />
                      </font>
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin>
                   </Label>
                   <Button fx:id="TermQuery_Btn" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#handleButtonClicks_Main" prefHeight="27.0" prefWidth="182.0" stylesheets="@../../../css/style.css" text="Term query" textFill="WHITE">
                      <graphic>
@@ -198,6 +207,9 @@
                      </graphic>
                   </Button>
                </children>
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
                <padding>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                </padding>
@@ -252,31 +264,6 @@
                                     <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                  </padding>
                               </Label>
-                              <Button fx:id="btnMinimize" mnemonicParsing="false" onAction="#handleButtonClicks_Main" prefHeight="56.0" prefWidth="43.0" style="-fx-background-radius: 10;" stylesheets="@../../../css/style.css" text="-" textFill="WHITE">
-                                 <font>
-                                    <Font name="System Bold" size="24.0" />
-                                 </font>
-                                 <opaqueInsets>
-                                    <Insets />
-                                 </opaqueInsets>
-                                 <padding>
-                                    <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
-                                 </padding>
-                                 <effect>
-                                    <Blend />
-                                 </effect>
-                              </Button>
-                              <Button fx:id="btnCloseApp" mnemonicParsing="false" onAction="#handleButtonClicks_Main" prefHeight="56.0" prefWidth="43.0" style="-fx-background-radius: 10;" stylesheets="@../../../css/style.css" text="X" textFill="WHITE">
-                                 <font>
-                                    <Font name="System Bold" size="24.0" />
-                                 </font>
-                                 <opaqueInsets>
-                                    <Insets />
-                                 </opaqueInsets>
-                                 <padding>
-                                    <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
-                                 </padding>
-                              </Button>
                            </children>
                            <padding>
                               <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
@@ -344,6 +331,34 @@
                </children>
             </VBox>
          </right>
+         <top>
+            <MenuBar stylesheets="@../../../css/style.css" BorderPane.alignment="CENTER">
+              <menus>
+                <Menu mnemonicParsing="false">
+                  <items>
+                    <MenuItem mnemonicParsing="false" style="-fx-background-color: black;" text="Statistics" />
+                        <MenuItem mnemonicParsing="false" style="-fx-background-color: black;" text="Close app" />
+                  </items>
+                     <graphic>
+                        <ImageView fitHeight="26.0" fitWidth="29.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../../icons/menu-48.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                </Menu>
+                  <Menu mnemonicParsing="false">
+                     <graphic>
+                        <ImageView fitHeight="26.0" fitWidth="29.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../../icons/ir-50.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Menu>
+              </menus>
+            </MenuBar>
+         </top>
       </BorderPane>
    </children>
 </AnchorPane>

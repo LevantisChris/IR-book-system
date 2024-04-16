@@ -25,3 +25,17 @@
 #scrollPane {
     -fx-background-color:  #282828;
 }
+
+
+.menu-bar {
+    -fx-padding: 5px;
+    -fx-background-color:   #1E1E1E;
+    -fx-font-size: 14;
+}
+
+.menu, .menu .label, .menu-item .label {
+    -fx-background-color:  #1E1E1E;
+    -fx-text-fill: white;
+}
+
+

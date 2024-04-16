@@ -7,7 +7,11 @@ public class DialogUtil {
 
     /* numOptions take 1 for one option Yes and 2 for two option Yes & No */
     public static boolean showConfirmationDialog(String title, String message, int numOptions) {
-        Alert alert = new Alert(Alert.AlertType.WARNING);
+        Alert alert;
+        if(title.equalsIgnoreCase("INFORMATION"))
+            alert = new Alert(Alert.AlertType.INFORMATION);
+        else
+            alert = new Alert(Alert.AlertType.WARNING);
         alert.setTitle(title);
         alert.setHeaderText(null);
         alert.setContentText(message);

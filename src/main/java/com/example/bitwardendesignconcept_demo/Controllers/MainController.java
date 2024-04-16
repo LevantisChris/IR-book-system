@@ -33,6 +33,10 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.net.URL;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.ResourceBundle;
@@ -482,10 +486,31 @@ public class MainController implements Initializable {
                 System.out.println("EVENT --> Rating submit button clicked");
                 double userRating =  rating.getRating();
                 System.out.println("EVENT --> The user choose a rating of: " + userRating + " stars");
+                storeRatingInDB(userRating);
             }
         });
 
         scrollAnimationLabels(sampleText_Label);
+    }
+
+    private void storeRatingInDB(double userRating) {
+        final String URL = "jdbc:mysql://localhost:3306/ir_system";
+        String USERNAME = "root";
+        String PASSWORD = "kolos2020";
+        String INSERT_QUERY = "INSERT INTO RATINGS (FILE_NAME_CT, RATING) VALUES (?, ?)";
+        try (
+                Connection connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+                PreparedStatement preparedStatement = connection.prepareStatement(INSERT_QUERY)
+        ) {
+            preparedStatement.setString(1, titleOfTheDoc_Label.getText());
+            preparedStatement.setDouble(2, userRating);
+            preparedStatement.executeUpdate();
+            System.out.println("EVENT --> Rating inserted successfully!");
+            String message = "The rating for this document has been submitted successfully.\n Thank you.", title = "Information";
+            DialogUtil.showConfirmationDialog(title, message, 1);
+        } catch (SQLException e) {
+            System.err.println("EVENT --> Error inserting rating: " + e.getMessage());
+        }
     }
 
     private void generateMoreSnippets(String snippet) {
@@ -499,13 +524,12 @@ public class MainController implements Initializable {
         for(int i = 0;i < snippets_text.length;i++) {
             // For each create a TextField and add it in the moreSnippets_VBox
             TextField textField = new TextField();
-            textField.setText(i + ". " + "..." + snippets_text[i]);
+            textField.setText(i + ") " + "..." + snippets_text[i] + "...");
             textField.setStyle("-fx-text-fill: white; -fx-font-size: 15px;");
             textField.setOnMouseEntered(e -> textField.setStyle("-fx-text-fill: white; -fx-font-size: 15px; -fx-border-radius: 5px; -fx-background-color: #333333;"));
             textField.setOnMouseExited(e -> textField.setStyle("-fx-text-fill: white; -fx-font-size: 15px;-fx-background-color: transparent;"));
             textField.maxWidthProperty();
             textField.setEditable(false);
-            //label.setWrapText(true);
             moreSnippets_VBox.getChildren().add(textField);
         }
     }
