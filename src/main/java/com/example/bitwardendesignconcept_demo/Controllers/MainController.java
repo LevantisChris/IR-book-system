@@ -19,9 +19,8 @@ import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import com.example.bitwardendesignconcept_demo.models.MainAppModel;
 import javafx.stage.Stage;
@@ -110,10 +109,14 @@ public class MainController implements Initializable {
     private Label reultsIN_lbl;
 
     @FXML
-    private ScrollPane scrollPane;
+    private ScrollPane scrollPane, scrollPane2;
+
 
     @FXML
     private HBox ratingStar_HBox;
+
+    @FXML
+    private VBox moreSnippets_VBox;
 
     private boolean [] isSelected;
 
@@ -324,7 +327,7 @@ public class MainController implements Initializable {
     }
 
     private void updateResults(ArrayList<String> snippetList) {
-        scrollPane.setVisible(true);
+        scrollPane.setVisible(false);
         if (!vItems.getChildren().isEmpty()) {
             vItems.getChildren().clear();
         }
@@ -409,7 +412,15 @@ public class MainController implements Initializable {
     }
 
     private Timeline timeline;
+
     private void updateDetailsOfDoc(String bookTitle, String snippet, String aiSummarizer_text) {
+
+        scrollPane.setVisible(true);
+        scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+        scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+
+        generateMoreSnippets(snippet);
+
         ratingStar_HBox.getChildren().clear();
         titleOfTheDoc_Label.setText(bookTitle);
         sampleText_Label.setText(snippet);
@@ -475,6 +486,28 @@ public class MainController implements Initializable {
         });
 
         scrollAnimationLabels(sampleText_Label);
+    }
+
+    private void generateMoreSnippets(String snippet) {
+        moreSnippets_VBox.getChildren().clear(); // clear of there are any existing ...
+        scrollPane2.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+        scrollPane2.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+        /* Add TextFields in the moreSnippets_VBox */
+        String[] snippets_text = null;
+        snippets_text = snippet.split("////");
+
+        for(int i = 0;i < snippets_text.length;i++) {
+            // For each create a TextField and add it in the moreSnippets_VBox
+            TextField textField = new TextField();
+            textField.setText(i + ". " + "..." + snippets_text[i]);
+            textField.setStyle("-fx-text-fill: white; -fx-font-size: 15px;");
+            textField.setOnMouseEntered(e -> textField.setStyle("-fx-text-fill: white; -fx-font-size: 15px; -fx-border-radius: 5px; -fx-background-color: #333333;"));
+            textField.setOnMouseExited(e -> textField.setStyle("-fx-text-fill: white; -fx-font-size: 15px;-fx-background-color: transparent;"));
+            textField.maxWidthProperty();
+            textField.setEditable(false);
+            //label.setWrapText(true);
+            moreSnippets_VBox.getChildren().add(textField);
+        }
     }
 
     private void scrollAnimationLabels(Label label) {

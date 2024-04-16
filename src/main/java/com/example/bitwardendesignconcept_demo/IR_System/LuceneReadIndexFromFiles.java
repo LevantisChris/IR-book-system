@@ -185,7 +185,9 @@ public class LuceneReadIndexFromFiles {
         }
 
         // Get the highlighted text (snippets) containing the matching terms
-        String highlightedText = highlighter.getBestFragments(tokenStream, fullContent, 1, "");
+        /* The function returns a String that contains all the snippets, and
+        *  separate them with the //// */
+        String highlightedText = highlighter.getBestFragments(tokenStream, fullContent, 10, "////");
 
         // Strip HTML tags to get plain text
         // Get the highlighted text (snippets) containing the matching terms
