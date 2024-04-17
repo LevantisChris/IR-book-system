@@ -22,6 +22,10 @@ public class StatisticsController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        fixSize();
+    }
+
+    private void fixSize() {
         System.out.println("EVENT --> " + MainController.WIDTH + ", " + MainController.HEIGHT);
         mainScrollPane.setPrefWidth(MainController.WIDTH);
         mainScrollPane.setPrefHeight(MainController.HEIGHT);
