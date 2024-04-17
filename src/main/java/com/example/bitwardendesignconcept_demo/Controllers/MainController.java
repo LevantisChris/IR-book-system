@@ -19,9 +19,7 @@ import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Priority;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import com.example.bitwardendesignconcept_demo.models.MainAppModel;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -46,6 +44,7 @@ import static com.example.bitwardendesignconcept_demo.IR_System.MAIN_OPTIONS.*;
 
 public class MainController implements Initializable {
 
+    protected static double WIDTH, HEIGHT;
 
     @FXML
     private VBox vItems;
@@ -122,6 +121,16 @@ public class MainController implements Initializable {
     @FXML
     private VBox moreSnippets_VBox;
 
+    @FXML
+    private VBox leftVBox, rightVBox, centerVBox;
+    @FXML
+    private BorderPane mainborderPane;
+    @FXML
+    private AnchorPane MainAnchorPane;
+
+    @FXML
+    private Button userStatistics_btn;
+
     private boolean [] isSelected;
 
     ///
@@ -133,7 +142,21 @@ public class MainController implements Initializable {
 
     @FXML
     void handleButtonClicks_Main(ActionEvent event) {
-        if(event.getSource() == submit_btn) {
+        if(event.getSource() == userStatistics_btn) {
+            System.out.println("EVENT --> User cliked userStatistics_btn");
+
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/bitwardendesignconcept_demo/statistics-view.fxml"));
+                Node statisticsView = loader.load();
+
+                MainAnchorPane.getChildren().clear(); // Clear existing children
+                MainAnchorPane.getChildren().add(statisticsView);
+            } catch (IOException e) {
+                System.out.println("EVENT --> Error in creating the statistics-view.fxml");
+                e.printStackTrace();
+            }
+
+        } else if(event.getSource() == submit_btn) {
             if(userQuery_TextField.getText().isEmpty()) {
                 String message = "Please add a query.", title = "Warning";
                 DialogUtil.showConfirmationDialog(title, message, 1);
@@ -275,6 +298,13 @@ public class MainController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        mainborderPane.heightProperty().addListener((observable, oldValue, newValue) -> {
+            HEIGHT = mainborderPane.getHeight();
+        });
+
+        mainborderPane.widthProperty().addListener((observable, oldValue, newValue) -> {
+            WIDTH = mainborderPane.getWidth();
+        });
         scrollPane.setVisible(false);
         /* Check if the indexing folder is empty */
         if (!checkIndexingFolderStatus()) {
