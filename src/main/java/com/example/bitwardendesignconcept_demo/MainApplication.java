@@ -15,7 +15,6 @@ public class MainApplication extends Application {
         FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("hello-view.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
         scene.getStylesheets().add(getClass().getResource("/css/style.css").toExternalForm());
-        stage.initStyle(StageStyle.UNDECORATED);
         stage.setScene(scene);
 
         scene.setOnMousePressed(evt -> {

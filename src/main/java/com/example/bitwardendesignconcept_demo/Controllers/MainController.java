@@ -10,6 +10,7 @@ import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Platform;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -126,12 +127,19 @@ public class MainController implements Initializable {
     @FXML
     private BorderPane mainborderPane;
     @FXML
-    private AnchorPane MainAnchorPane;
+    private ButtonBar bottom_menu_bar;
 
     @FXML
     private Button userStatistics_btn;
 
+    @FXML
+    private Button go_back_button;
+
     private boolean [] isSelected;
+
+    private BorderPane temp; /* This anchor Pane will store temporarily the "previous" children of the MainAnchorPane.
+     So when the user is on the statistics-view and click the "Go back" button the previous children of the MainAnchorPane
+     will be recreated dynamically */
 
     ///
 
@@ -140,17 +148,33 @@ public class MainController implements Initializable {
     private MAIN_OPTIONS SELECTED_SALGO; private Button reference_sAlgo = null;
     private MAIN_OPTIONS SELECTED_SQUERY; private Button reference_sQuery = null;
 
+    public static void recreateChildren() {
+        //MainAnchorPane.getChildren().clear(); // Clear existing children
+        //MainAnchorPane.getChildren().addAll(temp.getChildren());
+    }
+
     @FXML
     void handleButtonClicks_Main(ActionEvent event) {
-        if(event.getSource() == userStatistics_btn) {
-            System.out.println("EVENT --> User cliked userStatistics_btn");
-
+        if(event.getSource() == go_back_button) {
+            System.out.println("EVENT --> User clicked go_back_button");
+            mainborderPane.getChildren().add(temp);
+            go_back_button.setVisible(false);
+        } else if(event.getSource() == userStatistics_btn) {
+            System.out.println("EVENT --> User clicked userStatistics_btn");
+            go_back_button.setVisible(true);
             try {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/bitwardendesignconcept_demo/statistics-view.fxml"));
                 Node statisticsView = loader.load();
 
-                MainAnchorPane.getChildren().clear(); // Clear existing children
-                MainAnchorPane.getChildren().add(statisticsView);
+                temp = new BorderPane();
+                ObservableList<Node> tmp = mainborderPane.getChildren();
+                temp.getChildren().addAll(tmp);
+
+                // Clear the center, left, and right children
+                mainborderPane.setCenter(null);
+                mainborderPane.setLeft(null);
+                mainborderPane.setRight(null);
+                mainborderPane.setCenter(statisticsView);
             } catch (IOException e) {
                 System.out.println("EVENT --> Error in creating the statistics-view.fxml");
                 e.printStackTrace();
@@ -299,7 +323,7 @@ public class MainController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         mainborderPane.heightProperty().addListener((observable, oldValue, newValue) -> {
-            HEIGHT = mainborderPane.getHeight();
+            HEIGHT = mainborderPane.getHeight() - bottom_menu_bar.getHeight();
         });
 
         mainborderPane.widthProperty().addListener((observable, oldValue, newValue) -> {

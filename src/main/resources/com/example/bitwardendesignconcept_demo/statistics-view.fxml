@@ -91,11 +91,7 @@
                </VBox>
             </center>
             <bottom>
-               <HBox alignment="CENTER_RIGHT" BorderPane.alignment="CENTER">
-                  <children>
-                     <Button fx:id="goback_btn" mnemonicParsing="false" prefHeight="39.0" prefWidth="121.0" stylesheets="@../../../css/style.css" text="Go back" textFill="WHITE" />
-                  </children>
-               </HBox>
+               <HBox alignment="CENTER_RIGHT" BorderPane.alignment="CENTER" />
             </bottom>
          </BorderPane>
       </VBox>
