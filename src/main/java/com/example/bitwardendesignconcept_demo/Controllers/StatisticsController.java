@@ -431,9 +431,9 @@ public class StatisticsController implements Initializable {
         mainBorderPane.setPrefHeight(HEIGHT);
         mainScrollPane.setFitToWidth(true);
 
-        tableView.setPrefHeight(HEIGHT - 800);
-        linechart.setPrefHeight(HEIGHT - 600);
-        linechart2.setPrefHeight(HEIGHT - 600);
-        linechart3.setPrefHeight(HEIGHT - 600);
+        tableView.setPrefHeight(HEIGHT - 500);
+        linechart.setPrefHeight(HEIGHT - 400);
+        linechart2.setPrefHeight(HEIGHT - 400);
+        linechart3.setPrefHeight(HEIGHT - 400);
     }
 }

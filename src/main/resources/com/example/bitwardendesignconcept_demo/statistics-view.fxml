@@ -18,7 +18,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<ScrollPane fx:id="mainScrollPane" prefHeight="616.0" prefWidth="682.0" style="-fx-background-color: #1E1E1E;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.bitwardendesignconcept_demo.Controllers.StatisticsController">
+<ScrollPane fx:id="mainScrollPane" prefHeight="892.0" prefWidth="682.0" style="-fx-background-color: #1E1E1E;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.bitwardendesignconcept_demo.Controllers.StatisticsController">
    <content>
       <VBox fx:id="mainVBox" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="993.0" prefWidth="672.0" style="-fx-background-color: #1E1E1E;">
          <BorderPane fx:id="mainBorderPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="985.0" prefWidth="632.0" style="-fx-background-color: #1E1E1E;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
