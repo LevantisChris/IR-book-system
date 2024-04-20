@@ -18,10 +18,10 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<ScrollPane fx:id="mainScrollPane" prefWidth="682.0" style="-fx-background-color: #1E1E1E;" stylesheets="@../../../css/style.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.bitwardendesignconcept_demo.Controllers.StatisticsController">
+<ScrollPane fx:id="mainScrollPane" prefHeight="616.0" prefWidth="682.0" style="-fx-background-color: #1E1E1E;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.bitwardendesignconcept_demo.Controllers.StatisticsController">
    <content>
-      <VBox fx:id="mainVBox" style="-fx-background-color: #1E1E1E;">
-         <BorderPane fx:id="mainBorderPane" prefHeight="454.0" prefWidth="672.0" style="-fx-background-color: #1E1E1E;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <VBox fx:id="mainVBox" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="606.0" prefWidth="672.0" style="-fx-background-color: #1E1E1E;">
+         <BorderPane fx:id="mainBorderPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="606.0" prefWidth="672.0" style="-fx-background-color: #1E1E1E;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <top>
                <HBox spacing="10.0" BorderPane.alignment="CENTER">
                   <children>
@@ -42,7 +42,7 @@
                </HBox>
             </top>
             <center>
-               <VBox fx:id="centerVBox" prefHeight="200.0" prefWidth="100.0" spacing="10.0" BorderPane.alignment="CENTER">
+               <VBox fx:id="centerVBox" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="200.0" prefWidth="100.0" spacing="10.0" BorderPane.alignment="CENTER">
                   <children>
                      <Label fx:id="average_score_label" prefHeight="32.0" prefWidth="764.0" text="Average Score" textFill="#c9c9c9">
                         <font>
@@ -56,7 +56,7 @@
                      </Label>
                      <VBox alignment="CENTER" spacing="10.0">
                         <children>
-                           <TableView fx:id="tableView" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
+                           <TableView fx:id="tableView" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="167.0" prefWidth="662.0">
                              <columns>
                                <TableColumn fx:id="queryColumn" prefWidth="320.0" text="Query" />
                                <TableColumn fx:id="timeColumn" prefWidth="341.0" text="Time" />
@@ -67,20 +67,28 @@
                            </TableView>
                            <HBox alignment="CENTER" maxWidth="1.7976931348623157E308" spacing="10.0">
                               <children>
-                                 <ChoiceBox prefWidth="150.0" />
-                                 <ChoiceBox layoutX="10.0" layoutY="10.0" prefWidth="150.0" />
-                                 <ChoiceBox layoutX="160.0" layoutY="10.0" prefWidth="150.0" />
-                                 <ChoiceBox layoutX="310.0" layoutY="10.0" prefWidth="150.0" />
-                                 <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="155.0" text="Generate" textFill="WHITE" />
+                                 <ChoiceBox fx:id="analyzerChoiceBox" prefWidth="150.0" />
+                                 <ChoiceBox fx:id="qparsersChoiceBox" layoutX="10.0" layoutY="10.0" prefWidth="150.0" />
+                                 <ChoiceBox fx:id="salgosChoiceBox" layoutX="310.0" layoutY="10.0" prefWidth="150.0" />
+                                 <ChoiceBox fx:id="squerysChoiceBox" layoutX="160.0" layoutY="10.0" prefWidth="150.0" />
+                                 <Button fx:id="generateBtn" mnemonicParsing="false" onAction="#handleButtonClicks_Statistics" prefHeight="25.0" prefWidth="155.0" stylesheets="@../../../css/button.css" text="Generate" textFill="WHITE" />
                               </children>
                            </HBox>
-                           <LineChart>
+                           <LineChart fx:id="linechart" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="200.0" prefWidth="562.0" style="-fx-background-color: white;">
                               <xAxis>
                                  <CategoryAxis side="BOTTOM" />
                               </xAxis>
                               <yAxis>
                                  <NumberAxis side="LEFT" />
                               </yAxis>
+                           </LineChart>
+                           <LineChart fx:id="linechart2" style="-fx-background-color: white;">
+                             <xAxis>
+                               <CategoryAxis side="BOTTOM" />
+                             </xAxis>
+                             <yAxis>
+                               <NumberAxis side="LEFT" />
+                             </yAxis>
                            </LineChart>
                         </children>
                      </VBox>
@@ -94,6 +102,9 @@
                <HBox alignment="CENTER_RIGHT" BorderPane.alignment="CENTER" />
             </bottom>
          </BorderPane>
+         <padding>
+            <Insets left="20.0" right="20.0" />
+         </padding>
       </VBox>
    </content>
    <padding>
