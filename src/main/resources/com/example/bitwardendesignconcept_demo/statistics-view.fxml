@@ -18,7 +18,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<ScrollPane fx:id="mainScrollPane" style="-fx-background-color: #1E1E1E;" stylesheets="@../../../css/style.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.bitwardendesignconcept_demo.Controllers.StatisticsController">
+<ScrollPane fx:id="mainScrollPane" prefWidth="682.0" style="-fx-background-color: #1E1E1E;" stylesheets="@../../../css/style.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.bitwardendesignconcept_demo.Controllers.StatisticsController">
    <content>
       <VBox fx:id="mainVBox" style="-fx-background-color: #1E1E1E;">
          <BorderPane fx:id="mainBorderPane" prefHeight="454.0" prefWidth="672.0" style="-fx-background-color: #1E1E1E;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -30,7 +30,7 @@
                            <Image url="@../../../icons/favorite-48.png" />
                         </image>
                      </ImageView>
-                     <Label contentDisplay="CENTER" prefHeight="39.0" prefWidth="614.0" text="You favoutite Analyzer is " textFill="WHITE">
+                     <Label fx:id="favourAnalyzer_label" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" text="You favourite Analyzer is " textFill="WHITE">
                         <font>
                            <Font name="System Bold" size="27.0" />
                         </font>
@@ -42,9 +42,9 @@
                </HBox>
             </top>
             <center>
-               <VBox prefHeight="200.0" prefWidth="100.0" spacing="10.0" BorderPane.alignment="CENTER">
+               <VBox fx:id="centerVBox" prefHeight="200.0" prefWidth="100.0" spacing="10.0" BorderPane.alignment="CENTER">
                   <children>
-                     <Label prefHeight="32.0" prefWidth="764.0" text="Average Score" textFill="#c9c9c9">
+                     <Label fx:id="average_score_label" prefHeight="32.0" prefWidth="764.0" text="Average Score" textFill="#c9c9c9">
                         <font>
                            <Font size="24.0" />
                         </font>
@@ -54,18 +54,18 @@
                            <Font size="20.0" />
                         </font>
                      </Label>
-                     <TableView prefHeight="200.0" prefWidth="200.0">
-                        <columns>
-                           <TableColumn prefWidth="192.66665649414062" text="Query" />
-                           <TableColumn prefWidth="571.3333435058594" text="Time" />
-                        </columns>
-                        <columnResizePolicy>
-                           <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
-                        </columnResizePolicy>
-                     </TableView>
-                     <VBox alignment="CENTER">
+                     <VBox alignment="CENTER" spacing="10.0">
                         <children>
-                           <HBox spacing="10.0">
+                           <TableView fx:id="tableView" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
+                             <columns>
+                               <TableColumn fx:id="queryColumn" prefWidth="320.0" text="Query" />
+                               <TableColumn fx:id="timeColumn" prefWidth="341.0" text="Time" />
+                             </columns>
+                              <columnResizePolicy>
+                                 <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                              </columnResizePolicy>
+                           </TableView>
+                           <HBox alignment="CENTER" maxWidth="1.7976931348623157E308" spacing="10.0">
                               <children>
                                  <ChoiceBox prefWidth="150.0" />
                                  <ChoiceBox layoutX="10.0" layoutY="10.0" prefWidth="150.0" />

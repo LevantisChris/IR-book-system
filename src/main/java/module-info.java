@@ -16,4 +16,6 @@ module com.example.bitwardendesignconcept_demo {
     opens com.example.bitwardendesignconcept_demo.Components to javafx.fxml;
     exports com.example.bitwardendesignconcept_demo;
     opens com.example.bitwardendesignconcept_demo to javafx.fxml;
+    exports com.example.bitwardendesignconcept_demo.Controllers.SearchRow;
+    opens com.example.bitwardendesignconcept_demo.Controllers.SearchRow to javafx.fxml;
 }

@@ -1,5 +1,6 @@
 package com.example.bitwardendesignconcept_demo.IR_System;
 
+import com.example.bitwardendesignconcept_demo.Database.DATABASE_OPTIONS;
 import org.jsoup.Jsoup;
 
 import com.example.bitwardendesignconcept_demo.models.MainAppModel;
@@ -230,12 +231,10 @@ public class LuceneReadIndexFromFiles {
     }
 
     /* Database */
-    private static final String URL = "jdbc:mysql://localhost:3306/ir_system";
-    private static final String USERNAME = "root";
-    private static final String PASSWORD = "kolos2020";
+
 
     private void insertIntoSearchingHistory(String user_query, String analyzer, String qParser, String sAlgo, String sQuery, String time) {
-        try (Connection connection = DriverManager.getConnection(URL, USERNAME, PASSWORD)) {
+        try (Connection connection = DriverManager.getConnection(DATABASE_OPTIONS.URL, DATABASE_OPTIONS.USERNAME, DATABASE_OPTIONS.PASSWORD)) {
             String query = "INSERT INTO SEARCHING_HISTORY (USER_QUERY_H, ANALYZER_SEARCH_H, QPARSER_SEARCH_H, SALGO_SEARCH_H, SQUERY_SEARCH_H, TIME_SEARCH_H) VALUES (?, ?, ?, ?, ?, ?)";
             PreparedStatement preparedStatement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             preparedStatement.setString(1, user_query);
@@ -267,7 +266,7 @@ public class LuceneReadIndexFromFiles {
     }
 
     private void insertIntoSearchInfo(String nameDoc, float score) {
-        try (Connection connection = DriverManager.getConnection(URL, USERNAME, PASSWORD)) {
+        try (Connection connection = DriverManager.getConnection(DATABASE_OPTIONS.URL, DATABASE_OPTIONS.USERNAME, DATABASE_OPTIONS.PASSWORD)) {
             String query = "INSERT INTO SEARCH_INFO (INDEX_SEARCH_H, NAME_DOC_SEARCH_I, SCORE_SEARCH_I) VALUES (?, ?, ?)";
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setInt(1, generatedIndex);
@@ -281,7 +280,7 @@ public class LuceneReadIndexFromFiles {
     }
 
     private void updateAnalyzerCounter(String analyzerName) {
-        try (Connection connection = DriverManager.getConnection(URL, USERNAME, PASSWORD)) {
+        try (Connection connection = DriverManager.getConnection(DATABASE_OPTIONS.URL, DATABASE_OPTIONS.USERNAME, DATABASE_OPTIONS.PASSWORD)) {
             // Increment the counter for the given QParser name
             String query = "UPDATE FREQUENCY_OF_ANALYZERS SET COUNTER_FA = COUNTER_FA + 1 WHERE NAME_FA = ?";
             PreparedStatement preparedStatement = connection.prepareStatement(query);
@@ -293,7 +292,7 @@ public class LuceneReadIndexFromFiles {
     }
 
     private void updateQParserCounter(String qParserName) {
-        try (Connection connection = DriverManager.getConnection(URL, USERNAME, PASSWORD)) {
+        try (Connection connection = DriverManager.getConnection(DATABASE_OPTIONS.URL, DATABASE_OPTIONS.USERNAME, DATABASE_OPTIONS.PASSWORD)) {
             // Increment the counter for the given QParser name
             String query = "UPDATE FREQUENCY_OF_QPARSERS SET COUNTER_FQP = COUNTER_FQP + 1 WHERE NAME_FQP = ?";
             PreparedStatement preparedStatement = connection.prepareStatement(query);
@@ -305,7 +304,7 @@ public class LuceneReadIndexFromFiles {
     }
 
     private void updateSAlgosCounter(String sAlgosName) {
-        try (Connection connection = DriverManager.getConnection(URL, USERNAME, PASSWORD)) {
+        try (Connection connection = DriverManager.getConnection(DATABASE_OPTIONS.URL, DATABASE_OPTIONS.USERNAME, DATABASE_OPTIONS.PASSWORD)) {
             // Increment the counter for the given QParser name
             String query = "UPDATE FREQUENCY_OF_SALGOS SET COUNTER_FSA = COUNTER_FSA + 1 WHERE NAME_FSA = ?";
             PreparedStatement preparedStatement = connection.prepareStatement(query);
@@ -317,7 +316,7 @@ public class LuceneReadIndexFromFiles {
     }
 
     private void updateSQueriesCounter(String sQueriesName) {
-        try (Connection connection = DriverManager.getConnection(URL, USERNAME, PASSWORD)) {
+        try (Connection connection = DriverManager.getConnection(DATABASE_OPTIONS.URL, DATABASE_OPTIONS.USERNAME, DATABASE_OPTIONS.PASSWORD)) {
             // Increment the counter for the given QParser name
             String query = "UPDATE FREQUENCY_OF_SQUERYS SET COUNTER_FSQ = COUNTER_FSQ + 1 WHERE NAME_FSQ = ?";
             PreparedStatement preparedStatement = connection.prepareStatement(query);
