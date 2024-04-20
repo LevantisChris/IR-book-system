@@ -97,6 +97,20 @@ public class StatisticsController implements Initializable {
     @FXML
     private LineChart<?, ?> linechart2;
 
+    @FXML
+    private ChoiceBox<String> indexingAnalyzerChoiceBox;
+    private String[] indexingAnalyzer_type =
+            {
+                    "Standard Analyzer",
+                    "Simple Analyzer",
+                    "Whitespace Analyzer"
+            };
+
+    @FXML
+    private Button generateBtn1;
+
+    @FXML
+    private LineChart<?, ?> linechart3;
 
 
     @Override
@@ -139,8 +153,58 @@ public class StatisticsController implements Initializable {
                     System.out.println("EVENT --> The timestamps_sec list is null");
                 }
             }
+        } else if(event.getSource() == generateBtn1) {
+            linechart3.setTitle("The time taken for the indexing regarding the number of docs in the collection of the system");
+            linechart3.getData().clear();
+            linechart3.layout();
+            linechart3.getXAxis().setLabel("Number of docs in the Collection");
+            linechart3.getYAxis().setLabel("Indexing time");
+            if(indexingAnalyzerChoiceBox.getValue() == null) {
+                String message = "Please select a value in the Choice boxes for the indexing Analyzer.", title = "Warning";
+                DialogUtil.showConfirmationDialog(title, message, 1);
+            } else {
+                getTimeForIndexingAnalyzer(indexingAnalyzerChoiceBox.getValue());
+            }
         }
     }
+
+    /*-------------------------------------------------------------------------------------------------------------------*/
+    private void getTimeForIndexingAnalyzer(String indexingAnalyzer_type) {
+        try {
+            String sql = "SELECT NUMBER_OF_FILES, TOTAL_TIME \n" +
+                    "FROM ir_system.indexing_collection\n" +
+                    "WHERE TYPE_ANALYZER = ?;";
+            PreparedStatement preparedStatement = DriverManager.getConnection(DATABASE_OPTIONS.URL, DATABASE_OPTIONS.USERNAME, DATABASE_OPTIONS.PASSWORD).prepareStatement(sql);
+
+            preparedStatement.setString(1, indexingAnalyzer_type);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                Time time = resultSet.getTime("TOTAL_TIME");
+                double seconds = time.getSeconds();
+                String NUMBER_OF_FILES = resultSet.getString("NUMBER_OF_FILES");
+                System.out.println("EVENT --> Indexing time: " + seconds + ", number of docs: " + NUMBER_OF_FILES);
+                generateLineChart3(NUMBER_OF_FILES, seconds);
+            }
+            resultSet.close();
+            preparedStatement.close();
+        } catch (SQLException e) {
+            System.out.println("EVENT --> Error occurred in the getTimeForPair: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+    private void generateLineChart3(String numberOfDocs, double totalTime) {
+        XYChart.Series series;
+        if (linechart3.getData().isEmpty()) {
+            series = new XYChart.Series();
+            linechart3.getData().add(series);
+        } else {
+            series = (XYChart.Series) linechart3.getData().get(0);
+        }
+        series.getData().add(new XYChart.Data<>(numberOfDocs, totalTime));
+    }
+    /*-------------------------------------------------------------------------------------------------------------------*/
 
     private void initializeUI() {
         favourAnalyzer_label.setText("You favourite Analyzer is " + findFavourAnalyzer());
@@ -263,6 +327,8 @@ public class StatisticsController implements Initializable {
         qparsersChoiceBox.getItems().addAll(qparsers_type);
         salgosChoiceBox.getItems().addAll(salgos_type);
         squerysChoiceBox.getItems().addAll(squerys_type);
+
+        indexingAnalyzerChoiceBox.getItems().addAll(indexingAnalyzer_type);
     }
 
     /*----------------------------------------------------------------------------------------------------------------------*/
@@ -368,5 +434,6 @@ public class StatisticsController implements Initializable {
         tableView.setPrefHeight(HEIGHT - 800);
         linechart.setPrefHeight(HEIGHT - 600);
         linechart2.setPrefHeight(HEIGHT - 600);
+        linechart3.setPrefHeight(HEIGHT - 600);
     }
 }
