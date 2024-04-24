@@ -180,7 +180,7 @@ public class LuceneReadIndexFromFiles {
         } else if(PREFERRED_ANALYZER == MAIN_OPTIONS.ANALYZER_KEYWORD) {
             tokenStream = TokenSources.getTokenStream("contents", fullContent, new KeywordAnalyzer());
         } else if(PREFERRED_ANALYZER == MAIN_OPTIONS.ANALYZER_STOP) {
-            tokenStream = TokenSources.getTokenStream("contents", fullContent, new EnglishAnalyzer()); // Not by accident :)
+            tokenStream = TokenSources.getTokenStream("contents", fullContent, new StopAnalyzer(Path.of("./stopWords/stopWords.txt"))); // Not by accident :)
         } else if(PREFERRED_ANALYZER == MAIN_OPTIONS.ANALYZER_WHITESPACE) {
             tokenStream = TokenSources.getTokenStream("contents", fullContent, new WhitespaceAnalyzer());
         }
