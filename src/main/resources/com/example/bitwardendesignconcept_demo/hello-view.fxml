@@ -18,11 +18,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
-
-<AnchorPane fx:id="MainAnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="717.0" prefWidth="1272.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.bitwardendesignconcept_demo.Controllers.MainController">
-
-<AnchorPane fx:id="MainAnchorPane" style="-fx-background-color: #1E1E1E;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.bitwardendesignconcept_demo.Controllers.MainController">
+<?import javafx.scene.text.Font?<AnchorPane fx:id="MainAnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="717.0" prefWidth="1272.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.bitwardendesignconcept_demo.Controllers.MainController">
    <children>
       <BorderPane layoutX="-3.0" prefHeight="717.0" prefWidth="1275.0" style="-fx-background-color: #1E1E1E;">
          <left>
