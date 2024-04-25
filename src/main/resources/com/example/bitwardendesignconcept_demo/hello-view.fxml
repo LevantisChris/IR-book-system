@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
+<?import java.net.URL?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ButtonBar?>
-<?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
@@ -18,27 +17,21 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?<AnchorPane fx:id="MainAnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="717.0" prefWidth="1272.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.bitwardendesignconcept_demo.Controllers.MainController">
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane fx:id="MainAnchorPane" style="-fx-background-color: #1E1E1E;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.bitwardendesignconcept_demo.Controllers.MainController">
    <children>
-      <BorderPane layoutX="-3.0" prefHeight="717.0" prefWidth="1275.0" style="-fx-background-color: #1E1E1E;">
+      <BorderPane fx:id="mainborderPane" layoutX="-3.0" layoutY="46.0" prefHeight="659.0" prefWidth="1275.0" style="-fx-background-color: #1E1E1E;">
          <left>
-            <VBox prefHeight="717.0" prefWidth="204.0" style="-fx-background-color: #282828;" BorderPane.alignment="CENTER">
+            <VBox fx:id="leftVBox" prefHeight="717.0" prefWidth="204.0" style="-fx-background-color: #282828;" BorderPane.alignment="CENTER">
                <children>
-                  <Button fx:id="btnFavorites" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#handleButtonClicks_Main" prefHeight="27.0" prefWidth="238.0" stylesheets="@../../../css/style.css" text="Statistics" textFill="WHITE">
+                  <Button fx:id="userStatistics_btn" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#handleButtonClicks_Main" prefHeight="27.0" prefWidth="238.0" stylesheets="@../../../css/style.css" text="Statistics" textFill="WHITE">
                      <graphic>
                         <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../../../icons/Star.png" />
                            </image></ImageView>
-                     </graphic>
-                  </Button>
-                  <Button fx:id="btnTrash" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#handleButtonClicks_Main" prefHeight="27.0" prefWidth="221.0" stylesheets="@../../../css/style.css" text="User Ratings" textFill="WHITE">
-                     <graphic>
-                        <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../../../icons/Checkmark.png" />
-                           </image>
-                        </ImageView>
                      </graphic>
                   </Button>
                   <Label prefHeight="33.0" prefWidth="227.0" text="Type of Analyzer" textFill="#aeaeae">
@@ -197,43 +190,15 @@
                         </ImageView>
                      </graphic>
                   </Button>
-                  <VBox prefHeight="31.0" prefWidth="194.0" spacing="5.0">
-                     <children>
-                        <Button fx:id="BooleanQuery_Btn" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#handleButtonClicks_Main" prefHeight="27.0" prefWidth="194.0" stylesheets="@../../../css/style.css" text="Boolean query" textFill="WHITE">
-                           <graphic>
-                              <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@../../../icons/search_48.png" />
-                                 </image>
-                              </ImageView>
-                           </graphic>
-                        </Button>
-                        <CheckBox fx:id="boolean_MUST_check_box" mnemonicParsing="false" onAction="#handleCheckBoxesClicks" prefHeight="17.0" prefWidth="220.0" text="MUST" textFill="WHITE" visible="false">
-                           <VBox.margin>
-                              <Insets left="20.0" right="20.0" />
-                           </VBox.margin>
-                           <font>
-                              <Font size="10.0" />
-                           </font>
-                        </CheckBox>
-                        <CheckBox fx:id="boolean_SHOULD_check_box" layoutX="10.0" layoutY="36.0" mnemonicParsing="false" onAction="#handleCheckBoxesClicks" prefHeight="17.0" prefWidth="195.0" text="SHOULD" textFill="WHITE" visible="false">
-                           <VBox.margin>
-                              <Insets left="20.0" right="20.0" />
-                           </VBox.margin>
-                           <font>
-                              <Font size="10.0" />
-                           </font>
-                        </CheckBox>
-                        <CheckBox fx:id="boolean_MUST_NOT_check_box" layoutX="10.0" layoutY="53.0" mnemonicParsing="false" onAction="#handleCheckBoxesClicks" prefHeight="17.0" prefWidth="195.0" text="MUST_NOT" textFill="WHITE" visible="false">
-                           <VBox.margin>
-                              <Insets left="20.0" right="20.0" />
-                           </VBox.margin>
-                           <font>
-                              <Font size="10.0" />
-                           </font>
-                        </CheckBox>
-                     </children>
-                  </VBox>
+                  <Button fx:id="BooleanQuery_Btn" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#handleButtonClicks_Main" prefHeight="27.0" prefWidth="233.0" stylesheets="@../../../css/style.css" text="Boolean query" textFill="WHITE">
+                     <graphic>
+                        <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../../icons/search_48.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
                </children>
                <opaqueInsets>
                   <Insets />
@@ -244,7 +209,7 @@
             </VBox>
          </left>
          <center>
-            <VBox prefHeight="557.0" prefWidth="363.0" style="-fx-background-color: #1E1E1E; -fx-border-color: #1A1A1A;" BorderPane.alignment="CENTER">
+            <VBox fx:id="centerVBox" prefHeight="557.0" prefWidth="363.0" style="-fx-background-color: #1E1E1E; -fx-border-color: #1A1A1A;" BorderPane.alignment="CENTER">
                <padding>
                   <Insets left="4.0" right="4.0" top="4.0" />
                </padding>
@@ -278,7 +243,7 @@
                </children></VBox>
          </center>
          <right>
-            <VBox prefHeight="731.0" prefWidth="620.0" BorderPane.alignment="CENTER">
+            <VBox fx:id="rightVBox" prefHeight="584.0" prefWidth="620.0" BorderPane.alignment="CENTER">
                <children>
                   <Pane prefHeight="739.0" prefWidth="620.0" style="-fx-background-color: #1E1E1E;">
                      <children>
@@ -297,9 +262,9 @@
                               <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                            </padding>
                         </HBox>
-                        <ScrollPane fx:id="scrollPane" hbarPolicy="NEVER" layoutY="76.0" prefHeight="595.0" prefWidth="621.0" style="-fx-background-color: #282828;" vbarPolicy="NEVER">
+                        <ScrollPane fx:id="scrollPane" hbarPolicy="NEVER" layoutY="76.0" prefHeight="583.0" prefWidth="621.0" style="-fx-background-color: #282828;" vbarPolicy="NEVER">
                            <content>
-                              <VBox fx:id="detailsFile_VBox" prefHeight="593.0" prefWidth="619.0" spacing="10.0" style="-fx-background-color: #1E1E1E;">
+                              <VBox fx:id="detailsFile_VBox" prefHeight="723.0" prefWidth="619.0" spacing="10.0" style="-fx-background-color: #1E1E1E;">
                                  <children>
                                     <Label fx:id="titleOfTheDoc_Label" prefHeight="53.0" prefWidth="628.0" textFill="WHITE">
                                        <font>
@@ -350,7 +315,6 @@
                               </VBox>
                            </content>
                         </ScrollPane>
-
                      </children>
                      <VBox.margin>
                         <Insets />
@@ -360,50 +324,47 @@
             </VBox>
          </right>
          <top>
-            <HBox prefWidth="1270.0" style="-fx-background-color: #1E1E1E;" BorderPane.alignment="CENTER">
-               <children>
-                  <MenuBar prefHeight="46.0" prefWidth="1143.0" stylesheets="@../../../css/style.css">
-                    <menus>
-                      <Menu mnemonicParsing="false">
-                        <items>
-                          <MenuItem mnemonicParsing="false" style="-fx-background-color: black;" text="Statistics" />
-                              <MenuItem mnemonicParsing="false" style="-fx-background-color: black;" text="Close app" />
-                        </items>
-                           <graphic>
-                              <ImageView fitHeight="26.0" fitWidth="29.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@../../../icons/menu-48.png" />
-                                 </image>
-                              </ImageView>
-                           </graphic>
-                      </Menu>
-                        <Menu mnemonicParsing="false">
-                           <graphic>
-                              <ImageView fitHeight="26.0" fitWidth="29.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@../../../icons/ir-50.png" />
-                                 </image>
-                              </ImageView>
-                           </graphic>
-                        </Menu>
-                    </menus>
-                  </MenuBar>
-                  <Button fx:id="minimize_btn" mnemonicParsing="false" prefHeight="46.0" prefWidth="79.0" style="-fx-background-color: #1E1E1E;" stylesheets="@../../../css/style.css" text="/" textFill="WHITE">
-                     <font>
-                        <Font name="System Bold" size="22.0" />
-                     </font>
-                  </Button>
-                  <Button fx:id="close_btn" layoutX="1202.0" layoutY="10.0" mnemonicParsing="false" prefHeight="46.0" prefWidth="79.0" style="-fx-background-color: #1E1E1E;" stylesheets="@../../../css/style.css" text="X" textFill="WHITE">
-                     <font>
-                        <Font name="System Bold" size="21.0" />
-                     </font>
-                     <HBox.margin>
-                        <Insets left="5.0" />
-                     </HBox.margin>
-                  </Button>
-               </children>
-            </HBox>
+            <HBox prefWidth="1270.0" style="-fx-background-color: #1E1E1E;" BorderPane.alignment="CENTER" />
          </top>
       </BorderPane>
+      <MenuBar prefHeight="35.0" prefWidth="1272.0" stylesheets="@../../../css/style.css">
+         <menus>
+            <Menu mnemonicParsing="false">
+               <items>
+                  <MenuItem mnemonicParsing="false" style="-fx-background-color: black;" text="Statistics" />
+                  <MenuItem mnemonicParsing="false" style="-fx-background-color: black;" text="Close app" />
+               </items>
+               <graphic>
+                  <ImageView fitHeight="26.0" fitWidth="29.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../../icons/menu-48.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Menu>
+            <Menu mnemonicParsing="false">
+               <graphic>
+                  <ImageView fitHeight="26.0" fitWidth="29.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../../icons/ir-50.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Menu>
+         </menus>
+      </MenuBar>
+      <ButtonBar fx:id="bottom_menu_bar" layoutX="-1.0" layoutY="704.0" prefHeight="40.0" prefWidth="1272.0" style="-fx-background-color: #1E1E1E;">
+         <buttons>
+            <Button fx:id="go_back_button" mnemonicParsing="false" onAction="#handleButtonClicks_Main" text="Go back" textFill="WHITE" visible="false">
+               <stylesheets>
+                  <URL value="@../../../css/style.css" />
+                  <URL value="@../../../css/button.css" />
+               </stylesheets>
+            </Button>
+         </buttons>
+         <padding>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </padding>
+      </ButtonBar>
    </children>
 </AnchorPane>

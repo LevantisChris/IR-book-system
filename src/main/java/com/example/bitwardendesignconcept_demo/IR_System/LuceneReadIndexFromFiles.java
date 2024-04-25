@@ -50,10 +50,7 @@ public class LuceneReadIndexFromFiles {
                                            MAIN_OPTIONS PREFERRED_QUERY_PARSER,
                                            MAIN_OPTIONS PREFERRED_SIMILARITY_ALGO,
                                            MAIN_OPTIONS PREFERRED_SEARCH_QUERY,
-                                           String USER_QUERY,
-                                                String SELECTED_TYPE_OF_BOOLEAN_QUERY) {
-
-        System.out.println("EVENT --> TEST: SELECTED_TYPE_OF_BOOLEAN_QUERY == " + SELECTED_TYPE_OF_BOOLEAN_QUERY);
+                                           String USER_QUERY) {
 
         if(!app.isEmpty()) app.clear();
 
