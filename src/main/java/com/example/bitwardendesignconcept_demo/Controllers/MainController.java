@@ -54,6 +54,13 @@ public class MainController implements Initializable {
 
     @FXML
     private Button BooleanQuery_Btn;
+    private String SELECTED_TYPE_OF_BOOLEAN_QUERY = "";
+    @FXML
+    private CheckBox boolean_MUST_check_box;
+    @FXML
+    private CheckBox boolean_SHOULD_check_box;
+    @FXML
+    private CheckBox boolean_MUST_NOT_check_box;
 
     @FXML
     private Button EnglishAnalyzer_Btn;
@@ -154,6 +161,28 @@ public class MainController implements Initializable {
     }
 
     @FXML
+    void handleCheckBoxesClicks(ActionEvent event) {
+        if(event.getSource() == boolean_MUST_check_box) {
+            SELECTED_TYPE_OF_BOOLEAN_QUERY = "MUST";
+            System.out.println("EVENT --> boolean_MUST_check_box is selected");
+            boolean_SHOULD_check_box.setSelected(false);
+            boolean_MUST_NOT_check_box.setSelected(false);
+        } else if(event.getSource() == boolean_SHOULD_check_box) {
+            SELECTED_TYPE_OF_BOOLEAN_QUERY = "SHOULD";
+            System.out.println("EVENT --> boolean_SHOULD_check_box is selected");
+            boolean_MUST_check_box.setSelected(false);
+            boolean_MUST_NOT_check_box.setSelected(false);
+        } else if(event.getSource() == boolean_MUST_NOT_check_box) {
+            SELECTED_TYPE_OF_BOOLEAN_QUERY = "MUST_NOT";
+            System.out.println("EVENT --> boolean_MUST_NOT_check_box is selected");
+            boolean_SHOULD_check_box.setSelected(false);
+            boolean_MUST_check_box.setSelected(false);
+        }
+    }
+
+
+
+    @FXML
     void handleButtonClicks_Main(ActionEvent event) {
         if(event.getSource() == go_back_button) {
             System.out.println("EVENT --> User clicked go_back_button");
@@ -181,16 +210,27 @@ public class MainController implements Initializable {
             }
 
         } else if(event.getSource() == submit_btn) {
-            if(userQuery_TextField.getText().isEmpty()) {
+            if (userQuery_TextField.getText().isEmpty()) {
                 String message = "Please add a query.", title = "Warning";
                 DialogUtil.showConfirmationDialog(title, message, 1);
-            } else if(SELECTED_ANALYZER == null ||
+            } else if (SELECTED_ANALYZER == null ||
                     SELECTED_QPARSER == null ||
                     SELECTED_SALGO == null ||
                     SELECTED_SQUERY == null) {
                 String message = "Please select all options.", title = "Warning";
                 DialogUtil.showConfirmationDialog(title, message, 1);
             } else {
+                if (SELECTED_SQUERY == SQUERY_BOOLEAN) {
+                    /* If the user choose the Boolean query, he/she must also select a the type of the that (MUST, SHOULD & MUST_NOT) */
+                    if ((!boolean_MUST_check_box.isSelected() &&
+                            !boolean_SHOULD_check_box.isSelected() &&
+                            !boolean_MUST_NOT_check_box.isSelected()) &&
+                            SELECTED_TYPE_OF_BOOLEAN_QUERY.isEmpty()) {
+                        String message = "In order to use a boolean query you must specify the type of that.", title = "Warning";
+                        DialogUtil.showConfirmationDialog(title, message, 1);
+                        return;
+                    }
+                }
                 LuceneReadIndexFromFiles luceneReadIndexFromFiles
                         = new LuceneReadIndexFromFiles();
                 ArrayList<String> snippetList = luceneReadIndexFromFiles.readIndexfromFiles(
@@ -198,7 +238,8 @@ public class MainController implements Initializable {
                         SELECTED_QPARSER,
                         SELECTED_SALGO,
                         SELECTED_SQUERY,
-                        userQuery_TextField.getText());
+                        userQuery_TextField.getText(),
+                        SELECTED_TYPE_OF_BOOLEAN_QUERY);
                 reultsIN_lbl.setText("Results in " + luceneReadIndexFromFiles.time_taken);
                 updateResults(snippetList);
             }
@@ -288,6 +329,11 @@ public class MainController implements Initializable {
         }
         /* Type of Search Query */
         else if(event.getSource() == TermQuery_Btn) {
+            /* Hide the ChoiceBoxes of the Boolean query */
+            boolean_MUST_check_box.setVisible(false);
+            boolean_SHOULD_check_box.setVisible(false);
+            boolean_MUST_NOT_check_box.setVisible(false);
+            //
             System.out.println("EVENT --> The user clicked TermQuery_Btn");
             SELECTED_SQUERY =SQUERY_TERM;
             if (reference_sQuery != null) reference_sQuery.setStyle("-fx-background-color: null");
@@ -295,6 +341,11 @@ public class MainController implements Initializable {
             TermQuery_Btn.setStyle("-fx-background-color: #336600");
 
         } else if(event.getSource() == WildCardQuery_Btn) {
+            /* Hide the ChoiceBoxes of the Boolean query */
+            boolean_MUST_check_box.setVisible(false);
+            boolean_SHOULD_check_box.setVisible(false);
+            boolean_MUST_NOT_check_box.setVisible(false);
+            //
             System.out.println("EVENT --> The user clicked WildCardQuery_Btn");
             SELECTED_SQUERY = SQUERY_WILDCARD;
             if (reference_sQuery != null) reference_sQuery.setStyle("-fx-background-color: null");
@@ -302,6 +353,11 @@ public class MainController implements Initializable {
             WildCardQuery_Btn.setStyle("-fx-background-color: #336600");
 
         } else if(event.getSource() == PrefixQuery_Btn) {
+            /* Hide the ChoiceBoxes of the Boolean query */
+            boolean_MUST_check_box.setVisible(false);
+            boolean_SHOULD_check_box.setVisible(false);
+            boolean_MUST_NOT_check_box.setVisible(false);
+            //
             System.out.println("EVENT --> The user clicked PrefixQuery_Btn");
             SELECTED_SQUERY = SQUERY_PREFIX;
             if (reference_sQuery != null) reference_sQuery.setStyle("-fx-background-color: null");
@@ -309,12 +365,16 @@ public class MainController implements Initializable {
             PrefixQuery_Btn.setStyle("-fx-background-color: #336600");
 
         } else if(event.getSource() == BooleanQuery_Btn) {
+            /* Show the CheckBoxes */
+            boolean_MUST_check_box.setVisible(true);
+            boolean_SHOULD_check_box.setVisible(true);
+            boolean_MUST_NOT_check_box.setVisible(true);
+            //
             System.out.println("EVENT --> The user clicked BooleanQuery_Btn");
-            SELECTED_SQUERY = SQUERY_PREFIX;
+            SELECTED_SQUERY = SQUERY_BOOLEAN;
             if (reference_sQuery != null) reference_sQuery.setStyle("-fx-background-color: null");
             reference_sQuery = BooleanQuery_Btn;
             BooleanQuery_Btn.setStyle("-fx-background-color: #336600");
-
         } else {
             System.out.println("EVENT --> Not clicked");
         }
