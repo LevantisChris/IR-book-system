@@ -1,15 +1,15 @@
 package com.example.bitwardendesignconcept_demo.IR_System;
 
+import com.example.bitwardendesignconcept_demo.Components.DialogUtil;
 import com.example.bitwardendesignconcept_demo.Database.DATABASE_OPTIONS;
+import org.apache.lucene.index.Term;
 import org.apache.lucene.queryparser.complexPhrase.ComplexPhraseQueryParser;
+import org.apache.lucene.search.*;
+import org.apache.lucene.search.highlight.*;
 import org.jsoup.Jsoup;
 
 import com.example.bitwardendesignconcept_demo.models.MainAppModel;
 import org.apache.lucene.analysis.TokenStream;
-import org.apache.lucene.search.highlight.Highlighter;
-import org.apache.lucene.search.highlight.QueryScorer;
-import org.apache.lucene.search.highlight.SimpleHTMLFormatter;
-import org.apache.lucene.search.highlight.TokenSources;
 import org.apache.lucene.analysis.core.KeywordAnalyzer;
 import org.apache.lucene.analysis.core.SimpleAnalyzer;
 import org.apache.lucene.analysis.core.StopAnalyzer;
@@ -20,16 +20,12 @@ import org.apache.lucene.document.Document;
 import org.apache.lucene.index.DirectoryReader;
 import org.apache.lucene.index.IndexReader;
 import org.apache.lucene.queryparser.simple.SimpleQueryParser;
-import org.apache.lucene.search.IndexSearcher;
-import org.apache.lucene.search.Query;
-import org.apache.lucene.search.TopDocs;
 import org.apache.lucene.search.similarities.BM25Similarity;
 import org.apache.lucene.search.similarities.ClassicSimilarity;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.FSDirectory;
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.queryparser.classic.*;
-import org.apache.lucene.search.ScoreDoc;
 
 import java.io.File;
 import java.io.IOException;
@@ -42,11 +38,15 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
+import static com.example.bitwardendesignconcept_demo.IR_System.MAIN_OPTIONS.*;
+
 public class LuceneReadIndexFromFiles {
     private String indexPath = "indexedFiles";
     private int generatedIndex = -1;
     public static ArrayList<MainAppModel> app = new ArrayList<>(); // This list will keep the last results of the last search ...
     public String time_taken = null;
+
+
     public ArrayList<String> readIndexfromFiles(MAIN_OPTIONS PREFERRED_ANALYZER,
                                            MAIN_OPTIONS PREFERRED_QUERY_PARSER,
                                            MAIN_OPTIONS PREFERRED_SIMILARITY_ALGO,
@@ -79,32 +79,74 @@ public class LuceneReadIndexFromFiles {
             Analyzer analyzer = setAnalyzer(PREFERRED_ANALYZER);
             Query query = null;
             if (analyzer != null) {
-                if(PREFERRED_QUERY_PARSER == MAIN_OPTIONS.QPARSER_STANDARD) {
-                    QueryParser queryParser = new QueryParser("contents", analyzer);
-                    /* Maybe we dont need to specify different types of queries,
-                     *  it is in the context of the UI and the user how to handle it. */
-                    query = queryParser.parse(USER_QUERY);
-                    /* Perform the Search */
-                    topDocs = indexSearcher.search(query, 10);
-                } else if(PREFERRED_QUERY_PARSER == MAIN_OPTIONS.QPARSER_MULTIFIELD) {
-                    MultiFieldQueryParser queryParser = new MultiFieldQueryParser(new String[]{"titles", "contents"}, analyzer);
-                    /* Maybe we dont need to specify different types of queries,
-                     *  it is in the context of the UI and the user how to handle it. */
-                    query = queryParser.parse(USER_QUERY);
-                    /* Perform the Search */
-                    topDocs = indexSearcher.search(query, 10);
-                } else if(PREFERRED_QUERY_PARSER == MAIN_OPTIONS.QPARSER_COMPLEX_PHRASE) {
-                    ComplexPhraseQueryParser queryParser = new ComplexPhraseQueryParser("contents", analyzer);
-                    query = queryParser.parse(USER_QUERY);
-                    /* Perform the Search */
-                    topDocs = indexSearcher.search(query, 10);
-                } else if(PREFERRED_QUERY_PARSER == MAIN_OPTIONS.QPARSER_SIMPLE) {
-                    SimpleQueryParser queryParser = new SimpleQueryParser(analyzer, "contents");
-                    /* Maybe we dont need to specify different types of queries,
-                     *  it is in the context of the UI and the user how to handle it. */
-                    query = queryParser.parse(USER_QUERY);
-                    /* Perform the Search */
-                    topDocs = indexSearcher.search(query, 10);
+                /* NOTEEE!!! --> The user can not pick a QPARSER AND ALSO A SQUERY. */
+                if(PREFERRED_QUERY_PARSER != null) {
+                    System.out.println("EVENT --> Starting query parsing functioning: " + PREFERRED_QUERY_PARSER);
+                    if (PREFERRED_QUERY_PARSER == MAIN_OPTIONS.QPARSER_STANDARD) {
+                        QueryParser queryParser = new QueryParser("contents", analyzer);
+                        /* Maybe we dont need to specify different types of queries,
+                         *  it is in the context of the UI and the user how to handle it. */
+                        query = queryParser.parse(USER_QUERY);
+                        /* Perform the Search */
+                        topDocs = indexSearcher.search(query, 10);
+                    } else if (PREFERRED_QUERY_PARSER == MAIN_OPTIONS.QPARSER_MULTIFIELD) {
+                        MultiFieldQueryParser queryParser = new MultiFieldQueryParser(new String[]{"titles", "contents"}, analyzer);
+                        /* Maybe we dont need to specify different types of queries,
+                         *  it is in the context of the UI and the user how to handle it. */
+                        query = queryParser.parse(USER_QUERY);
+                        /* Perform the Search */
+                        topDocs = indexSearcher.search(query, 10);
+                    } else if (PREFERRED_QUERY_PARSER == MAIN_OPTIONS.QPARSER_COMPLEX_PHRASE) {
+                        ComplexPhraseQueryParser queryParser = new ComplexPhraseQueryParser("contents", analyzer);
+                        query = queryParser.parse(USER_QUERY);
+                        /* Perform the Search */
+                        topDocs = indexSearcher.search(query, 10);
+                    } else if (PREFERRED_QUERY_PARSER == MAIN_OPTIONS.QPARSER_SIMPLE) {
+                        SimpleQueryParser queryParser = new SimpleQueryParser(analyzer, "contents");
+                        /* Maybe we dont need to specify different types of queries,
+                         *  it is in the context of the UI and the user how to handle it. */
+                        query = queryParser.parse(USER_QUERY);
+                        /* Perform the Search */
+                        topDocs = indexSearcher.search(query, 10);
+                    }
+                } else if(PREFERRED_SEARCH_QUERY != null) {
+                    System.out.println("EVENT --> Starting search query functioning: " + PREFERRED_SEARCH_QUERY);
+                    if(PREFERRED_SEARCH_QUERY == SQUERY_TERM) {
+                        Term term = new Term("contents", USER_QUERY);
+                        query = new TermQuery(term);
+                        topDocs = indexSearcher.search(query, 10);
+                    } else if(PREFERRED_SEARCH_QUERY == SQUERY_WILDCARD) {
+                        Term wildcardTerm = new Term("contents", USER_QUERY);
+                        query = new WildcardQuery(wildcardTerm);
+                        topDocs = indexSearcher.search(query, 10);
+                    } else if(PREFERRED_SEARCH_QUERY == SQUERY_PREFIX) {
+                        Term prefixTerm = new Term("contents", USER_QUERY);
+                        query = new PrefixQuery(prefixTerm);
+                        topDocs = indexSearcher.search(query, 10);
+                    } else if(PREFERRED_SEARCH_QUERY == SQUERY_BOOLEAN) {
+                        if(SELECTED_TYPE_OF_BOOLEAN_QUERY != null) { /* The type of the boolean query must not be null */
+                            String[] splittedWords = USER_QUERY.split(" ");
+                            BooleanQuery.Builder builder = new BooleanQuery.Builder();
+                            for (String word : splittedWords) {
+                                TermQuery termQuery = new TermQuery(new Term("contents", word)); // Assuming "content" is the field you want to search in
+                                if (SELECTED_TYPE_OF_BOOLEAN_QUERY.equals("MUST")) {
+                                    builder.add(termQuery, BooleanClause.Occur.MUST);
+                                } else if (SELECTED_TYPE_OF_BOOLEAN_QUERY.equals("SHOULD")) {
+                                    builder.add(termQuery, BooleanClause.Occur.SHOULD);
+                                } else if (SELECTED_TYPE_OF_BOOLEAN_QUERY.equals("MUST_NOT")) {
+                                    builder.add(termQuery, BooleanClause.Occur.MUST_NOT);
+                                }
+                                BooleanQuery booleanQuery = builder.build();
+                                topDocs = indexSearcher.search(booleanQuery, 10);
+                            }
+                        } else {
+                            String message = "An error occurred in the indexing process, Boolean query not working as expected.", title = "Warning";
+                            DialogUtil.showConfirmationDialog(title, message, 1);
+                        }
+                    }
+                } else {
+                    String message = "An error occurred in the indexing process.", title = "Warning";
+                    DialogUtil.showConfirmationDialog(title, message, 1);
                 }
             }
 
@@ -124,9 +166,9 @@ public class LuceneReadIndexFromFiles {
             insertIntoSearchingHistory(
                     USER_QUERY,
                     PREFERRED_ANALYZER.toString(),
-                    PREFERRED_QUERY_PARSER.toString(),
+                    PREFERRED_QUERY_PARSER != null ? PREFERRED_QUERY_PARSER.toString() : null,
                     PREFERRED_SIMILARITY_ALGO.toString(),
-                    PREFERRED_SEARCH_QUERY.toString(),
+                    PREFERRED_SEARCH_QUERY != null ? PREFERRED_SEARCH_QUERY.toString() : null,
                     formattedTime);
 
             SimpleHTMLFormatter htmlFormatter = new SimpleHTMLFormatter();
@@ -135,9 +177,9 @@ public class LuceneReadIndexFromFiles {
             ArrayList<String> snippetList = displayResults(indexSearcher, indexReader, topDocs, highlighter, query, PREFERRED_ANALYZER);
 
             updateAnalyzerCounter(PREFERRED_ANALYZER.toString());
-            updateQParserCounter(PREFERRED_QUERY_PARSER.toString());
+            updateQParserCounter(PREFERRED_QUERY_PARSER != null ? PREFERRED_QUERY_PARSER.toString() : null);
             updateSAlgosCounter(PREFERRED_SIMILARITY_ALGO.toString());
-            updateSQueriesCounter(PREFERRED_SEARCH_QUERY.toString());
+            updateSQueriesCounter(PREFERRED_SEARCH_QUERY != null ? PREFERRED_SEARCH_QUERY.toString() : null);
 
             return snippetList;
         } catch (IOException | ParseException e) {
@@ -169,39 +211,49 @@ public class LuceneReadIndexFromFiles {
             indexReader.close();
             return snippetList;
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            System.out.println("EVENT --> ERROR in displayResults: " + e.getMessage());
+            e.printStackTrace();
+            return null;
         }
     }
 
     // Method to retrieve highlighted snippets from the document
-    private static String getSnippet(Document document, Query query, Highlighter highlighter, MAIN_OPTIONS PREFERRED_ANALYZER) throws Exception {
-        // Get the full text content of the document
-        String fullContent = document.get("contents");
+    private String getSnippet(Document document, Query query, Highlighter highlighter, MAIN_OPTIONS PREFERRED_ANALYZER) {
+        try {
+            // Get the full text content of the document
+            String fullContent = document.get("contents");
 
-        TokenStream tokenStream = null;
-        if(PREFERRED_ANALYZER == MAIN_OPTIONS.ANALYZER_STANDARD)
-            // Create a token stream for the full content
-            tokenStream = TokenSources.getTokenStream("contents", fullContent, new StandardAnalyzer());
-        else if(PREFERRED_ANALYZER == MAIN_OPTIONS.ANALYZER_ENGLISH) {
-            tokenStream = TokenSources.getTokenStream("contents", fullContent, new EnglishAnalyzer());
-        } else if(PREFERRED_ANALYZER == MAIN_OPTIONS.ANALYZER_SIMPLE) {
-            tokenStream = TokenSources.getTokenStream("contents", fullContent, new SimpleAnalyzer());
-        } else if(PREFERRED_ANALYZER == MAIN_OPTIONS.ANALYZER_KEYWORD) {
-            tokenStream = TokenSources.getTokenStream("contents", fullContent, new KeywordAnalyzer());
-        } else if(PREFERRED_ANALYZER == MAIN_OPTIONS.ANALYZER_STOP) {
-            tokenStream = TokenSources.getTokenStream("contents", fullContent, new StopAnalyzer(Path.of("./stopWords/stopWords.txt"))); // Not by accident :)
-        } else if(PREFERRED_ANALYZER == MAIN_OPTIONS.ANALYZER_WHITESPACE) {
-            tokenStream = TokenSources.getTokenStream("contents", fullContent, new WhitespaceAnalyzer());
+            TokenStream tokenStream = null;
+            if(PREFERRED_ANALYZER == MAIN_OPTIONS.ANALYZER_STANDARD)
+                // Create a token stream for the full content
+                tokenStream = TokenSources.getTokenStream("contents", fullContent, new StandardAnalyzer());
+            else if(PREFERRED_ANALYZER == MAIN_OPTIONS.ANALYZER_ENGLISH) {
+                tokenStream = TokenSources.getTokenStream("contents", fullContent, new EnglishAnalyzer());
+            } else if(PREFERRED_ANALYZER == MAIN_OPTIONS.ANALYZER_SIMPLE) {
+                tokenStream = TokenSources.getTokenStream("contents", fullContent, new SimpleAnalyzer());
+            } else if(PREFERRED_ANALYZER == MAIN_OPTIONS.ANALYZER_KEYWORD) {
+                tokenStream = TokenSources.getTokenStream("contents", fullContent, new KeywordAnalyzer());
+            } else if(PREFERRED_ANALYZER == MAIN_OPTIONS.ANALYZER_STOP) {
+                tokenStream = TokenSources.getTokenStream("contents", fullContent, new StopAnalyzer(Path.of("./stopWords/stopWords.txt"))); // Not by accident :)
+            } else if(PREFERRED_ANALYZER == MAIN_OPTIONS.ANALYZER_WHITESPACE) {
+                tokenStream = TokenSources.getTokenStream("contents", fullContent, new WhitespaceAnalyzer());
+            } else {
+                System.out.println("EVENT --> ERROR the getSnippet, PREFERRED_ANALYZER is null");
+                return null;
+            }
+            String snippet = highlighter.getBestFragment(tokenStream, document.get("contents"));
+
+            // Truncate the snippet to a maximum length
+            int maxLength = 32766 ;
+            if (snippet != null && snippet.length() > maxLength) {
+                snippet = snippet.substring(0, maxLength) + "..."; // Truncate and add ellipsis
+            }
+
+            return snippet;
+        } catch (IOException | InvalidTokenOffsetsException e) {
+            System.out.println("EVENT --> ERROR in getSnippet: " + e.getMessage());
+            throw new RuntimeException(e);
         }
-
-        // Get the highlighted text (snippets) containing the matching terms
-        /* The function returns a String that contains all the snippets, and
-        *  separate them with the //// */
-        String highlightedText = highlighter.getBestFragments(tokenStream, fullContent, 10, "////");
-
-        // Strip HTML tags to get plain text
-        // Get the highlighted text (snippets) containing the matching terms
-        return Jsoup.parse(highlightedText).text();
     }
 
     private Analyzer setAnalyzer(MAIN_OPTIONS PREFERRED_ANALYZER) {
