@@ -173,11 +173,6 @@ public class MainController implements Initializable {
     private MAIN_OPTIONS SELECTED_SALGO; private Button reference_sAlgo = null;
     private MAIN_OPTIONS SELECTED_SQUERY; private Button reference_sQuery = null;
 
-    public static void recreateChildren() {
-        //MainAnchorPane.getChildren().clear(); // Clear existing children
-        //MainAnchorPane.getChildren().addAll(temp.getChildren());
-    }
-
     @FXML
     void handleCheckBoxesClicks(ActionEvent event) {
         if(event.getSource() == boolean_MUST_check_box) {
@@ -243,16 +238,21 @@ public class MainController implements Initializable {
                 System.out.println("EVENT --> Error in creating the statistics-view.fxml");
                 e.printStackTrace();
             }
-
         } else if(event.getSource() == submit_btn) {
+            System.out.println("TEST: " +
+                    SELECTED_ANALYZER+ ", " + SELECTED_SALGO + ", " + SELECTED_QPARSER + ", " + SELECTED_SQUERY);
             if (userQuery_TextField.getText().isEmpty()) {
                 String message = "Please add a query.", title = "Warning";
                 DialogUtil.showConfirmationDialog(title, message, 1);
             } else if (SELECTED_ANALYZER == null ||
-                    SELECTED_QPARSER == null ||
-                    SELECTED_SALGO == null ||
-                    SELECTED_SQUERY == null) {
-                String message = "Please select all options.", title = "Warning";
+                    SELECTED_SALGO == null) {
+                String message = "Please select a type of Analyzer and also a Similarity Algo.", title = "Warning";
+                DialogUtil.showConfirmationDialog(title, message, 1);
+            } else if((SELECTED_QPARSER == null) && (SELECTED_SQUERY == null)) {
+                String message = "Please select a Query Parser or a specific type of Search Query.", title = "Warning";
+                DialogUtil.showConfirmationDialog(title, message, 1);
+            } else if((SELECTED_QPARSER != null) && (SELECTED_SQUERY != null)) {
+                String message = "Please select a Query Parser or a specific type of Search Query.", title = "Warning";
                 DialogUtil.showConfirmationDialog(title, message, 1);
             } else {
                 if (SELECTED_SQUERY == SQUERY_BOOLEAN) {
@@ -328,6 +328,11 @@ public class MainController implements Initializable {
             System.out.println("EVENT --> The user clicked StandardQueryParser_Btn");
             SELECTED_QPARSER = QPARSER_STANDARD;
             if (reference_qParser != null) reference_qParser.setStyle("-fx-background-color: null");
+            //
+            if (reference_sQuery != null) {reference_sQuery.setStyle("-fx-background-color: null");}
+            reference_sQuery = null;
+            SELECTED_SQUERY = null;
+            //
             reference_qParser = StandardQueryParser_Btn;
             StandardQueryParser_Btn.setStyle("-fx-background-color: #336600");
 
@@ -335,6 +340,11 @@ public class MainController implements Initializable {
             System.out.println("EVENT --> The user clicked MultiFieldQueryParser_Btn");
             SELECTED_QPARSER = QPARSER_MULTIFIELD;
             if (reference_qParser != null) reference_qParser.setStyle("-fx-background-color: null");
+            //
+            if (reference_sQuery != null) {reference_sQuery.setStyle("-fx-background-color: null");}
+            reference_sQuery = null;
+            SELECTED_SQUERY = null;
+            //
             reference_qParser = MultiFieldQueryParser_Btn;
             MultiFieldQueryParser_Btn.setStyle("-fx-background-color: #336600");
 
@@ -342,12 +352,22 @@ public class MainController implements Initializable {
             System.out.println("EVENT --> The user clicked ComplexPhraseQueryParser_Btn");
             SELECTED_QPARSER = QPARSER_COMPLEX_PHRASE;
             if (reference_qParser != null) reference_qParser.setStyle("-fx-background-color: null");
+            //
+            if (reference_sQuery != null) {reference_sQuery.setStyle("-fx-background-color: null");}
+            reference_sQuery = null;
+            SELECTED_SQUERY = null;
+            //
             reference_qParser = ComplexPhraseQueryParser_Btn;
             ComplexPhraseQueryParser_Btn.setStyle("-fx-background-color: #336600");
         } else if(event.getSource() == SimpleQueryParser_Btn) {
             System.out.println("EVENT --> The user clicked SimpleQueryParser_Btn");
             SELECTED_QPARSER = QPARSER_SIMPLE;
             if (reference_qParser != null) reference_qParser.setStyle("-fx-background-color: null");
+            //
+            if (reference_sQuery != null) {reference_sQuery.setStyle("-fx-background-color: null");}
+            reference_sQuery = null;
+            SELECTED_SQUERY = null;
+            //
             reference_qParser = SimpleQueryParser_Btn;
             SimpleQueryParser_Btn.setStyle("-fx-background-color: #336600");
 
@@ -375,6 +395,10 @@ public class MainController implements Initializable {
             boolean_SHOULD_check_box.setVisible(false);
             boolean_MUST_NOT_check_box.setVisible(false);
             //
+            if (reference_qParser != null) {reference_qParser.setStyle("-fx-background-color: null");}
+            reference_qParser = null;
+            SELECTED_QPARSER = null;
+            //
             System.out.println("EVENT --> The user clicked TermQuery_Btn");
             SELECTED_SQUERY =SQUERY_TERM;
             if (reference_sQuery != null) reference_sQuery.setStyle("-fx-background-color: null");
@@ -386,6 +410,10 @@ public class MainController implements Initializable {
             boolean_MUST_check_box.setVisible(false);
             boolean_SHOULD_check_box.setVisible(false);
             boolean_MUST_NOT_check_box.setVisible(false);
+            //
+            if (reference_qParser != null) {reference_qParser.setStyle("-fx-background-color: null");}
+            reference_qParser = null;
+            SELECTED_QPARSER = null;
             //
             System.out.println("EVENT --> The user clicked WildCardQuery_Btn");
             SELECTED_SQUERY = SQUERY_WILDCARD;
@@ -399,6 +427,10 @@ public class MainController implements Initializable {
             boolean_SHOULD_check_box.setVisible(false);
             boolean_MUST_NOT_check_box.setVisible(false);
             //
+            if (reference_qParser != null) {reference_qParser.setStyle("-fx-background-color: null");}
+            reference_qParser = null;
+            SELECTED_QPARSER = null;
+            //
             System.out.println("EVENT --> The user clicked PrefixQuery_Btn");
             SELECTED_SQUERY = SQUERY_PREFIX;
             if (reference_sQuery != null) reference_sQuery.setStyle("-fx-background-color: null");
@@ -410,6 +442,10 @@ public class MainController implements Initializable {
             boolean_MUST_check_box.setVisible(true);
             boolean_SHOULD_check_box.setVisible(true);
             boolean_MUST_NOT_check_box.setVisible(true);
+            //
+            if (reference_qParser != null) {reference_qParser.setStyle("-fx-background-color: null");}
+            reference_qParser = null;
+            SELECTED_QPARSER = null;
             //
             System.out.println("EVENT --> The user clicked BooleanQuery_Btn");
             SELECTED_SQUERY = SQUERY_BOOLEAN;
