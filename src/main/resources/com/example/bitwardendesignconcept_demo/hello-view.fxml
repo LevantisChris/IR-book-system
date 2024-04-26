@@ -121,6 +121,15 @@
                         </ImageView>
                      </graphic>
                   </Button>
+                  <Button fx:id="ComplexPhraseQueryParser_Btn" alignment="BASELINE_LEFT" layoutX="15.0" layoutY="297.0" mnemonicParsing="false" onAction="#handleButtonClicks_Main" prefHeight="27.0" prefWidth="230.0" stylesheets="@../../../css/style.css" text="Complex Phrase QueryParser" textFill="WHITE">
+                     <graphic>
+                        <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../../icons/Magnetic%20Card.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
                   <Button fx:id="SimpleQueryParser_Btn" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#handleButtonClicks_Main" prefHeight="27.0" prefWidth="234.0" stylesheets="@../../../css/style.css" text="Simple Query Parser" textFill="WHITE">
                      <graphic>
                         <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true">

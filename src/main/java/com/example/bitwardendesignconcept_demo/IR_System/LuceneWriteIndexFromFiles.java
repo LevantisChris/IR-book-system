@@ -26,6 +26,8 @@ import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.FSDirectory;
 import org.apache.lucene.analysis.core.SimpleAnalyzer;
 
+import static com.example.bitwardendesignconcept_demo.Database.DATABASE_OPTIONS.*;
+
 public class LuceneWriteIndexFromFiles {
 
     private int numOfDocs = 0;
@@ -130,6 +132,9 @@ public class LuceneWriteIndexFromFiles {
             doc.add(new LongPoint("modified", lastModified));
             doc.add(new TextField("contents", new String(Files.readAllBytes(file)), Store.YES));
 
+            /* More fields for the Multifield Parser */
+            doc.add(new TextField("titles", file.getFileName().toString(), Field.Store.YES));
+
             //Updates a document by first deleting the document(s)
             //containing <code>term</code> and then adding the new
             //document.  Then delete and then add are atomic as seen
@@ -161,9 +166,6 @@ public class LuceneWriteIndexFromFiles {
     }
 
     /* Database */
-    private static final String URL = "jdbc:mysql://localhost:3306/ir_system";
-    private static final String USERNAME = "root";
-    private static final String PASSWORD = "kolos2020";
 
     public static void insertIndexingCollection(String typeOfAnalyzer, int numberOfFiles, int totalSize, String formattedTime) {
         String sql = "INSERT INTO INDEXING_COLLECTION (DATE_INDEXED, TYPE_ANALYZER, NUMBER_OF_FILES, TOTAL_SIZE, TOTAL_TIME) VALUES (CURDATE(), ?, ?, ?, ?)";

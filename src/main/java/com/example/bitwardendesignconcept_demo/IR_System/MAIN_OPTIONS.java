@@ -14,6 +14,7 @@ public enum MAIN_OPTIONS {
     /* TYPE OF QUERY PARSERS */
     QPARSER_STANDARD,
     QPARSER_MULTIFIELD,
+    QPARSER_COMPLEX_PHRASE,
     QPARSER_SIMPLE,
     /*--------------------------------------------------------------------*/
     /* TYPE OF SIMILARITY ALGORITHMS */

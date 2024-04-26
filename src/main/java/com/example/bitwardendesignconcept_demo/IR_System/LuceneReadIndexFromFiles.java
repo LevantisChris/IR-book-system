@@ -1,6 +1,7 @@
 package com.example.bitwardendesignconcept_demo.IR_System;
 
 import com.example.bitwardendesignconcept_demo.Database.DATABASE_OPTIONS;
+import org.apache.lucene.queryparser.complexPhrase.ComplexPhraseQueryParser;
 import org.jsoup.Jsoup;
 
 import com.example.bitwardendesignconcept_demo.models.MainAppModel;
@@ -86,9 +87,14 @@ public class LuceneReadIndexFromFiles {
                     /* Perform the Search */
                     topDocs = indexSearcher.search(query, 10);
                 } else if(PREFERRED_QUERY_PARSER == MAIN_OPTIONS.QPARSER_MULTIFIELD) {
-                    MultiFieldQueryParser queryParser = new MultiFieldQueryParser(new String[]{}, analyzer); // Not specific files the analyzer will search all of them*
+                    MultiFieldQueryParser queryParser = new MultiFieldQueryParser(new String[]{"titles", "contents"}, analyzer);
                     /* Maybe we dont need to specify different types of queries,
                      *  it is in the context of the UI and the user how to handle it. */
+                    query = queryParser.parse(USER_QUERY);
+                    /* Perform the Search */
+                    topDocs = indexSearcher.search(query, 10);
+                } else if(PREFERRED_QUERY_PARSER == MAIN_OPTIONS.QPARSER_COMPLEX_PHRASE) {
+                    ComplexPhraseQueryParser queryParser = new ComplexPhraseQueryParser("contents", analyzer);
                     query = queryParser.parse(USER_QUERY);
                     /* Perform the Search */
                     topDocs = indexSearcher.search(query, 10);

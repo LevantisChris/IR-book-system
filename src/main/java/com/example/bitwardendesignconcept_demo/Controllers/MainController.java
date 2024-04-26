@@ -3,6 +3,7 @@ package com.example.bitwardendesignconcept_demo.Controllers;
 import com.example.bitwardendesignconcept_demo.AI_Summarizer;
 import com.example.bitwardendesignconcept_demo.Components.DialogUtil;
 import com.example.bitwardendesignconcept_demo.Components.IndexingApplication;
+import com.example.bitwardendesignconcept_demo.Database.DATABASE_OPTIONS;
 import com.example.bitwardendesignconcept_demo.IR_System.LuceneReadIndexFromFiles;
 import com.example.bitwardendesignconcept_demo.IR_System.MAIN_OPTIONS;
 import com.example.bitwardendesignconcept_demo.MainApplication;
@@ -41,6 +42,7 @@ import java.util.Arrays;
 import java.util.ResourceBundle;
 import java.io.File;
 
+import static com.example.bitwardendesignconcept_demo.Database.DATABASE_OPTIONS.*;
 import static com.example.bitwardendesignconcept_demo.IR_System.MAIN_OPTIONS.*;
 
 public class MainController implements Initializable {
@@ -70,6 +72,9 @@ public class MainController implements Initializable {
 
     @FXML
     private Button MultiFieldQueryParser_Btn;
+
+    @FXML
+    private Button ComplexPhraseQueryParser_Btn;
 
     @FXML
     private Button PrefixQuery_Btn;
@@ -303,6 +308,12 @@ public class MainController implements Initializable {
             reference_qParser = MultiFieldQueryParser_Btn;
             MultiFieldQueryParser_Btn.setStyle("-fx-background-color: #336600");
 
+        } else if(event.getSource() == ComplexPhraseQueryParser_Btn) {
+            System.out.println("EVENT --> The user clicked ComplexPhraseQueryParser_Btn");
+            SELECTED_QPARSER = QPARSER_COMPLEX_PHRASE;
+            if (reference_qParser != null) reference_qParser.setStyle("-fx-background-color: null");
+            reference_qParser = ComplexPhraseQueryParser_Btn;
+            ComplexPhraseQueryParser_Btn.setStyle("-fx-background-color: #336600");
         } else if(event.getSource() == SimpleQueryParser_Btn) {
             System.out.println("EVENT --> The user clicked SimpleQueryParser_Btn");
             SELECTED_QPARSER = QPARSER_SIMPLE;
@@ -608,9 +619,6 @@ public class MainController implements Initializable {
     }
 
     private void storeRatingInDB(double userRating) {
-        final String URL = "jdbc:mysql://localhost:3306/ir_system";
-        String USERNAME = "root";
-        String PASSWORD = "kolos2020";
         String INSERT_QUERY = "INSERT INTO RATINGS (FILE_NAME_CT, RATING) VALUES (?, ?)";
         try (
                 Connection connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
