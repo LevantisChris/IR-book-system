@@ -68,6 +68,7 @@ public class StatisticsController implements Initializable {
             {
                     "QPARSER_STANDARD",
                     "QPARSER_MULTIFIELD",
+                    "QPARSER_COMPLEX_PHRASE",
                     "QPARSER_SIMPLE"
             };
     @FXML

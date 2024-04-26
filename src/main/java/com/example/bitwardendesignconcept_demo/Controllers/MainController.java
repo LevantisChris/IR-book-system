@@ -3,7 +3,6 @@ package com.example.bitwardendesignconcept_demo.Controllers;
 import com.example.bitwardendesignconcept_demo.AI_Summarizer;
 import com.example.bitwardendesignconcept_demo.Components.DialogUtil;
 import com.example.bitwardendesignconcept_demo.Components.IndexingApplication;
-import com.example.bitwardendesignconcept_demo.Database.DATABASE_OPTIONS;
 import com.example.bitwardendesignconcept_demo.IR_System.LuceneReadIndexFromFiles;
 import com.example.bitwardendesignconcept_demo.IR_System.MAIN_OPTIONS;
 import com.example.bitwardendesignconcept_demo.MainApplication;
@@ -33,6 +32,11 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.net.URL;
+import java.nio.file.FileVisitResult;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.SimpleFileVisitor;
+import java.nio.file.attribute.BasicFileAttributes;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -51,8 +55,12 @@ public class MainController implements Initializable {
 
     @FXML
     private VBox vItems;
+
     @FXML
     private Button BM_25_SimilarityALgo_Btn;
+
+    @FXML
+    private MenuItem clearIndexFiles_menuItem;
 
     @FXML
     private Button BooleanQuery_Btn;
@@ -155,6 +163,11 @@ public class MainController implements Initializable {
 
     ///
 
+    private Stage stage;
+    public void setStage(Stage stage) {
+        this.stage = stage;
+    }
+
     private MAIN_OPTIONS SELECTED_ANALYZER; private Button reference_analyzer = null;
     private MAIN_OPTIONS SELECTED_QPARSER; private Button reference_qParser = null;
     private MAIN_OPTIONS SELECTED_SALGO; private Button reference_sAlgo = null;
@@ -185,11 +198,28 @@ public class MainController implements Initializable {
         }
     }
 
-
-
     @FXML
     void handleButtonClicks_Main(ActionEvent event) {
-        if(event.getSource() == go_back_button) {
+        if(event.getSource() == clearIndexFiles_menuItem) {
+            System.out.println("EVENT --> The user wants to delete the indexed files");
+            boolean state = deleteFilesInFolder(Path.of("./indexedFiles"));
+            if(state == true) {
+                System.out.println("EVENT --> SUCCESSFUL deletion of the indexed files");
+                stage.close();
+                /* Start the indexing proccess view again */
+                Platform.runLater(() -> {
+                    IndexingApplication indexingApp = new IndexingApplication();
+                    Stage stage = new Stage();
+                    try {
+                        indexingApp.start(stage);
+                    } catch (Exception e) {
+                        System.out.println("EVENT: Error in the creating of the new indexing stage.");
+                    }
+                });
+            } else {
+                System.out.println("EVENT --> ERROR in the deletion of the indexed files");
+            }
+        } else if(event.getSource() == go_back_button) {
             System.out.println("EVENT --> User clicked go_back_button");
             mainborderPane.getChildren().add(temp);
             go_back_button.setVisible(false);
@@ -416,6 +446,7 @@ public class MainController implements Initializable {
                 try {
                     IndexingApplication indexingApp = new IndexingApplication();
                     indexingApp.start(new Stage());
+                    stage.close();
                 } catch (Exception e) {
                     throw new RuntimeException(e);
                 }
@@ -683,5 +714,28 @@ public class MainController implements Initializable {
             scrollX = label.getWidth();
         }
         label.setTranslateX(scrollX);
+    }
+
+    public boolean deleteFilesInFolder(Path folderPath) {
+        try {
+            Files.walkFileTree(folderPath, new SimpleFileVisitor<Path>() {
+                @Override
+                public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
+                    // Delete each file
+                    Files.delete(file);
+                    System.out.println("Deleted file: " + file);
+                    return FileVisitResult.CONTINUE;
+                }
+                @Override
+                public FileVisitResult visitFileFailed(Path file, IOException exc) throws IOException {
+                    System.err.println("Failed to visit file: " + file);
+                    return FileVisitResult.CONTINUE;
+                }
+            });
+        } catch (IOException e) {
+            System.out.println("EVENT --> Error occured in the deletion of the indexed files: " + e.getMessage());
+            return false;
+        }
+        return true;
     }
 }

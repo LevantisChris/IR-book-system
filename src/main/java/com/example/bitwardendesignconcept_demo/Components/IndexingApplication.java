@@ -15,7 +15,7 @@ public class IndexingApplication extends Application {
         FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("indexing-view.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
         scene.getStylesheets().add(getClass().getResource("/css/style.css").toExternalForm());
-        stage.initStyle(StageStyle.UNDECORATED);
+        stage.initStyle(StageStyle.UNIFIED);
         stage.setScene(scene);
         IndexingController indexingController = fxmlLoader.getController();
         indexingController.setStage(stage);

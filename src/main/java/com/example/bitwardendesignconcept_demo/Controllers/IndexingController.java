@@ -1,26 +1,17 @@
 package com.example.bitwardendesignconcept_demo.Controllers;
 
 import com.example.bitwardendesignconcept_demo.Components.DialogUtil;
-import com.example.bitwardendesignconcept_demo.IR_System.LuceneReadIndexFromFiles;
 import com.example.bitwardendesignconcept_demo.IR_System.LuceneWriteIndexFromFiles;
 import com.example.bitwardendesignconcept_demo.MainApplication;
-import com.example.bitwardendesignconcept_demo.models.MainAppModel;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.geometry.Insets;
-import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
-import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.ResourceBundle;
 
 public class IndexingController implements Initializable {
@@ -80,6 +71,16 @@ public class IndexingController implements Initializable {
                     String message = "The indexing process completed successfully.", title = "Warning";
                     DialogUtil.showConfirmationDialog(title, message, 1);
                     stage.close();
+                    /* Start the main view */
+                    Platform.runLater(() -> {
+                        MainApplication mainApplication = new MainApplication();
+                        Stage stage = new Stage();
+                        try {
+                            mainApplication.start(stage);
+                        } catch (Exception e) {
+                            System.out.println("EVENT: Error in the creating of the new main stage.");
+                        }
+                    });
                 } else {
                     String message = "Error occurred in indexing process.", title = "Warning";
                     DialogUtil.showConfirmationDialog(title, message, 1);

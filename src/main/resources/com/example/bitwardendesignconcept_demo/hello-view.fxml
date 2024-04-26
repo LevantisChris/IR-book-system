@@ -369,7 +369,7 @@
          <menus>
             <Menu mnemonicParsing="false">
                <items>
-                  <MenuItem mnemonicParsing="false" style="-fx-background-color: black;" text="Statistics" />
+                  <MenuItem fx:id="clearIndexFiles_menuItem" mnemonicParsing="false" onAction="#handleButtonClicks_Main" style="-fx-background-color: black;" text="Clear index files" />
                   <MenuItem mnemonicParsing="false" style="-fx-background-color: black;" text="Close app" />
                </items>
                <graphic>
