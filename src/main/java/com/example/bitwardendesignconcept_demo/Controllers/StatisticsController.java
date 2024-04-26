@@ -18,6 +18,7 @@ import java.net.URL;
 import java.sql.*;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class StatisticsController implements Initializable {
@@ -69,7 +70,8 @@ public class StatisticsController implements Initializable {
                     "QPARSER_STANDARD",
                     "QPARSER_MULTIFIELD",
                     "QPARSER_COMPLEX_PHRASE",
-                    "QPARSER_SIMPLE"
+                    "QPARSER_SIMPLE",
+                    "NULL"
             };
     @FXML
     private ChoiceBox<String> salgosChoiceBox;
@@ -86,7 +88,8 @@ public class StatisticsController implements Initializable {
                     "SQUERY_TERM",
                     "SQUERY_WILDCARD",
                     "SQUERY_PREFIX",
-                    "SQUERY_BOOLEAN"
+                    "SQUERY_BOOLEAN",
+                    "NULL"
             };
 
     @FXML
@@ -139,9 +142,9 @@ public class StatisticsController implements Initializable {
                 System.out.println("EVENT --> Generating Line chart");
                 ArrayList<Double> timestamps_sec = getTimeForPair(
                         analyzerChoiceBox.getValue(),
-                        qparsersChoiceBox.getValue(),
+                        qparsersChoiceBox.getValue().equals("NULL") ? null : qparsersChoiceBox.getValue(),
                         salgosChoiceBox.getValue(),
-                        squerysChoiceBox.getValue()
+                        squerysChoiceBox.getValue().equals("NULL") ? null : squerysChoiceBox.getValue()
                 );
                 if(timestamps_sec != null) {
                     linechart.getXAxis().setLabel("Times used");
@@ -293,9 +296,25 @@ public class StatisticsController implements Initializable {
                     "WHERE ANALYZER_SEARCH_H = ? AND QPARSER_SEARCH_H = ? AND SALGO_SEARCH_H = ? AND SQUERY_SEARCH_H = ?";
             PreparedStatement preparedStatement = DriverManager.getConnection(DATABASE_OPTIONS.URL, DATABASE_OPTIONS.USERNAME, DATABASE_OPTIONS.PASSWORD).prepareStatement(sql);
             preparedStatement.setString(1, analyzer_type);
-            preparedStatement.setString(2, qparser_type);
+
+            if (qparser_type != null) {
+                System.out.println("DEN EINAi 1: " + qparser_type);
+                preparedStatement.setString(2, qparser_type);
+            } else {
+                System.out.println("EINAi 1: " + qparser_type);
+                preparedStatement.setNull(2, Types.VARCHAR);
+            }
+
             preparedStatement.setString(3, salgo_type);
-            preparedStatement.setString(4, squery_type);
+
+            if (squery_type != null) {
+                System.out.println("DEN EINAi 2: " + squery_type);
+                preparedStatement.setString(4, squery_type);
+            } else {
+                System.out.println("EINAi 2: " + squery_type);
+                preparedStatement.setNull(4, Types.VARCHAR);
+            }
+
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 Timestamp timestamp = resultSet.getTimestamp("TIME_SEARCH_H");

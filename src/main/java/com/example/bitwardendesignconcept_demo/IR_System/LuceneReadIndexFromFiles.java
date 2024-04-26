@@ -37,6 +37,7 @@ import java.time.Instant;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Objects;
 
 import static com.example.bitwardendesignconcept_demo.IR_System.MAIN_OPTIONS.*;
 
@@ -300,9 +301,20 @@ public class LuceneReadIndexFromFiles {
             PreparedStatement preparedStatement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             preparedStatement.setString(1, user_query);
             preparedStatement.setString(2, analyzer);
-            preparedStatement.setString(3, qParser);
+
+            if (qParser != null) {
+                preparedStatement.setString(3, qParser);
+            } else {
+                preparedStatement.setNull(3,  Types.VARCHAR);
+            }
+
             preparedStatement.setString(4, sAlgo);
-            preparedStatement.setString(5, sQuery);
+
+            if (sQuery != null) {
+                preparedStatement.setString(5, sQuery);
+            } else {
+                preparedStatement.setNull(5,  Types.VARCHAR);
+            }
 
             // Parse the time string to LocalTime
             LocalTime localTime = LocalTime.parse(time, DateTimeFormatter.ofPattern("HH:mm:ss.SSSSSS"));
