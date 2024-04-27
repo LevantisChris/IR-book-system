@@ -177,10 +177,11 @@ public class LuceneReadIndexFromFiles {
 
             ArrayList<String> snippetList = displayResults(indexSearcher, indexReader, topDocs, highlighter, query, PREFERRED_ANALYZER);
 
+            /* Update the counters of the parameters the user pick */
             updateAnalyzerCounter(PREFERRED_ANALYZER.toString());
-            updateQParserCounter(PREFERRED_QUERY_PARSER != null ? PREFERRED_QUERY_PARSER.toString() : null);
+            if(PREFERRED_QUERY_PARSER != null) { updateQParserCounter(PREFERRED_QUERY_PARSER.toString()); };
             updateSAlgosCounter(PREFERRED_SIMILARITY_ALGO.toString());
-            updateSQueriesCounter(PREFERRED_SEARCH_QUERY != null ? PREFERRED_SEARCH_QUERY.toString() : null);
+            if(PREFERRED_SEARCH_QUERY != null) { updateSQueriesCounter(PREFERRED_SEARCH_QUERY.toString()); };
 
             return snippetList;
         } catch (IOException | ParseException e) {
