@@ -55,9 +55,9 @@ create table searching_history
         primary key,
     USER_QUERY_H      varchar(500) not null,
     ANALYZER_SEARCH_H varchar(100) not null,
-    QPARSER_SEARCH_H  varchar(100) not null,
+    QPARSER_SEARCH_H  varchar(100),
     SALGO_SEARCH_H    varchar(100) not null,
-    SQUERY_SEARCH_H   varchar(100) not null,
+    SQUERY_SEARCH_H   varchar(100),
     TIME_SEARCH_H     datetime(6)  not null
 );
 

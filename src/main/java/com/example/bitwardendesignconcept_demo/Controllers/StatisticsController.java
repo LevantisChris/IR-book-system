@@ -293,7 +293,10 @@ public class StatisticsController implements Initializable {
         ArrayList<Double> timestamps_sec = new ArrayList<>();
         try {
             String sql = "SELECT TIME_SEARCH_H FROM ir_system.searching_history " +
-                    "WHERE ANALYZER_SEARCH_H = ? AND QPARSER_SEARCH_H = ? AND SALGO_SEARCH_H = ? AND SQUERY_SEARCH_H = ?";
+                    "WHERE ANALYZER_SEARCH_H = ? " +
+                    "AND (QPARSER_SEARCH_H = ? OR QPARSER_SEARCH_H IS NULL) " +
+                    "AND SALGO_SEARCH_H = ? " +
+                    "AND (SQUERY_SEARCH_H = ? OR QPARSER_SEARCH_H IS NULL)";
             PreparedStatement preparedStatement = DriverManager.getConnection(DATABASE_OPTIONS.URL, DATABASE_OPTIONS.USERNAME, DATABASE_OPTIONS.PASSWORD).prepareStatement(sql);
             preparedStatement.setString(1, analyzer_type);
 
