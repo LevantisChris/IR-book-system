@@ -85,7 +85,8 @@ public class LuceneWriteIndexFromFiles {
             long seconds = timeElapsed.toSecondsPart();
             // Format the time as HH:MM:SS
             String formattedTime = String.format("%02d:%02d:%02d", hours, minutes, seconds);
-            System.out.println("EVENT --> Time taken (WRITE INDEX): " + formattedTime);
+            System.out.println("EVENT --> Time taken (WRITE INDEX - FORMATED): " + formattedTime);
+            System.out.println("EVENT --> Time taken (WRITE INDEX - NOT FORMATED): " + timeElapsed.toSecondsPart());
             /* Create the stats for the collection the Systems just index */
             calcStatsOfCollection(docDir, formattedTime, typeOfAnalyzer);
 
