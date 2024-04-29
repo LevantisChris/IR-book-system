@@ -1,5 +1,7 @@
-# BitWardenDesignConcept_demo-JavaFX
-BitWarden design concept, windows application using JavaFX.
-Screenshot of the final look of the app:
+# IR e-books System
+Final app.
 
-![app](https://github.com/LevantisChris/BitWardenDesignConcept_demo-JavaFX/assets/117188793/d176e4e2-6d31-4e0b-a946-a5434b5898d2)
+![image](https://github.com/LevantisChris/IR-book-system/assets/117188793/bbd0fa82-65c2-4034-a358-801922ca7e76)
+![image](https://github.com/LevantisChris/IR-book-system/assets/117188793/67dc9d47-9d9e-4443-80f1-8a87df02f749)
+
+
