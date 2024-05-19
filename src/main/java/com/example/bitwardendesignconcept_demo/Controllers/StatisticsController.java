@@ -17,6 +17,7 @@ import javafx.scene.layout.VBox;
 import java.net.URL;
 import java.sql.*;
 import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.util.ArrayList;
 import java.util.Objects;
 import java.util.ResourceBundle;
@@ -254,7 +255,11 @@ public class StatisticsController implements Initializable {
             ResultSet resultSet = preparedStatement.executeQuery();
             while(resultSet.next()) {
                 double avg_score = resultSet.getDouble("avg_score");
-                DecimalFormat df = new DecimalFormat("#.##");
+
+                DecimalFormatSymbols symbols = new DecimalFormatSymbols();
+                symbols.setDecimalSeparator('.');
+                DecimalFormat df = new DecimalFormat("#.##", symbols);
+
                 String formattedAvgScore = df.format(avg_score);
                 double roundedAvgScore = Double.parseDouble(formattedAvgScore);
 
