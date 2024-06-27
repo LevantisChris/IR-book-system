@@ -1,6 +1,6 @@
 # IR e-books System
-The user can compare different options and parameters in each search. 
-The app is using the Library Apach Lucene to do the Indexing and the Searching functions. 
+The user can compare different options and parameters in each search. The app also stores some statistics and visualize them.
+The app is using the Library Apache Lucene to do the Indexing and the Searching functions. 
 
 Maven and Java are required. 
 
